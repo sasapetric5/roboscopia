@@ -59,11 +59,12 @@ function compareValue(claim, candidate, field) {
   if (candidate.valueQualifier || /[±≈~]|\b(?:approx(?:imately)?|about)\b|\d\s*[–—-]\s*\d/i.test(claimText + " " + evidenceText)) return "non_scalar_review";
   const a = numeric(claim.value);
   const b = numeric(candidate.extractedValue);
-  if (a === null || b === null) {
-    return norm(claim.value) === norm(candidate.extractedValue) ? "equal" : "non_scalar_review";
-  }
   const claimUnit = normUnit(claim.unit);
   const evidenceUnit = normUnit(candidate.unit);
+  if (a === null || b === null) {
+    if (claimUnit !== evidenceUnit) return "unit_mismatch";
+    return norm(claim.value) === norm(candidate.extractedValue) ? "equal" : "non_scalar_review";
+  }
   if (claimUnit === evidenceUnit) return Math.abs(a - b) <= Math.max(0.000001, Math.abs(a) * 0.000001) ? "equal" : "mismatch";
   const group = UNIT_GROUPS[field];
   const left = group?.[claimUnit];
