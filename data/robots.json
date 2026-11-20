@@ -77,8 +77,16 @@
           "url": "https://support.bostondynamics.com/s/article/spot-specifications"
         }
       ],
-      "media": [],
-      "mediaStatus": "Rights clearance required"
+      "media": [
+        {
+          "type": "primary",
+          "url": "https://i.blogs.es/d540f2/spotmini1/1366_2000.jpg",
+          "source": "Xataka — Spot product photograph",
+          "sourceUrl": "https://www.xataka.com/robotica-e-ia/boston-dynamics-pone-a-venta-a-spot-su-perro-robot-atlas-aprende-nuevas-e-impresiones-rutinas-gimnasia",
+          "note": "Third-party editorial image; reuse permission not confirmed."
+        }
+      ],
+      "mediaStatus": "External product image preview; reuse permission not confirmed"
     },
     {
       "id": "go2",
@@ -151,8 +159,16 @@
           "url": "https://www.unitree.com/mobile/go2/"
         }
       ],
-      "media": [],
-      "mediaStatus": "Rights clearance required"
+      "media": [
+        {
+          "type": "primary",
+          "url": "https://www.maverickdrone.com/cdn/shop/files/Go2EDU.png?v=1718291125",
+          "source": "Maverick Drone — Unitree Go2 product image",
+          "sourceUrl": "https://www.maverickdrone.com/products/go2",
+          "note": "Distributor product image; reuse permission not confirmed."
+        }
+      ],
+      "mediaStatus": "External product image preview; reuse permission not confirmed"
     },
     {
       "id": "h1",
@@ -220,8 +236,16 @@
           "url": "https://www.unitree.com/h1/"
         }
       ],
-      "media": [],
-      "mediaStatus": "Rights clearance required"
+      "media": [
+        {
+          "type": "primary",
+          "url": "https://www.crkennedy.co.nz/ts1757387305/attachments/Product/45820/uth1.tag.1.webp",
+          "source": "C.R. Kennedy — Unitree H1 product image",
+          "sourceUrl": "https://www.crkennedy.co.nz/products/uth1/unitree-h1-universal-humanoid-robot",
+          "note": "Distributor product image; reuse permission not confirmed."
+        }
+      ],
+      "mediaStatus": "External product image preview; reuse permission not confirmed"
     },
     {
       "id": "ur5e",
@@ -296,8 +320,16 @@
           "url": "https://www.universal-robots.com/media/1807465/ur5e_e-series_datasheets_web.pdf"
         }
       ],
-      "media": [],
-      "mediaStatus": "Rights clearance required"
+      "media": [
+        {
+          "type": "primary",
+          "url": "https://cdn.shopify.com/s/files/1/0253/6200/6096/products/Universal_Robots_UR5e_1200p_f78c96b9-4e5c-4494-b93d-bd90725241a0_1600x.jpg?v=1572368358",
+          "source": "Thinkbot Solutions — UR5e product image",
+          "sourceUrl": "https://thinkbotsolutions.com/products/universal-robots-ur5e",
+          "note": "Distributor product image; reuse permission not confirmed."
+        }
+      ],
+      "mediaStatus": "External product image preview; reuse permission not confirmed"
     },
     {
       "id": "ur20",
@@ -373,8 +405,16 @@
           "url": "https://www.universal-robots.com/manuals/EN/HTML/SW10_9/Content/prod-usr-man/complianceUR20/H_g5_sections/appendix_g5/tech_spec_UR20.htm"
         }
       ],
-      "media": [],
-      "mediaStatus": "Rights clearance required"
+      "media": [
+        {
+          "type": "primary",
+          "url": "https://uploads.unchainedrobotics.de/media/file_upload/Universal%20Robots%20UR20e_fc871527.png",
+          "source": "Unchained Robotics — UR20 product image",
+          "sourceUrl": "https://unchainedrobotics.de/en/products/robot/cobot/universal-robots-ur20e",
+          "note": "Distributor product image; reuse permission not confirmed."
+        }
+      ],
+      "mediaStatus": "External product image preview; reuse permission not confirmed"
     },
     {
       "id": "gofa5",
@@ -444,8 +484,16 @@
           "url": "https://library.e.abb.com/public/88cd85f2acbd47f9844e5d1861a4a275/200526%20GoFa%20CRB%2015000%20Datasheet.pdf"
         }
       ],
-      "media": [],
-      "mediaStatus": "Rights clearance required"
+      "media": [
+        {
+          "type": "primary",
+          "url": "https://cdn11.bigcommerce.com/s-hf5p6bxj3i/images/stencil/1280x1280/products/47138/51274/abb_gofa_800x800_72dpi__01448.1692212564.jpg?c=1",
+          "source": "Carolina Motion Controls — ABB GoFa 5 product image",
+          "sourceUrl": "https://carolinamotioncontrols.com/gofa-crb-15000-5-5kg-payload-with-95m-reach/",
+          "note": "Distributor product image; reuse permission not confirmed."
+        }
+      ],
+      "mediaStatus": "External product image preview; reuse permission not confirmed"
     },
     {
       "id": "kr6",
@@ -519,8 +567,16 @@
           "url": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
         }
       ],
-      "media": [],
-      "mediaStatus": "Rights clearance required"
+      "media": [
+        {
+          "type": "primary",
+          "url": "https://www.robotmp.com/image/cache/wkseller/21/products_2022/KR-6-R700-CR-750x750.jpg.webp",
+          "source": "RobotMP — KUKA KR 6 R700 CR family image",
+          "sourceUrl": "https://www.robotmp.com/kuka-kr-6-r700-cr-robot",
+          "note": "Related KR 6 R700 CR family variant; not confirmed as the exact sixx C-CR variant. Reuse permission not confirmed."
+        }
+      ],
+      "mediaStatus": "External product image preview; reuse permission not confirmed"
     }
   ]
 }
