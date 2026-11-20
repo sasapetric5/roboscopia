@@ -98,8 +98,6 @@ export function extractEvidenceCandidates({
   const pages = extractPages(text);
   const modelMatch = containsExactModelName(text, modelName);
   const configurationMatch = containsExactModelName(text, configurationId);
-  const modelMatch = modelName ? allText.includes(modelName.toLocaleLowerCase()) : null;
-  const configurationMatch = configurationId ? allText.includes(configurationId.toLocaleLowerCase()) : null;") + "(?![\\p{L}\\p{N}])", "iu").test(text) : null;
   const candidates = [];
 
   for (const page of pages) {
