@@ -159,11 +159,13 @@ Kvalitetna i proverljiva baza podataka predstavlja temelj platforme. Marketplace
 - The Data Quality Review Queue at `scripts/data-quality-review-queue.mjs` turns audit findings into stable human-review items. Reviewer decisions are stored separately in `data/review-decisions.json` and recorded through a validating local command; the canonical robot catalog is never edited by the queue.
 - Queue workflow and limitations: [docs/DATA_QUALITY_REVIEW_QUEUE.md](docs/DATA_QUALITY_REVIEW_QUEUE.md). Ten focused review-queue tests are committed but have not yet been executed in Node.js.
 - A read-only Data Quality Audit is implemented at `scripts/data-quality-audit.mjs`; it flags broken references, missing provenance, potential duplicate identities, conflicting values, stale verified claims, source-review gaps and media-rights gaps.
-- Audit behavior and commands are documented in [docs/DATA_QUALITY_AUDIT.md](docs/DATA_QUALITY_AUDIT.md). Seven focused tests are committed, but have not yet been executed in a Node.js environment.
+- Audit behavior and commands are documented in [docs/DATA_QUALITY_AUDIT.md](docs/DATA_QUALITY_AUDIT.md). Seven focused audit tests are now passing in GitHub Actions.
 
 
 - Data Quality Review Queue u `scripts/data-quality-review-queue.mjs` pretvara nalaze audita u stabilne zadatke za ljudsku proveru. Odluke recenzenata čuvaju se odvojeno u `data/review-decisions.json`; red za proveru nikada sam ne menja kanonski katalog robota.
-- Uputstvo i ograničenja: [docs/DATA_QUALITY_REVIEW_QUEUE.md](docs/DATA_QUALITY_REVIEW_QUEUE.md). Dodato je osam ciljanih testova, ali njihovo izvršavanje u Node.js okruženju još nije potvrđeno.
+- Uputstvo i ograničenja: [docs/DATA_QUALITY_REVIEW_QUEUE.md](docs/DATA_QUALITY_REVIEW_QUEUE.md). Dodato je deset ciljanih testova; svi testovi prolaze u GitHub Actions.
+
+- [x] GitHub Actions workflow `.github/workflows/data-quality.yml` runs the Node.js test suite, the read-only data audit and review-queue generation on pushes to `main`; latest run passed: [workflow run](https://github.com/sasapetric5/roboscopia/actions/runs/44807571168).
 
 ## Canonical catalog data model
 
