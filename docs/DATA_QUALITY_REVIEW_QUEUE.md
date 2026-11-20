@@ -71,4 +71,4 @@ node scripts/data-quality-review-queue.mjs --json
 node --test tests/*.test.mjs
 ```
 
-The test suite covers queue generation, stable IDs, context and priority, non-mutation of canonical data, status validation and decision creation. Tests must be executed in Node.js before this workflow is treated as verified.
+The test suite covers queue generation, stable IDs, context and priority, non-mutation of canonical data, status validation and decision creation. The latest GitHub Actions run passed all tests and both data-quality commands.
