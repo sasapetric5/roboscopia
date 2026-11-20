@@ -6,8 +6,12 @@ import { pathToFileURL } from "node:url";
 const OUTCOMES = new Set(["supported", "partially_supported", "contradicted", "not_applicable"]);
 const sha = (value) => createHash("sha256").update(value).digest("hex").slice(0, 24);
 const norm = (value) => String(value ?? "").normalize("NFKC").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().replace(/\s+/g, " ");
-const normUnit = (value) => String(value ?? "").normalize("NFKC").toLowerCase()
-  .replace(/[·⋅]/g, "").replace(/\s+/g, "");
+const normUnit = (value) => {
+  const unit = String(value ?? "").normalize("NFKC").toLowerCase()
+    .replace(/[·⋅]/g, "").replace(/\s+/g, "");
+  if (["rotatingjoints", "joint", "joints", "axis", "axes"].includes(unit)) return "count";
+  return unit;
+};
 const FIELD_ALIASES = new Map([
   ["mass", ["mass", "weight", "mass with battery", "weight with battery", "robot arm mass", "robot mass"]],
   ["payload", ["payload", "maximum payload", "max payload", "rated payload", "standard payload"]],
