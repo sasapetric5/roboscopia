@@ -59,7 +59,7 @@ function findSource(db, issue) {
   const sourceMatch = issue.path.match(/sources\[(\d+)\]/);
   if (sourceMatch) return db.sources?.[Number(sourceMatch[1])] ?? null;
 
-  const specificationMatch = issue.path.match(/^records\\[(\\d+)\\]\\.specifications\\[(\\d+)\\]/);
+  const specificationMatch = issue.path.match(/^records\[(\d+)\]\.specifications\[(\d+)\]/);
   if (specificationMatch) {
     const record = db.records?.[Number(specificationMatch[1])];
     const spec = record?.specifications?.[Number(specificationMatch[2])];
