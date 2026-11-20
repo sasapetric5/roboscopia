@@ -6,6 +6,7 @@ import {
   buildReviewQueue,
   validateReviewDecision,
 } from "../scripts/data-quality-review-queue.mjs";
+import { createReviewDecision } from "../scripts/record-review-decision.mjs";
 
 const db = JSON.parse(await readFile(new URL("../data/robots.json", import.meta.url), "utf8"));
 const clone = (value) => structuredClone(value);
