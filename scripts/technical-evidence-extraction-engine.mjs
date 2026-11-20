@@ -92,7 +92,7 @@ export function extractEvidenceCandidates({
         const match = line.match(pattern.regex);
         if (!match) continue;
         const matchedText = normalizeSpace(match[0]);
-        const value = match[1].replace(",", ".");
+        const value = parseEngineeringNumber(match[1]);
         const unit = pattern.id === "ingress_protection" ? "" : (match[2] ?? "");
         const candidateMaterial = [
           documentSha256 ?? sha256(text),
