@@ -12,6 +12,9 @@ test("evidence source registry contains seven manufacturer-primary source record
     assert.ok(source.sourcePageUrl.startsWith("https://"));
     assert.ok(source.modelIds.length > 0);
     assert.equal(source.rightsStatus, "review_required");
+    assert.equal(source.acquisition.status, "not_acquired");
+    assert.equal(source.acquisition.rightsReview, "pending");
+    assert.equal(source.acquisition.sha256, null);
   }
 });
 
