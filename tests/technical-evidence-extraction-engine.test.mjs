@@ -8,7 +8,7 @@ const sha = "a".repeat(64);
 
 test("extracts common robot specifications with exact page and line evidence", () => {
   const text = [
-    "Product Technical Specifications",
+    "Spot Product Technical Specifications",
     "Mass with battery: 33.8 kg",
     "Maximum payload: 14 kg",
     "Maximum speed: 1.6 m/s",
@@ -78,7 +78,7 @@ test("does not invent model or configuration matches", () => {
 test("supports common engineering units and decimal comma", () => {
   const report = extractEvidenceCandidates({
     text: [
-      "Reach: 1,750 mm",
+      "Reach: 1,750 mm",\n      "Rated payload: 1,5 kg",
       "Repeatability: ±0.03 mm",
       "Runtime: 90 min",
       "Battery capacity: 564 Wh",
@@ -87,7 +87,7 @@ test("supports common engineering units and decimal comma", () => {
     ].join("\n"),
   });
   const fields = Object.fromEntries(report.candidates.map((x) => [x.field, x]));
-  assert.equal(fields.reach.extractedValue, 1750);
+  assert.equal(fields.reach.extractedValue, 1750);\n  assert.equal(fields.payload.extractedValue, 1.5);
   assert.equal(fields.repeatability.extractedValue, 0.03);
   assert.equal(fields.runtime.extractedValue, 90);
   assert.equal(fields.battery_capacity.extractedValue, 564);
