@@ -111,8 +111,9 @@ The first major technical focus is expected to be the **Data Engine**: dependabl
 - [ ] Competitive intelligence research completed.
 - [ ] Reusable components evaluated.
 - [ ] Architecture and technology choices finalized.
-- [ ] First functional unit implemented and verified.
-- [ ] Production deployment approved.
+- [x] First functional unit prototype implemented: source-linked Knowledge Base with search, category filtering and side-by-side comparison (two initial sample profiles).
+- [ ] Functional and mobile-browser verification completed.
+- [x] Cloudflare Pages production deployment approved; custom-domain verification may still be in progress.
 
 ---
 
