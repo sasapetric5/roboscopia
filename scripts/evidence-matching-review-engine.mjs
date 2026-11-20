@@ -7,7 +7,7 @@ const OUTCOMES = new Set(["supported", "partially_supported", "contradicted", "n
 const sha = (value) => createHash("sha256").update(value).digest("hex").slice(0, 24);
 const norm = (value) => String(value ?? "").normalize("NFKC").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().replace(/\s+/g, " ");
 const normUnit = (value) => String(value ?? "").normalize("NFKC").toLowerCase()
-  .replace(/[·⋅]/g, "").replace(/\\s+/g, "");
+  .replace(/[·⋅]/g, "").replace(/\s+/g, "");
 const FIELD_ALIASES = new Map([
   ["mass", ["mass", "weight", "mass with battery", "weight with battery", "robot arm mass", "robot mass"]],
   ["payload", ["payload", "maximum payload", "max payload", "rated payload", "standard payload"]],
@@ -50,13 +50,13 @@ function fieldFor(spec) {
 }
 function numeric(value) {
   if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value === "string" && /^\\s*\\d+(?:[.,]\\d+)?\\s*$/.test(value)) return Number(value.trim().replace(",", "."));
+  if (typeof value === "string" && /^\s*\d+(?:[.,]\d+)?\s*$/.test(value)) return Number(value.trim().replace(",", "."));
   return null;
 }
 function compareValue(claim, candidate, field) {
   const claimText = String(claim.value ?? "").trim();
   const evidenceText = String(candidate.extractedValue ?? "").trim();
-  if (candidate.valueQualifier || /[±≈~]|\\b(?:approx(?:imately)?|about)\\b|\\d\\s*[–—-]\\s*\\d/i.test(claimText + " " + evidenceText)) return "non_scalar_review";
+  if (candidate.valueQualifier || /[±≈~]|\b(?:approx(?:imately)?|about)\b|\d\s*[–—-]\s*\d/i.test(claimText + " " + evidenceText)) return "non_scalar_review";
   const a = numeric(claim.value);
   const b = numeric(candidate.extractedValue);
   if (a === null || b === null) {
