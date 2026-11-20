@@ -147,6 +147,16 @@ Kvalitetna i proverljiva baza podataka predstavlja temelj platforme. Marketplace
 - Grafički prikazi su originalne SVG ilustracije interfejsa, ne fotografije stvarnih proizvoda.
 - Katalog je početna verzija; funkcionalnost u mobilnom pregledaču i dostupnost na produkcionom domenu još zahtevaju praktičnu proveru.
 
+## Canonical catalog data model
+
+- `data/robots.json` is the single source of truth for the current catalog and technical dossiers.
+- Schema version `2.0.0` adds normalized manufacturer, product-family and model identity references, controlled categories, and configuration placeholders.
+- The catalog loads model records from the JSON file and supports category and manufacturer filtering, search, sorting and comparison of up to three models.
+- Technical dossiers load the same model records from the JSON file.
+- Configuration placeholders are not verified technical profiles. Unitree Go2 AIR / PRO / X / EDU are identity/research entries only; their specifications have not been asserted.
+- The data model and integrity rules are documented in [docs/DATA_MODEL.md](docs/DATA_MODEL.md).
+- No live database, scraping pipeline, R2 bucket or Oracle resource has been activated.
+
 ## Planirane funkcionalne oblasti
 
 - `website` — javni sajt i SR/EN iskustvo.
