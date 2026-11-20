@@ -6,18 +6,22 @@ import { pathToFileURL } from "node:url";
 const OUTCOMES = new Set(["supported", "partially_supported", "contradicted", "not_applicable"]);
 const sha = (value) => createHash("sha256").update(value).digest("hex").slice(0, 24);
 const norm = (value) => String(value ?? "").normalize("NFKC").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().replace(/\s+/g, " ");
-const normUnit = (value) => String(value ?? "").normalize("NFKC").toLowerCase().replace(/\s+/g, "");
+const normUnit = (value) => String(value ?? "").normalize("NFKC").toLowerCase()
+  .replace(/[·⋅]/g, "").replace(/\\s+/g, "");
 const FIELD_ALIASES = new Map([
-  ["mass", ["mass", "weight", "mass with battery", "weight with battery"]],
-  ["payload", ["payload", "maximum payload", "rated payload"]],
-  ["speed", ["speed", "maximum speed", "top speed"]],
-  ["runtime", ["runtime", "typical runtime", "run time", "operating time", "battery life"]],
+  ["mass", ["mass", "weight", "mass with battery", "weight with battery", "robot arm mass", "robot mass"]],
+  ["payload", ["payload", "maximum payload", "max payload", "rated payload", "standard payload"]],
+  ["speed", ["speed", "maximum speed", "top speed", "maximum running speed", "moving speed", "maximum tcp speed", "max tcp speed"]],
+  ["runtime", ["runtime", "typical runtime", "run time", "operating time", "battery life", "battery endurance"]],
   ["battery_capacity", ["battery capacity", "capacity", "battery energy"]],
-  ["reach", ["reach", "working reach"]],
-  ["repeatability", ["repeatability"]],
-  ["degrees_of_freedom", ["degrees of freedom", "dof"]],
+  ["reach", ["reach", "working reach", "maximum reach", "reach to wrist", "reach to flange"]],
+  ["repeatability", ["repeatability", "pose repeatability"]],
+  ["degrees_of_freedom", ["degrees of freedom", "dof", "axes", "number of axes"]],
   ["ingress_protection", ["ingress protection", "ip rating", "ip"]],
   ["power", ["power", "rated power", "power consumption"]],
+  ["height", ["height", "overall height", "standing height"]],
+  ["dimensions", ["dimensions", "standing dimensions"]],
+  ["torque", ["torque", "maximum joint torque", "joint torque"]],
 ]);
 const FIELD_BY_LABEL = new Map([...FIELD_ALIASES].flatMap(([field, labels]) => [[norm(field), field], ...labels.map((label) => [norm(label), field])]));
 const UNIT_GROUPS = {
@@ -28,25 +32,35 @@ const UNIT_GROUPS = {
   battery_capacity: { wh: 1, kwh: 1000, ah: null, mah: null },
   reach: { mm: 0.001, cm: 0.01, m: 1, in: 0.0254, inch: 0.0254, inches: 0.0254 },
   repeatability: { mm: 1, cm: 10, in: 25.4 },
+  height: { mm: 0.001, cm: 0.01, m: 1, in: 0.0254 },
+  torque: { nm: 1, knm: 1000 },
   power: { w: 1, kw: 1000 },
 };
 function fieldFor(spec) {
-  const direct = FIELD_BY_LABEL.get(norm(spec?.field ?? spec?.name ?? spec?.specification ?? spec?.fieldLabel));
-  if (direct) return direct;
-  for (const [field, labels] of FIELD_ALIASES) if (labels.some((label) => norm(spec?.name).includes(norm(label)))) return field;
+  const labels = [spec?.field, spec?.name, spec?.specification, spec?.fieldLabel].filter(Boolean).map(norm);
+  for (const label of labels) {
+    const direct = FIELD_BY_LABEL.get(label);
+    if (direct) return direct;
+  }
+  const combined = labels.join(" ");
+  for (const [field, aliases] of FIELD_ALIASES) {
+    if (aliases.some((alias) => combined.includes(norm(alias)))) return field;
+  }
   return null;
 }
 function numeric(value) {
   if (typeof value === "number" && Number.isFinite(value)) return value;
-  if (typeof value === "string" && /^\s*\d+(?:[.,]\d+)?\s*$/.test(value)) return Number(value.trim().replace(",", "."));
+  if (typeof value === "string" && /^\\s*\\d+(?:[.,]\\d+)?\\s*$/.test(value)) return Number(value.trim().replace(",", "."));
   return null;
 }
 function compareValue(claim, candidate, field) {
+  const claimText = String(claim.value ?? "").trim();
+  const evidenceText = String(candidate.extractedValue ?? "").trim();
+  if (candidate.valueQualifier || /[±≈~]|\\b(?:approx(?:imately)?|about)\\b|\\d\\s*[–—-]\\s*\\d/i.test(claimText + " " + evidenceText)) return "non_scalar_review";
   const a = numeric(claim.value);
   const b = numeric(candidate.extractedValue);
   if (a === null || b === null) {
-    return String(claim.value).trim().toLowerCase() === String(candidate.extractedValue).trim().toLowerCase()
-      ? "equal" : "mismatch";
+    return norm(claim.value) === norm(candidate.extractedValue) ? "equal" : "non_scalar_review";
   }
   const claimUnit = normUnit(claim.unit);
   const evidenceUnit = normUnit(candidate.unit);
@@ -90,8 +104,12 @@ export function buildEvidenceMatchingReport(db, sourceReport, extractionReports 
       let status = "candidate_review";
       if (!sameModel && !modelUnspecified) status = "model_mismatch";
       else if (!sameConfig && !configUnspecified) status = "configuration_mismatch";
+      else if (candidate.modelMentionStatus === "not_found") status = "model_identity_unverified";
+      else if (candidate.configurationMentionStatus === "not_found") status = "configuration_identity_unverified";
+      else if (modelUnspecified) status = "model_identity_unverified";
       else if (valueResult === "unit_mismatch") status = "unit_mismatch";
       else if (valueResult === "mismatch") status = "value_mismatch";
+      else if (valueResult === "non_scalar_review") status = "non_scalar_review";
       else if (staleEvidence(candidate, now)) status = "possible_stale_evidence";
       else if (valueResult === "equal" || valueResult === "equal_converted") status = "value_match_unverified";
       return {
