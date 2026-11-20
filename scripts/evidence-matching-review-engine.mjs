@@ -18,7 +18,7 @@ const FIELD_ALIASES = new Map([
   ["ingress_protection", ["ingress protection", "ip rating", "ip"]],
   ["power", ["power", "rated power", "power consumption"]],
 ]);
-const FIELD_BY_LABEL = new Map([...FIELD_ALIASES].flatMap(([field, labels]) => labels.map((label) => [norm(label), field])));
+const FIELD_BY_LABEL = new Map([...FIELD_ALIASES].flatMap(([field, labels]) => [[norm(field), field], ...labels.map((label) => [norm(label), field])]));
 const UNIT_GROUPS = {
   mass: { kg: 1, g: 0.001, lb: 0.45359237, lbs: 0.45359237 },
   payload: { kg: 1, g: 0.001, lb: 0.45359237, lbs: 0.45359237 },
