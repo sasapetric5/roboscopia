@@ -34,3 +34,6 @@ jobs:
 
       - name: Generate review queue
         run: node scripts/data-quality-review-queue.mjs --json
+
+      - name: Generate source verification report
+        run: node scripts/source-verification-engine.mjs --json
