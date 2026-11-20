@@ -1,0 +1,187 @@
+{
+  "schemaVersion": "1.0.0",
+  "policy": {
+    "sourceSelection": "manufacturer_primary_sources_only",
+    "networkAutomation": false,
+    "scraping": false,
+    "automaticPdfDownload": false,
+    "redistributeOriginalDocuments": false,
+    "storeOriginalDocumentsInPublicRepository": false,
+    "localProcessing": "only for documents lawfully obtained and supplied or downloaded by an authorized reviewer",
+    "rightsReviewRequired": true,
+    "catalogMutation": false,
+    "automaticApproval": false
+  },
+  "sources": [
+    {
+      "id": "spot-ifU-5-1",
+      "manufacturer": "Boston Dynamics",
+      "modelIds": [
+        "spot"
+      ],
+      "documentType": "pdf",
+      "title": "Spot Instructions for Use",
+      "revision": "Version 5.1",
+      "documentDate": "2025",
+      "sourcePageUrl": "https://support.bostondynamics.com/s/article/spot-specifications",
+      "downloadUrl": "https://d3cjkvgbik1jtv.cloudfront.net/translations/spot-5_1/spot-user-manual-en.pdf",
+      "officialHost": "bostondynamics.com",
+      "deliveryHost": "d3cjkvgbik1jtv.cloudfront.net",
+      "expectedLocator": "§1.5.2, Spot Specifications, printed page 10; physical properties and power tables",
+      "claims": [
+        "mass with battery",
+        "maximum speed",
+        "battery capacity",
+        "typical runtime"
+      ],
+      "rightsStatus": "review_required",
+      "notes": "Official Boston Dynamics instructions; current support page separately notes production hardware and payload-related runtime changes. Verify IP and payload against correct table/source before linking."
+    },
+    {
+      "id": "unitree-go2-product-page",
+      "manufacturer": "Unitree Robotics",
+      "modelIds": [
+        "go2"
+      ],
+      "documentType": "html",
+      "title": "Unitree Go2 official product specification page",
+      "revision": "Live page; capture revision at acquisition",
+      "sourcePageUrl": "https://www.unitree.com/go2/",
+      "downloadUrl": null,
+      "officialHost": "unitree.com",
+      "expectedLocator": "Mechanical Specifications; Performance Parameters; configuration columns AIR / PRO / X / EDU; notes [8]",
+      "claims": [
+        "weight with battery",
+        "standing dimensions",
+        "battery endurance",
+        "maximum running speed",
+        "payload"
+      ],
+      "rightsStatus": "review_required",
+      "notes": "Primary official source but not a PDF. Keep all variant columns; do not collapse to a universal value."
+    },
+    {
+      "id": "unitree-h1-product-page",
+      "manufacturer": "Unitree Robotics",
+      "modelIds": [
+        "h1"
+      ],
+      "documentType": "html",
+      "title": "Unitree H1 / H1-2 official product specification page",
+      "revision": "Live page; capture revision at acquisition",
+      "sourcePageUrl": "https://www.unitree.com/h1/",
+      "downloadUrl": null,
+      "officialHost": "unitree.com",
+      "expectedLocator": "Unitree H1 section; Body Size Value; Mobility; Endurance; Maximum Joint Torque; H1 Parameter table",
+      "claims": [
+        "height",
+        "mass",
+        "moving speed",
+        "battery capacity",
+        "maximum joint torque"
+      ],
+      "rightsStatus": "review_required",
+      "notes": "H1 and H1-2 are separate model variants on one page; evidence must be attributed only to H1."
+    },
+    {
+      "id": "ur5e-user-manual-sw5-26",
+      "manufacturer": "Universal Robots",
+      "modelIds": [
+        "ur5e"
+      ],
+      "documentType": "pdf",
+      "title": "UR5e User Manual",
+      "revision": "PolyScope SW5_26",
+      "sourcePageUrl": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm",
+      "downloadUrl": "https://www.universal-robots.com/manuals/EN/PDF/SW5_26/user-manual-UR5e-PDF_online/710-965-00_UR5e_User_Manual_en_Global.pdf",
+      "officialHost": "universal-robots.com",
+      "deliveryHost": "universal-robots.com",
+      "expectedLocator": "Technical Specifications UR5e; General specification, Movement, Features and Physical tables",
+      "claims": [
+        "maximum payload",
+        "reach",
+        "degrees of freedom",
+        "pose repeatability",
+        "robot arm mass",
+        "ingress protection"
+      ],
+      "rightsStatus": "review_required",
+      "notes": "Manufacturer's online technical-specification table is also available and may provide more direct locator evidence than a full manual."
+    },
+    {
+      "id": "ur20-user-manual-sw5-26",
+      "manufacturer": "Universal Robots",
+      "modelIds": [
+        "ur20-1750"
+      ],
+      "documentType": "pdf",
+      "title": "UR20 User Manual",
+      "revision": "PolyScope SW5_26",
+      "sourcePageUrl": "https://www.universal-robots.com/manuals/EN/PDF/SW5_26/user-manual-UR20-PDF_online/718-818-00_UR20_User_Manual_en_Global.pdf",
+      "downloadUrl": "https://www.universal-robots.com/manuals/EN/PDF/SW5_26/user-manual-UR20-PDF_online/718-818-00_UR20_User_Manual_en_Global.pdf",
+      "officialHost": "universal-robots.com",
+      "deliveryHost": "universal-robots.com",
+      "expectedLocator": "§3.1 Technical Specifications UR20; General specification, Movement, Physical tables",
+      "claims": [
+        "standard payload",
+        "extended payload",
+        "reach",
+        "maximum TCP speed",
+        "robot mass",
+        "repeatability"
+      ],
+      "rightsStatus": "review_required",
+      "notes": "Manual states 20 kg standard, 25 kg with boundary conditions, approximately 5 m/s TCP speed, ±0.1 mm repeatability and 64 kg arm weight."
+    },
+    {
+      "id": "abb-gofa-crb15000-datasheet",
+      "manufacturer": "ABB Robotics",
+      "modelIds": [
+        "gofa-5"
+      ],
+      "documentType": "pdf",
+      "title": "GoFa CRB 15000 Datasheet",
+      "revision": "9AKK107991A8564",
+      "sourcePageUrl": "https://one.robotics.abb.com/en/robots/p/GoFa-CRB-15000",
+      "downloadUrl": "https://library.e.abb.com/public/24de2251a42d4f9badda0232508ff242/9AKK107991A8564_en_F_GoFa%E2%84%A2%20CRB%2015000%20datasheet.pdf",
+      "officialHost": "abb.com",
+      "deliveryHost": "library.e.abb.com",
+      "expectedLocator": "Performance table (GoFa 5 column); Physical table; Movement / axes table",
+      "claims": [
+        "payload",
+        "reach to wrist",
+        "reach to flange",
+        "axes",
+        "pose repeatability"
+      ],
+      "rightsStatus": "review_required",
+      "notes": "Variant columns distinguish GoFa 5, GoFa 10 and GoFa 12; preserve the GoFa 5 column."
+    },
+    {
+      "id": "kuka-kr6-r700-sixx-c-v4-1",
+      "manufacturer": "KUKA",
+      "modelIds": [
+        "kr-6-r700-sixx-c"
+      ],
+      "documentType": "pdf",
+      "title": "KR 6 R700 sixx C Technical Data",
+      "revision": "V4.1",
+      "documentDate": "2022-09-23",
+      "sourcePageUrl": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf",
+      "downloadUrl": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf",
+      "officialHost": "kuka.com",
+      "deliveryHost": "kuka.com",
+      "expectedLocator": "Technical data and payload diagram; rated payload explanatory note; document number 0000-215-571",
+      "claims": [
+        "maximum reach",
+        "rated payload",
+        "maximum payload",
+        "axes",
+        "pose repeatability",
+        "robot mass"
+      ],
+      "rightsStatus": "review_required",
+      "notes": "Exact C model, not C-CR or C-WP. Rated 3 kg; up to 6 kg subject to load-case verification."
+    }
+  ]
+}
