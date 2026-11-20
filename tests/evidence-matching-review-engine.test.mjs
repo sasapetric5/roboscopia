@@ -80,7 +80,7 @@ test("maps every catalog specification label to its normalized field", () => {
   }
 });
 test("keeps approximate values, ranges and tolerances for human review", () => {
-  const ranged = buildEvidenceMatchingReport(db, { claims: [{ ...claim, value: "2–4", unit: "h" }] }, [{ candidates: [candidate({ field: "runtime", extractedValue: "2–4", unit: "h", valueQualifier: true })] }]);
+  const ranged = buildEvidenceMatchingReport(db, { claims: [{ ...claim, specification: "Battery endurance", value: "2–4", unit: "h" }] }, [{ candidates: [candidate({ field: "runtime", extractedValue: "2–4", unit: "h", valueQualifier: true })] }]);
   assert.equal(ranged.matches[0].status, "non_scalar_review");
   const tolerance = buildEvidenceMatchingReport(db, { claims: [{ ...claim, specification: "Pose repeatability", value: "±0.03", unit: "mm" }] }, [{ candidates: [candidate({ field: "repeatability", extractedValue: 0.03, unit: "mm", valueQualifier: true })] }]);
   assert.equal(tolerance.matches[0].status, "non_scalar_review");
