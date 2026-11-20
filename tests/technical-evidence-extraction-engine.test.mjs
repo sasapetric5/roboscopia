@@ -149,3 +149,18 @@ test("extracts all additional catalog field families and keeps ranges non-scalar
   assert.ok(byField.torque?.some((x) => x.extractedValue === 360));
   assert.ok(byField.payload?.some((x) => x.extractedValue === "7–8" && x.valueQualifier));
 });
+
+test("does not confuse H1 with the distinct H1-2 model", () => {
+  const h1OnlyInH12 = extractEvidenceCandidates({
+    text: "Unitree H1-2 specifications\\nHeight: 178 cm",
+    modelId: "h1",
+    modelName: "H1",
+  });
+  assert.equal(h1OnlyInH12.context.modelMentionStatus, "not_found");
+  const exactH1 = extractEvidenceCandidates({
+    text: "Unitree H1 humanoid robot specifications\\nHeight: 180 cm",
+    modelId: "h1",
+    modelName: "H1",
+  });
+  assert.equal(exactH1.context.modelMentionStatus, "mention_found");
+});
