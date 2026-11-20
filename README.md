@@ -112,7 +112,11 @@ The first major technical focus is expected to be the **Data Engine**: dependabl
 - [x] Preliminary open-source discovery across 10 robotics-related GitHub repositories; license and scope checks started. No third-party code or datasets imported.
 - [ ] Full security, maintenance and compatibility evaluation of selected reusable components.
 - [ ] Architecture and technology choices finalized.
-- [x] Knowledge Base catalog upgraded: 7 source-linked profiles across 4 categories, bilingual interface, search, category filters, sorting, expandable source details and comparison of up to 3 models.
+- [x] Knowledge Base catalog: 7 model entries across 4 categories, bilingual interface, search, category filters, sorting and comparison of up to 3 models.
+- [x] Structured model dataset added at `data/robots.json`, with model identity, variant notes, applications, strengths, limitations, specifications and source URLs.
+- [x] Bilingual technical dossier page added at `robot-profile.html`; catalog cards link to individual model dossiers.
+- [ ] Product photography, multi-angle galleries and video embeds pending image/video rights clearance and source review.
+- [ ] Competitive comparisons, model histories and availability records pending equivalent-variant evidence and dated sources.
 - [x] Original inline SVG illustrations added as temporary interface artwork; they are explicitly not represented as product photographs.
 - [ ] Functional, accessibility and mobile-browser verification completed.
 - [x] Cloudflare Pages deployment from `main` approved; domain setup previously confirmed by the project owner.
