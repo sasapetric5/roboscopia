@@ -112,7 +112,7 @@
       "id": "ur20-user-manual-sw5-26",
       "manufacturer": "Universal Robots",
       "modelIds": [
-        "ur20-1750"
+        "ur20"
       ],
       "documentType": "pdf",
       "title": "UR20 User Manual",
@@ -137,7 +137,7 @@
       "id": "abb-gofa-crb15000-datasheet",
       "manufacturer": "ABB Robotics",
       "modelIds": [
-        "gofa-5"
+        "gofa5"
       ],
       "documentType": "pdf",
       "title": "GoFa CRB 15000 Datasheet",
@@ -161,7 +161,7 @@
       "id": "kuka-kr6-r700-sixx-c-v4-1",
       "manufacturer": "KUKA",
       "modelIds": [
-        "kr-6-r700-sixx-c"
+        "kr6"
       ],
       "documentType": "pdf",
       "title": "KR 6 R700 sixx C Technical Data",
