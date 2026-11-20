@@ -121,7 +121,7 @@ The first major technical focus is expected to be the **Data Engine**: dependabl
 - [ ] Competitive comparisons, model histories and availability records pending equivalent-variant evidence and dated sources.
 - [x] Original inline SVG illustrations added as temporary interface artwork; they are explicitly not represented as product photographs.
 - [ ] Functional, accessibility and mobile-browser verification completed.
-- [x] Cloudflare Pages deployment from `main` approved; domain setup previously confirmed by the project owner.
+- [x] Cloudflare Pages project connected to `main`; automatic deployments are temporarily disabled by project owner request. Final production deployment is deferred until development and tests are complete.
 
 ---
 
@@ -161,6 +161,9 @@ Kvalitetna i proverljiva baza podataka predstavlja temelj platforme. Marketplace
 - A read-only Data Quality Audit is implemented at `scripts/data-quality-audit.mjs`; it flags broken references, missing provenance, potential duplicate identities, conflicting values, stale verified claims, source-review gaps and media-rights gaps.
 - Audit behavior and commands are documented in [docs/DATA_QUALITY_AUDIT.md](docs/DATA_QUALITY_AUDIT.md). Seven focused tests are committed, but have not yet been executed in a Node.js environment.
 
+
+- Data Quality Review Queue u `scripts/data-quality-review-queue.mjs` pretvara nalaze audita u stabilne zadatke za ljudsku proveru. Odluke recenzenata čuvaju se odvojeno u `data/review-decisions.json`; red za proveru nikada sam ne menja kanonski katalog robota.
+- Uputstvo i ograničenja: [docs/DATA_QUALITY_REVIEW_QUEUE.md](docs/DATA_QUALITY_REVIEW_QUEUE.md). Dodato je osam ciljanih testova, ali njihovo izvršavanje u Node.js okruženju još nije potvrđeno.
 
 ## Canonical catalog data model
 
