@@ -117,3 +117,35 @@ test("report never claims it fetched or verified a PDF or source", () => {
   assert.equal(report.policy.catalogMutated, false);
   assert.equal(report.policy.scannedPageOcr, false);
 });
+
+test("extracts all additional catalog field families and keeps ranges non-scalar", () => {
+  const text = [
+    "Battery endurance: 2–4 h",
+    "Maximum running speed: 5 m/s",
+    "Moving speed: 3.3 m/s",
+    "Maximum TCP speed: 5 m/s",
+    "Robot arm mass: 20.7 kg",
+    "Robot mass: 64 kg",
+    "Maximum reach: 706.7 mm",
+    "Reach to wrist: 950 mm",
+    "Reach to flange: 1050 mm",
+    "Pose repeatability: ±0.03 mm",
+    "Axes: 6",
+    "Height: 180 cm",
+    "Standing dimensions: 70 × 31 × 40 cm",
+    "Maximum joint torque: 360 N·m",
+    "Payload: ≈7–8 kg",
+  ].join("\n");
+  const report = extractEvidenceCandidates({ text, modelId: "test", modelName: "Test" });
+  const byField = Object.groupBy(report.candidates, (item) => item.field);
+  assert.ok(byField.runtime?.some((x) => x.extractedValue === "2–4" && x.valueQualifier));
+  assert.ok(byField.speed?.some((x) => x.extractedValue === 5));
+  assert.ok(byField.mass?.some((x) => x.extractedValue === 20.7));
+  assert.ok(byField.reach?.some((x) => x.extractedValue === 706.7));
+  assert.ok(byField.repeatability?.some((x) => x.extractedValue === 0.03 && x.valueQualifier));
+  assert.ok(byField.degrees_of_freedom?.some((x) => x.extractedValue === 6));
+  assert.ok(byField.height?.some((x) => x.extractedValue === 180));
+  assert.ok(byField.dimensions?.some((x) => x.extractedValue === "70 × 31 × 40"));
+  assert.ok(byField.torque?.some((x) => x.extractedValue === 360));
+  assert.ok(byField.payload?.some((x) => x.extractedValue === "7–8" && x.valueQualifier));
+});
