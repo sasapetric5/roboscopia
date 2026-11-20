@@ -27,6 +27,15 @@ const PATTERNS = [
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 const normalizeSpace = (value) => value.replace(/\s+/g, " ").trim();
 
+function parseEngineeringNumber(raw) {
+  if (raw.includes(",") && !raw.includes(".")) {
+    const [whole, fraction] = raw.split(",");
+    if (fraction.length === 3 && whole.length <= 3) return Number(whole + fraction);
+    return Number(`${whole}.${fraction}`);
+  }
+  return Number(raw.replaceAll(",", ""));
+}
+
 function parseHttpsSource(raw) {
   if (!raw) return { value: null, issue: null };
   try {
@@ -106,7 +115,7 @@ export function extractEvidenceCandidates({
           candidateType: "technical_specification",
           field: pattern.id,
           fieldLabel: pattern.label,
-          extractedValue: pattern.id === "ingress_protection" ? match[1].replace(/\s+/g, "").toUpperCase() : Number(value),
+          extractedValue: pattern.id === "ingress_protection" ? match[1].replace(/\s+/g, "").toUpperCase() : value,
           unit,
           exactMatch: matchedText,
           evidenceQuote: line.slice(0, 500),
