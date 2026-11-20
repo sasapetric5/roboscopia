@@ -95,3 +95,30 @@ test("review queue does not treat accepted risk as resolved", () => {
   assert.equal(nextQueue.counts.acceptedRisk, 1);
   assert.equal(nextQueue.counts.resolved, 0);
 });
+
+
+test("decision recorder creates a validated, timestamped review record", () => {
+  const queue = buildReviewQueue(db);
+  const itemId = queue.items[0].id;
+  const decision = createReviewDecision({
+    itemId,
+    status: "resolved",
+    note: "Reviewed against the official manufacturer documentation.",
+    decidedBy: "reviewer",
+    decidedAt: "2026-11-20T15:00:00.000Z",
+  }, new Set(queue.items.map((item) => item.id)));
+
+  assert.equal(decision.itemId, itemId);
+  assert.equal(decision.status, "resolved");
+  assert.equal(decision.decidedAt, "2026-11-20T15:00:00.000Z");
+});
+
+test("decision recorder refuses unknown queue items", () => {
+  const queue = buildReviewQueue(db);
+  assert.throws(() => createReviewDecision({
+    itemId: "not-in-current-queue",
+    status: "resolved",
+    note: "Reviewed",
+    decidedBy: "reviewer",
+  }, new Set(queue.items.map((item) => item.id))));
+});
