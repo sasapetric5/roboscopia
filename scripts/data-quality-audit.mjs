@@ -128,6 +128,7 @@ export function auditDatabase(db) {
     }
 
     const specs = Array.isArray(record.specifications) ? record.specifications : [];
+    const specificationValues = new Map();
     if (specs.length === 0) {
       add(issues, "warning", "NO_SPECIFICATIONS", `${base}.specifications`, "No technical specifications are recorded.");
     }
@@ -151,6 +152,18 @@ export function auditDatabase(db) {
       }
 
       const provenance = spec.provenance;
+      const specificationKey = [
+        normalizeLabel(spec.name),
+        normalizeLabel(spec.unit || ""),
+        provenance.configurationId || "model-level",
+      ].join("|");
+      if (specificationValues.has(specificationKey) &&
+          JSON.stringify(specificationValues.get(specificationKey).value) !== JSON.stringify(spec.value)) {
+        add(issues, "warning", "POTENTIAL_SPECIFICATION_CONFLICT", path,
+          `Value differs from another "${spec.name}" entry in the same model/configuration scope; review sources and conditions manually.`);
+      } else if (!specificationValues.has(specificationKey)) {
+        specificationValues.set(specificationKey, { value: spec.value, index: s });
+      }
       if (!ALLOWED_STATUSES.has(provenance.verificationStatus)) {
         add(issues, "error", "INVALID_VERIFICATION_STATUS", `${path}.provenance.verificationStatus`, "Verification status is not in the allowed status list.");
       }
@@ -173,6 +186,13 @@ export function auditDatabase(db) {
       }
       if (!spec.source && !spec.sourceId && !provenance.sourceId) {
         add(issues, "warning", "SPECIFICATION_WITHOUT_SOURCE", path, "No source is attached to this technical value.");
+      }
+      if (provenance.verificationStatus === "verified" && provenance.checkedAt) {
+        const checkedAt = Date.parse(provenance.checkedAt);
+        if (Number.isFinite(checkedAt) && Date.now() - checkedAt > 365 * 24 * 60 * 60 * 1000) {
+          add(issues, "warning", "STALE_VERIFIED_SPECIFICATION", `${path}.provenance.checkedAt`,
+            "The verified value was last checked more than 365 days ago; review whether it is still current.");
+        }
       }
       if (provenance.verificationStatus === "verified" && !provenance.checkedAt) {
         add(issues, "warning", "VERIFIED_WITHOUT_REVIEW_DATE", `${path}.provenance.checkedAt`, "Verified values should include the date of review.");
@@ -198,6 +218,12 @@ export function auditDatabase(db) {
     if (!source || typeof source !== "object") continue;
     if (!isHttpsUrl(source.url)) {
       add(issues, "error", "INVALID_SOURCE_URL", `sources[${i}].url`, "Registered source URL must be a valid HTTPS URL.");
+    }
+    if (source.domain === "unknown") {
+      add(issues, "warning", "SOURCE_DOMAIN_UNKNOWN", `sources[${i}].domain`, "Source domain has not been normalized.");
+    }
+    if (source.reviewStatus === "not_reviewed") {
+      add(issues, "warning", "SOURCE_NOT_REVIEWED", `sources[${i}].reviewStatus`, "Source page and claim applicability have not been reviewed.");
     }
     for (const field of ["domain", "authorityTier", "reviewStatus"]) {
       if (typeof source[field] !== "string" || !source[field].trim()) {
