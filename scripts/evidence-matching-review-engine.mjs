@@ -63,8 +63,8 @@ function compareValue(claim, candidate, field) {
   if (candidate.valueQualifier || /[±≈~]|\b(?:approx(?:imately)?|about)\b|\d\s*[–—-]\s*\d/i.test(claimText + " " + evidenceText)) return "non_scalar_review";
   const a = numeric(claim.value);
   const b = numeric(candidate.extractedValue);
-  const claimUnit = normUnit(claim.unit);
-  const evidenceUnit = normUnit(candidate.unit);
+  const claimUnit = field === "degrees_of_freedom" ? "count" : normUnit(claim.unit);
+  const evidenceUnit = field === "degrees_of_freedom" ? "count" : normUnit(candidate.unit);
   if (a === null || b === null) {
     if (claimUnit !== evidenceUnit) return "unit_mismatch";
     return norm(claim.value) === norm(candidate.extractedValue) ? "equal" : "non_scalar_review";
