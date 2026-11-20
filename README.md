@@ -147,6 +147,15 @@ Kvalitetna i proverljiva baza podataka predstavlja temelj platforme. Marketplace
 - Grafički prikazi su originalne SVG ilustracije interfejsa, ne fotografije stvarnih proizvoda.
 - Katalog je početna verzija; funkcionalnost u mobilnom pregledaču i dostupnost na produkcionom domenu još zahtevaju praktičnu proveru.
 
+## Data Engine — provenance and quality foundation
+
+- Canonical data schema is now `2.1.0`.
+- A normalized `sources[]` registry assigns stable IDs to the 12 currently recorded source URLs.
+- The 39 existing specification values now carry field-level provenance references and the explicit status `source_linked_unverified`; source URLs have not yet been independently checked against each exact claim.
+- Media entries carry `permission_not_confirmed` unless reuse rights are documented.
+- Quality statuses and conservative duplicate-handling rules are documented in [docs/DATA_ENGINE.md](docs/DATA_ENGINE.md).
+- No scraping, automated crawling, database provisioning or media copying was activated.
+
 ## Canonical catalog data model
 
 - `data/robots.json` is the single source of truth for the current catalog and technical dossiers.
