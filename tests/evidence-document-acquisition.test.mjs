@@ -22,3 +22,16 @@ test("acquisition CLI documents manual rights gate and has no download mode", ()
   assert.match(result.stdout, /processing-permitted yes/i);
   assert.doesNotMatch(result.stdout, /--download\b/i);
 });
+
+test("registered source records link all 39 claims to real catalog model IDs", async () => {
+  const registry = JSON.parse(await readFile(new URL("../data/evidence-document-registry.json", import.meta.url), "utf8"));
+  const db = JSON.parse(await readFile(new URL("../data/robots.json", import.meta.url), "utf8"));
+  const ids = new Set(db.records.map((record) => record.id));
+  let linked = 0;
+  for (const source of registry.sources) {
+    for (const modelId of source.modelIds) assert.ok(ids.has(modelId), "unknown model ID: " + modelId);
+    assert.ok(Array.isArray(source.catalogClaims));
+    linked += source.catalogClaims.length;
+  }
+  assert.equal(linked, 39);
+});
