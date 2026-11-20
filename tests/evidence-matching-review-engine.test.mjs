@@ -89,3 +89,14 @@ test("does not treat evidence without model identity as an exact match", () => {
   const report = buildEvidenceMatchingReport(db, sourceReport, [{ candidates: [candidate({ modelId: null })] }]);
   assert.equal(report.matches[0].status, "model_identity_unverified");
 });
+
+test("requires matching units for dimensions and normalizes axis-count labels", () => {
+  const dimensionsClaim = { ...claim, specification: "Standing dimensions", value: "70 × 31 × 40", unit: "cm" };
+  const dimensionsCandidate = candidate({ field: "dimensions", extractedValue: "70 × 31 × 40", unit: "mm" });
+  const dimensionsReport = buildEvidenceMatchingReport(db, { claims: [dimensionsClaim] }, [{ candidates: [dimensionsCandidate] }]);
+  assert.equal(dimensionsReport.matches[0].status, "unit_mismatch");
+  const axesClaim = { ...claim, specification: "Degrees of freedom", value: 6, unit: "rotating joints" };
+  const axesCandidate = candidate({ field: "degrees_of_freedom", extractedValue: 6, unit: "" });
+  const axesReport = buildEvidenceMatchingReport(db, { claims: [axesClaim] }, [{ candidates: [axesCandidate] }]);
+  assert.equal(axesReport.matches[0].valueComparison, "equal");
+});
