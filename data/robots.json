@@ -1,0 +1,526 @@
+{
+  "schemaVersion": "1.0.0",
+  "updated": "2026-11-20",
+  "mediaPolicy": "No third-party product imagery is embedded until reuse rights or explicit permission are documented. Official manufacturer links are provided for reference, not as a grant of image rights.",
+  "records": [
+    {
+      "id": "spot",
+      "manufacturer": "Boston Dynamics",
+      "model": "Spot",
+      "family": "Spot",
+      "category": "quadruped",
+      "generation": null,
+      "introducedYear": null,
+      "variant": "Production Spot; specifications can vary by hardware/software generation",
+      "summary": "Mobile quadruped inspection platform for industrial and outdoor environments.",
+      "applications": [
+        "Industrial inspection",
+        "Asset monitoring",
+        "Remote data collection"
+      ],
+      "strengths": [
+        "360° sensing coverage",
+        "Modular payload interfaces",
+        "Designed for uneven terrain"
+      ],
+      "limitations": [
+        "Runtime varies with payload and environment",
+        "Payload geometry and mass affect stability",
+        "Not a substitute for a safety-rated industrial mobile platform"
+      ],
+      "specifications": [
+        {
+          "name": "Mass with battery",
+          "value": 33.8,
+          "unit": "kg",
+          "source": "https://bostondynamics.com/products/spot/"
+        },
+        {
+          "name": "Maximum speed",
+          "value": 1.6,
+          "unit": "m/s",
+          "source": "https://bostondynamics.com/products/spot/"
+        },
+        {
+          "name": "Maximum payload",
+          "value": 14,
+          "unit": "kg",
+          "source": "https://bostondynamics.com/products/spot/"
+        },
+        {
+          "name": "Battery capacity",
+          "value": 564,
+          "unit": "Wh",
+          "source": "https://bostondynamics.com/products/spot/"
+        },
+        {
+          "name": "Typical runtime",
+          "value": 90,
+          "unit": "min",
+          "qualifier": "Average; varies with payload and environment",
+          "source": "https://bostondynamics.com/products/spot/"
+        },
+        {
+          "name": "Ingress protection",
+          "value": "IP54",
+          "unit": "",
+          "source": "https://bostondynamics.com/products/spot/"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Official product page and specifications",
+          "url": "https://bostondynamics.com/products/spot/"
+        },
+        {
+          "label": "Spot support specification reference",
+          "url": "https://support.bostondynamics.com/s/article/spot-specifications"
+        }
+      ],
+      "media": [],
+      "mediaStatus": "Rights clearance required"
+    },
+    {
+      "id": "go2",
+      "manufacturer": "Unitree Robotics",
+      "model": "Go2",
+      "family": "Go2",
+      "category": "quadruped",
+      "generation": null,
+      "introducedYear": null,
+      "variant": "AIR / PRO / X / EDU configurations; values differ by version",
+      "summary": "Compact bionic quadruped platform with 4D LiDAR and several hardware configurations.",
+      "applications": [
+        "Research and education",
+        "Mobile robotics development",
+        "Inspection and teleoperation experiments"
+      ],
+      "strengths": [
+        "Multiple configurations",
+        "4D LiDAR option",
+        "Open-ended secondary development capabilities"
+      ],
+      "limitations": [
+        "Performance depends on configuration",
+        "Manufacturer notes some functions may require human operation or secondary development",
+        "Battery endurance varies by battery and operating conditions"
+      ],
+      "specifications": [
+        {
+          "name": "Weight with battery",
+          "value": 15,
+          "unit": "kg",
+          "qualifier": "Approximate; manufacturer page",
+          "source": "https://www.unitree.com/go2/"
+        },
+        {
+          "name": "Standing dimensions",
+          "value": "70 × 31 × 40",
+          "unit": "cm",
+          "source": "https://www.unitree.com/go2/"
+        },
+        {
+          "name": "Battery endurance",
+          "value": "2–4",
+          "unit": "h",
+          "qualifier": "Manufacturer-stated long endurance; configuration and conditions matter",
+          "source": "https://www.unitree.com/go2/"
+        },
+        {
+          "name": "Maximum running speed",
+          "value": 5,
+          "unit": "m/s",
+          "qualifier": "Approximate laboratory-tested maximum; varies by version",
+          "source": "https://www.unitree.com/go2/"
+        },
+        {
+          "name": "Payload",
+          "value": "≈7–8",
+          "unit": "kg",
+          "qualifier": "Variant-dependent; maximum claims differ by configuration",
+          "source": "https://www.unitree.com/go2/"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Official Go2 product page and variant specifications",
+          "url": "https://www.unitree.com/go2/"
+        },
+        {
+          "label": "Go2 battery variants",
+          "url": "https://www.unitree.com/mobile/go2/battery/"
+        }
+      ],
+      "media": [],
+      "mediaStatus": "Rights clearance required"
+    },
+    {
+      "id": "h1",
+      "manufacturer": "Unitree Robotics",
+      "model": "H1",
+      "family": "H1",
+      "category": "humanoid",
+      "generation": null,
+      "introducedYear": null,
+      "variant": "H1; do not merge H1-2 specifications into this profile",
+      "summary": "Full-size general-purpose humanoid robot platform for mobility and embodied-robotics research.",
+      "applications": [
+        "Humanoid robotics research",
+        "Bipedal locomotion development",
+        "Embodied AI research"
+      ],
+      "strengths": [
+        "Full-size bipedal platform",
+        "360° depth sensing",
+        "High-mobility locomotion"
+      ],
+      "limitations": [
+        "H1 and H1-2 are distinct variants",
+        "Peak speed and torque are not equivalent to sustained operating performance",
+        "Research platform capabilities depend on software and configuration"
+      ],
+      "specifications": [
+        {
+          "name": "Height",
+          "value": 180,
+          "unit": "cm",
+          "qualifier": "Approximate",
+          "source": "https://www.unitree.com/h1/"
+        },
+        {
+          "name": "Mass",
+          "value": 47,
+          "unit": "kg",
+          "qualifier": "Approximate; H1 variant",
+          "source": "https://www.unitree.com/h1/"
+        },
+        {
+          "name": "Moving speed",
+          "value": 3.3,
+          "unit": "m/s",
+          "qualifier": "Manufacturer-stated",
+          "source": "https://www.unitree.com/h1/"
+        },
+        {
+          "name": "Battery capacity",
+          "value": 864,
+          "unit": "Wh",
+          "source": "https://www.unitree.com/h1/"
+        },
+        {
+          "name": "Maximum joint torque",
+          "value": 360,
+          "unit": "N·m",
+          "source": "https://www.unitree.com/h1/"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Official H1 / H1-2 product information",
+          "url": "https://www.unitree.com/h1/"
+        }
+      ],
+      "media": [],
+      "mediaStatus": "Rights clearance required"
+    },
+    {
+      "id": "ur5e",
+      "manufacturer": "Universal Robots",
+      "model": "UR5e",
+      "family": "e-Series",
+      "category": "cobot",
+      "generation": "e-Series",
+      "introducedYear": null,
+      "variant": "UR5e",
+      "summary": "Six-axis collaborative robot arm for flexible automation and medium-duty handling.",
+      "applications": [
+        "Assembly",
+        "Machine tending",
+        "Material handling",
+        "Inspection"
+      ],
+      "strengths": [
+        "Compact 850 mm reach",
+        "Integrated force/torque sensing",
+        "Broad industrial communications and ecosystem"
+      ],
+      "limitations": [
+        "5 kg payload and 850 mm reach constrain work envelope",
+        "Collaborative operation still requires application-specific risk assessment"
+      ],
+      "specifications": [
+        {
+          "name": "Maximum payload",
+          "value": 5,
+          "unit": "kg",
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+        },
+        {
+          "name": "Reach",
+          "value": 850,
+          "unit": "mm",
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+        },
+        {
+          "name": "Degrees of freedom",
+          "value": 6,
+          "unit": "rotating joints",
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+        },
+        {
+          "name": "Pose repeatability",
+          "value": "±0.03",
+          "unit": "mm",
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+        },
+        {
+          "name": "Robot arm mass",
+          "value": 20.7,
+          "unit": "kg",
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_24/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+        },
+        {
+          "name": "Ingress protection",
+          "value": "IP54",
+          "unit": "",
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+        }
+      ],
+      "sources": [
+        {
+          "label": "UR5e technical specifications (current manual)",
+          "url": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+        },
+        {
+          "label": "UR5e datasheet",
+          "url": "https://www.universal-robots.com/media/1807465/ur5e_e-series_datasheets_web.pdf"
+        }
+      ],
+      "media": [],
+      "mediaStatus": "Rights clearance required"
+    },
+    {
+      "id": "ur20",
+      "manufacturer": "Universal Robots",
+      "model": "UR20-1750",
+      "family": "UR Series",
+      "category": "cobot",
+      "generation": null,
+      "introducedYear": null,
+      "variant": "UR20 with 1,750 mm reach",
+      "summary": "Long-reach collaborative robot for heavier payloads and demanding automation cells.",
+      "applications": [
+        "Palletizing",
+        "Welding",
+        "CNC machine tending",
+        "Material handling"
+      ],
+      "strengths": [
+        "20 kg standard payload",
+        "1,750 mm reach",
+        "High TCP speed"
+      ],
+      "limitations": [
+        "25 kg extended payload is conditional and must be checked against operating envelope",
+        "System integration and risk assessment remain application-specific"
+      ],
+      "specifications": [
+        {
+          "name": "Standard payload",
+          "value": 20,
+          "unit": "kg",
+          "source": "https://www.universal-robots.com/products/ur20-1750/"
+        },
+        {
+          "name": "Extended payload",
+          "value": 25,
+          "unit": "kg",
+          "qualifier": "Subject to boundary conditions in manufacturer documentation",
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW10_9/Content/prod-usr-man/complianceUR20/H_g5_sections/appendix_g5/tech_spec_UR20.htm"
+        },
+        {
+          "name": "Reach",
+          "value": 1750,
+          "unit": "mm",
+          "source": "https://www.universal-robots.com/products/ur20-1750/"
+        },
+        {
+          "name": "Maximum TCP speed",
+          "value": 5,
+          "unit": "m/s",
+          "source": "https://www.universal-robots.com/products/ur20-1750/"
+        },
+        {
+          "name": "Robot mass",
+          "value": 64,
+          "unit": "kg",
+          "source": "https://www.universal-robots.com/products/ur20-1750/"
+        },
+        {
+          "name": "Repeatability",
+          "value": "±0.01",
+          "unit": "mm",
+          "source": "https://www.universal-robots.com/products/ur20-1750/"
+        }
+      ],
+      "sources": [
+        {
+          "label": "Official UR20-1750 product page",
+          "url": "https://www.universal-robots.com/products/ur20-1750/"
+        },
+        {
+          "label": "UR20 technical specifications and payload conditions",
+          "url": "https://www.universal-robots.com/manuals/EN/HTML/SW10_9/Content/prod-usr-man/complianceUR20/H_g5_sections/appendix_g5/tech_spec_UR20.htm"
+        }
+      ],
+      "media": [],
+      "mediaStatus": "Rights clearance required"
+    },
+    {
+      "id": "gofa5",
+      "manufacturer": "ABB Robotics",
+      "model": "GoFa 5",
+      "family": "GoFa CRB 15000",
+      "category": "cobot",
+      "generation": null,
+      "introducedYear": null,
+      "variant": "GoFa 5; distinguish from GoFa 10 and GoFa 12",
+      "summary": "Six-axis collaborative robot variant with integrated torque sensing and flexible mounting.",
+      "applications": [
+        "Machine tending",
+        "Welding",
+        "Palletizing",
+        "Assembly",
+        "Screwdriving"
+      ],
+      "strengths": [
+        "5 kg payload",
+        "Flexible mounting orientations",
+        "Integrated joint torque sensors"
+      ],
+      "limitations": [
+        "Do not apply GoFa 10/12 reach or payload figures to GoFa 5",
+        "Payload and reach depend on wrist/flange configuration"
+      ],
+      "specifications": [
+        {
+          "name": "Payload",
+          "value": 5,
+          "unit": "kg",
+          "source": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa"
+        },
+        {
+          "name": "Reach to wrist",
+          "value": 950,
+          "unit": "mm",
+          "source": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa"
+        },
+        {
+          "name": "Reach to flange",
+          "value": 1050,
+          "unit": "mm",
+          "source": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa"
+        },
+        {
+          "name": "Axes",
+          "value": 6,
+          "unit": "",
+          "source": "https://library.e.abb.com/public/d4c38d5b4bcf40df8504ee417cb0e830/GoFa%20CRB%2015000%20Datasheet.pdf"
+        },
+        {
+          "name": "Pose repeatability",
+          "value": "0.02",
+          "unit": "mm",
+          "source": "https://library.e.abb.com/public/7c359cda481943cfa98182b818b89878/UPDATED%20ABB_Collaborative_robotics_portfolio_2023_v4%20kopia.pdf"
+        }
+      ],
+      "sources": [
+        {
+          "label": "ABB GoFa family product page and variant table",
+          "url": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa"
+        },
+        {
+          "label": "ABB GoFa CRB 15000 datasheet",
+          "url": "https://library.e.abb.com/public/d4c38d5b4bcf40df8504ee417cb0e830/GoFa%20CRB%2015000%20Datasheet.pdf"
+        }
+      ],
+      "media": [],
+      "mediaStatus": "Rights clearance required"
+    },
+    {
+      "id": "kr6",
+      "manufacturer": "KUKA",
+      "model": "KR 6 R700 sixx C",
+      "family": "KR AGILUS",
+      "category": "industrial",
+      "generation": null,
+      "introducedYear": null,
+      "variant": "KR 6 R700 sixx C; rated 3 kg payload for dynamic performance, up to 6 kg under specified conditions",
+      "summary": "Compact six-axis industrial robot designed for precise automation in a small workspace.",
+      "applications": [
+        "Small-part handling",
+        "Assembly",
+        "Machine loading",
+        "Precision automation"
+      ],
+      "strengths": [
+        "Compact 700 mm class reach",
+        "Six axes",
+        "High repeatability"
+      ],
+      "limitations": [
+        "Rated payload is 3 kg for specified dynamic performance; 6 kg maximum is conditional",
+        "Load case and mounting configuration must be validated with KUKA"
+      ],
+      "specifications": [
+        {
+          "name": "Maximum reach",
+          "value": 706.7,
+          "unit": "mm",
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+        },
+        {
+          "name": "Rated payload",
+          "value": 3,
+          "unit": "kg",
+          "qualifier": "For optimized dynamic performance",
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+        },
+        {
+          "name": "Maximum payload",
+          "value": 6,
+          "unit": "kg",
+          "qualifier": "Conditional; depends on load centre distances and supplementary loads",
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+        },
+        {
+          "name": "Axes",
+          "value": 6,
+          "unit": "",
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+        },
+        {
+          "name": "Pose repeatability",
+          "value": "±0.03",
+          "unit": "mm",
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+        },
+        {
+          "name": "Robot mass",
+          "value": 50,
+          "unit": "kg",
+          "qualifier": "Approximate",
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+        }
+      ],
+      "sources": [
+        {
+          "label": "KUKA KR 6 R700 sixx C technical data sheet",
+          "url": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+        }
+      ],
+      "media": [],
+      "mediaStatus": "Rights clearance required"
+    }
+  ]
+}
