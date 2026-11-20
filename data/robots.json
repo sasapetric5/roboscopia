@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "2.0.0",
   "updated": "2026-11-20",
   "mediaPolicy": "No third-party product imagery is embedded until reuse rights or explicit permission are documented. Official manufacturer links are provided for reference, not as a grant of image rights.",
   "records": [
@@ -87,7 +87,11 @@
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
-      "summarySr": "Mobilna četvoronožna inspekcijska platforma namenjena industrijskim i spoljašnjim okruženjima."
+      "summarySr": "Mobilna četvoronožna inspekcijska platforma namenjena industrijskim i spoljašnjim okruženjima.",
+      "manufacturerId": "boston-dynamics",
+      "familyId": "boston-dynamics-spot",
+      "generationId": null,
+      "configurations": []
     },
     {
       "id": "go2",
@@ -170,7 +174,37 @@
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
-      "summarySr": "Kompaktna bionička četvoronožna platforma sa 4D LiDAR-om i više hardverskih konfiguracija."
+      "summarySr": "Kompaktna bionička četvoronožna platforma sa 4D LiDAR-om i više hardverskih konfiguracija.",
+      "manufacturerId": "unitree-robotics",
+      "familyId": "unitree-robotics-go2",
+      "generationId": null,
+      "configurations": [
+        {
+          "id": "air",
+          "name": "AIR",
+          "specificationStatus": "not_verified",
+          "specificationsVerified": false
+        },
+        {
+          "id": "pro",
+          "name": "PRO",
+          "specificationStatus": "not_verified",
+          "specificationsVerified": false
+        },
+        {
+          "id": "x",
+          "name": "X",
+          "specificationStatus": "not_verified",
+          "specificationsVerified": false
+        },
+        {
+          "id": "edu",
+          "name": "EDU",
+          "specificationStatus": "not_verified",
+          "specificationsVerified": false
+        }
+      ],
+      "configurationNote": "Configuration names are recorded for identity and future research only. No configuration-specific specifications are asserted."
     },
     {
       "id": "h1",
@@ -248,7 +282,11 @@
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
-      "summarySr": "Humanoidni robot pune veličine, namenjen istraživanju mobilnosti i robotike sa fizičkim utelovljenjem."
+      "summarySr": "Humanoidni robot pune veličine, namenjen istraživanju mobilnosti i robotike sa fizičkim utelovljenjem.",
+      "manufacturerId": "unitree-robotics",
+      "familyId": "unitree-robotics-h1",
+      "generationId": null,
+      "configurations": []
     },
     {
       "id": "ur5e",
@@ -333,7 +371,11 @@
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
-      "summarySr": "Šestoosna kolaborativna robotska ruka za fleksibilnu automatizaciju i rukovanje srednjim opterećenjima."
+      "summarySr": "Šestoosna kolaborativna robotska ruka za fleksibilnu automatizaciju i rukovanje srednjim opterećenjima.",
+      "manufacturerId": "universal-robots",
+      "familyId": "universal-robots-e-series",
+      "generationId": "e-series",
+      "configurations": []
     },
     {
       "id": "ur20",
@@ -419,7 +461,11 @@
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
-      "summarySr": "Kolaborativni robot velikog dohvata za veća opterećenja i zahtevne automatizovane radne ćelije."
+      "summarySr": "Kolaborativni robot velikog dohvata za veća opterećenja i zahtevne automatizovane radne ćelije.",
+      "manufacturerId": "universal-robots",
+      "familyId": "universal-robots-ur-series",
+      "generationId": null,
+      "configurations": []
     },
     {
       "id": "gofa5",
@@ -499,7 +545,11 @@
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
-      "summarySr": "Šestoosni kolaborativni robot sa integrisanim senzorima obrtnog momenta i fleksibilnim načinima montaže."
+      "summarySr": "Šestoosni kolaborativni robot sa integrisanim senzorima obrtnog momenta i fleksibilnim načinima montaže.",
+      "manufacturerId": "abb-robotics",
+      "familyId": "abb-robotics-gofa-crb-15000",
+      "generationId": null,
+      "configurations": []
     },
     {
       "id": "kr6",
@@ -583,7 +633,175 @@
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
-      "summarySr": "Kompaktan šestоosni industrijski robot namenjen preciznoj automatizaciji u malom radnom prostoru."
+      "summarySr": "Kompaktan šestоosni industrijski robot namenjen preciznoj automatizaciji u malom radnom prostoru.",
+      "manufacturerId": "kuka",
+      "familyId": "kuka-kr-agilus",
+      "generationId": null,
+      "configurations": []
+    }
+  ],
+  "entityModel": {
+    "manufacturer": {
+      "primaryKey": "id",
+      "description": "Manufacturer identity; one manufacturer can own multiple product families."
+    },
+    "family": {
+      "primaryKey": "id",
+      "description": "Product family scoped to a manufacturer; families must not be merged across manufacturers."
+    },
+    "model": {
+      "primaryKey": "id",
+      "description": "A distinct marketed model/profile; model identity is separate from configuration and generation."
+    },
+    "generation": {
+      "primaryKey": "generationId",
+      "nullable": true,
+      "description": "Generation is populated only when supported by reliable evidence."
+    },
+    "configuration": {
+      "primaryKey": "id",
+      "description": "Model-specific configuration; unverified configurations contain no asserted specifications."
+    }
+  },
+  "categories": [
+    {
+      "id": "quadruped",
+      "nameEn": "Quadruped robot",
+      "nameSr": "Četvoronožni robot"
+    },
+    {
+      "id": "humanoid",
+      "nameEn": "Humanoid robot",
+      "nameSr": "Humanoidni robot"
+    },
+    {
+      "id": "cobot",
+      "nameEn": "Collaborative robot",
+      "nameSr": "Kolaborativni robot"
+    },
+    {
+      "id": "industrial",
+      "nameEn": "Industrial robot arm",
+      "nameSr": "Industrijska robotska ruka"
+    }
+  ],
+  "manufacturers": [
+    {
+      "id": "abb-robotics",
+      "name": "ABB Robotics",
+      "modelIds": [
+        "gofa5"
+      ],
+      "sourceUrls": [
+        "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa",
+        "https://library.e.abb.com/public/88cd85f2acbd47f9844e5d1861a4a275/200526%20GoFa%20CRB%2015000%20Datasheet.pdf"
+      ]
+    },
+    {
+      "id": "boston-dynamics",
+      "name": "Boston Dynamics",
+      "modelIds": [
+        "spot"
+      ],
+      "sourceUrls": [
+        "https://bostondynamics.com/products/spot/",
+        "https://support.bostondynamics.com/s/article/spot-specifications"
+      ]
+    },
+    {
+      "id": "kuka",
+      "name": "KUKA",
+      "modelIds": [
+        "kr6"
+      ],
+      "sourceUrls": [
+        "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+      ]
+    },
+    {
+      "id": "unitree-robotics",
+      "name": "Unitree Robotics",
+      "modelIds": [
+        "go2",
+        "h1"
+      ],
+      "sourceUrls": [
+        "https://www.unitree.com/go2/",
+        "https://www.unitree.com/mobile/go2/",
+        "https://www.unitree.com/h1/"
+      ]
+    },
+    {
+      "id": "universal-robots",
+      "name": "Universal Robots",
+      "modelIds": [
+        "ur5e",
+        "ur20"
+      ],
+      "sourceUrls": [
+        "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm",
+        "https://www.universal-robots.com/media/1807465/ur5e_e-series_datasheets_web.pdf",
+        "https://www.universal-robots.com/products/ur20-1750/",
+        "https://www.universal-robots.com/manuals/EN/HTML/SW10_9/Content/prod-usr-man/complianceUR20/H_g5_sections/appendix_g5/tech_spec_UR20.htm"
+      ]
+    }
+  ],
+  "families": [
+    {
+      "id": "boston-dynamics-spot",
+      "manufacturerId": "boston-dynamics",
+      "name": "Spot",
+      "modelIds": [
+        "spot"
+      ]
+    },
+    {
+      "id": "unitree-robotics-go2",
+      "manufacturerId": "unitree-robotics",
+      "name": "Go2",
+      "modelIds": [
+        "go2"
+      ]
+    },
+    {
+      "id": "unitree-robotics-h1",
+      "manufacturerId": "unitree-robotics",
+      "name": "H1",
+      "modelIds": [
+        "h1"
+      ]
+    },
+    {
+      "id": "universal-robots-e-series",
+      "manufacturerId": "universal-robots",
+      "name": "e-Series",
+      "modelIds": [
+        "ur5e"
+      ]
+    },
+    {
+      "id": "universal-robots-ur-series",
+      "manufacturerId": "universal-robots",
+      "name": "UR Series",
+      "modelIds": [
+        "ur20"
+      ]
+    },
+    {
+      "id": "abb-robotics-gofa-crb-15000",
+      "manufacturerId": "abb-robotics",
+      "name": "GoFa CRB 15000",
+      "modelIds": [
+        "gofa5"
+      ]
+    },
+    {
+      "id": "kuka-kr-agilus",
+      "manufacturerId": "kuka",
+      "name": "KR AGILUS",
+      "modelIds": [
+        "kr6"
+      ]
     }
   ]
 }
