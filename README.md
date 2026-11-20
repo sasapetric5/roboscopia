@@ -116,6 +116,8 @@ The first major technical focus is expected to be the **Data Engine**: dependabl
 - [x] Structured model dataset added at `data/robots.json`, with model identity, variant notes, applications, strengths, limitations, specifications and source URLs.
 - [x] Bilingual technical dossier page added at `robot-profile.html`; catalog cards link to individual model dossiers.
 - [ ] Product photography, multi-angle galleries and video embeds pending image/video rights clearance and source review.
+- [x] Initial Cloudflare R2 media integration prepared: public URL resolver and configuration are disabled by default; R2 bucket and public endpoint have not been created or enabled.
+- [x] R2 media-storage policy documented: free-only, no paid add-ons, no DNS changes, rights metadata required before upload.
 - [ ] Competitive comparisons, model histories and availability records pending equivalent-variant evidence and dated sources.
 - [x] Original inline SVG illustrations added as temporary interface artwork; they are explicitly not represented as product photographs.
 - [ ] Functional, accessibility and mobile-browser verification completed.
