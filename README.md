@@ -186,7 +186,7 @@ The initial evidence extractor is implemented at `scripts/technical-evidence-ext
 - PDF input uses a locally installed Poppler `pdftotext` executable; no PDF is downloaded from a source URL.
 - Text input supports deterministic extraction tests and page breaks.
 - Every candidate remains `extracted_unverified`; no automatic factual approval or catalog mutation occurs.
-- OCR, complex table parsing, live URL fetching and cloud document processing are not enabled.
+- Nine focused tests cover the extraction logic; the full Node.js suite and CLI help are checked by GitHub Actions. The local-PDF/Poppler path is not yet exercised in CI.\n- OCR, complex table parsing, live URL fetching and cloud document processing are not enabled.
 - Usage and limits: [docs/TECHNICAL_EVIDENCE_EXTRACTION_ENGINE.md](docs/TECHNICAL_EVIDENCE_EXTRACTION_ENGINE.md).
 - PDF/OCR open-source evaluation: [docs/OPEN_SOURCE_EVALUATION_EVIDENCE_EXTRACTION.md](docs/OPEN_SOURCE_EVALUATION_EVIDENCE_EXTRACTION.md).
 
