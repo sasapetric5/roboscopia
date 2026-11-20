@@ -74,6 +74,23 @@ function findSection(lines, currentIndex) {
   return null;
 }
 
+function containsExactModelName(documentText, modelName) {
+  if (!modelName) return null;
+  const escaped = modelName.replace(/[.*+?^${}()|[\]\\]/g, "\\function findSection(lines, currentIndex) {
+  for (let i = currentIndex - 1; i >= Math.max(0, currentIndex - 5); i--) {
+    const candidate = normalizeSpace(lines[i]);
+    if (!candidate || candidate.length > 100) continue;
+    if (/^[-=_\s\d.]+$/.test(candidate)) continue;
+    if (candidate.length < 90 && !/[.!?]$/.test(candidate)) return candidate;
+  }
+  return null;
+}
+");
+  // A hyphenated suffix such as H1-2 must not be treated as the exact H1 model.
+  const pattern = new RegExp("(^|[^\\p{L}\\p{N}])" + escaped + "(?![\\p{L}\\p{N}-])", "iu");
+  return pattern.test(documentText);
+}
+
 export function extractEvidenceCandidates({
   text,
   documentSha256,
@@ -89,9 +106,10 @@ export function extractEvidenceCandidates({
   if (text.length > MAX_EXTRACTED_CHARS) throw new Error("Extracted text exceeds the configured size limit.");
   const source = parseHttpsSource(sourceUrl);
   const pages = extractPages(text);
-  const allText = text.toLocaleLowerCase();
+  const modelMatch = containsExactModelName(text, modelName);
+  const configurationMatch = configurationId ? new RegExp("(^|[^\\p{L}\\p{N}])" + configurationId.replace(/[.*+?^${}()|[\]\\]/g, "\\  const allText = text.toLocaleLowerCase();
   const modelMatch = modelName ? allText.includes(modelName.toLocaleLowerCase()) : null;
-  const configurationMatch = configurationId ? allText.includes(configurationId.toLocaleLowerCase()) : null;
+  const configurationMatch = configurationId ? allText.includes(configurationId.toLocaleLowerCase()) : null;") + "(?![\\p{L}\\p{N}])", "iu").test(text) : null;
   const candidates = [];
 
   for (const page of pages) {
