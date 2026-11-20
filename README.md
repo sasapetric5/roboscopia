@@ -190,6 +190,19 @@ The initial evidence extractor is implemented at `scripts/technical-evidence-ext
 - Usage and limits: [docs/TECHNICAL_EVIDENCE_EXTRACTION_ENGINE.md](docs/TECHNICAL_EVIDENCE_EXTRACTION_ENGINE.md).
 - PDF/OCR open-source evaluation: [docs/OPEN_SOURCE_EVALUATION_EVIDENCE_EXTRACTION.md](docs/OPEN_SOURCE_EVALUATION_EVIDENCE_EXTRACTION.md).
 
+## Evidence Matching & Review Engine
+
+The deterministic, read-only matcher at `scripts/evidence-matching-review-engine.mjs` connects the Data Quality Audit, Source Verification Engine and Technical Evidence Extraction Engine. It compares extracted evidence candidates with the 39 catalog specification claims and reports value/unit, model, configuration and possible staleness mismatches. Each result preserves the exact evidence quote, document hash and page/line/section locator.
+
+- Generate a local source report: `node scripts/source-verification-engine.mjs --json > data/source-verification-report.json`.
+- Supply locally extracted, rights-cleared evidence JSON: `node scripts/evidence-matching-review-engine.mjs --evidence ./evidence/spot-manual.json --json`.
+- Unit conversions are comparison-only; original catalog and evidence values are never rewritten.
+- Ambiguous candidates remain visible. Missing evidence is reported. A match is not approval.
+- Human review outcomes are separate metadata; catalog edits remain manual and require a fresh audit.
+- CI runs the matcher without external evidence files to validate safe unmatched-claim behavior. It makes no network requests and performs no scraping.
+
+Implementation and limitations: [docs/EVIDENCE_MATCHING_REVIEW_ENGINE.md](docs/EVIDENCE_MATCHING_REVIEW_ENGINE.md).
+
 ## Canonical catalog data model
 
 - `data/robots.json` is the single source of truth for the current catalog and technical dossiers.
