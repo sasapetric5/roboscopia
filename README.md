@@ -167,6 +167,17 @@ Kvalitetna i proverljiva baza podataka predstavlja temelj platforme. Marketplace
 
 - [x] GitHub Actions workflow `.github/workflows/data-quality.yml` runs the Node.js test suite, the read-only data audit and review-queue generation on pushes to `main`; latest run passed: [workflow run](https://github.com/sasapetric5/roboscopia/actions/runs/44807571168).
 
+
+## Source Verification Engine
+
+The claim-level source verification engine is implemented at `scripts/source-verification-engine.mjs`. It maps each recorded specification to its source, generates stable claim IDs, checks HTTPS URL syntax and reports manufacturer-domain candidates without treating them as verified evidence.
+
+- Reviewer decisions are validated and stored separately in `data/source-verification-decisions.json`.
+- Record a review with `scripts/record-source-decision.mjs`; see [docs/SOURCE_VERIFICATION_ENGINE.md](docs/SOURCE_VERIFICATION_ENGINE.md).
+- Open-source discovery and evaluation: [docs/OPEN_SOURCE_EVALUATION_SOURCE_VERIFICATION.md](docs/OPEN_SOURCE_EVALUATION_SOURCE_VERIFICATION.md).
+- GitHub Actions runs tests and report generation. Live HTTP HEAD probes are opt-in only and are not part of CI.
+- The engine does not fetch page bodies, scrape content, approve claims automatically or mutate the canonical robot catalog.
+
 ## Canonical catalog data model
 
 - `data/robots.json` is the single source of truth for the current catalog and technical dossiers.
