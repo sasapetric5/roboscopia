@@ -121,7 +121,7 @@ export function buildEvidenceMatchingReport(db, sourceReport, extractionReports 
           extractionStatus: candidate.reviewStatus ?? "extracted_unverified",
         },
         valueComparison: valueResult,
-        identity: { sameModel, modelUnspecified, sameConfiguration: sameConfig, configurationUnspecified, sameSourceHost },
+        identity: { sameModel, modelUnspecified, sameConfiguration: sameConfig, configurationUnspecified: configUnspecified, sameSourceHost },
         reviewRequired: true,
         catalogMutationAllowed: false,
       };
