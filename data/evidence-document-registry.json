@@ -73,7 +73,18 @@
           "unit": "",
           "catalogSourceId": "src-0001"
         }
-      ]
+      ],
+      "acquisition": {
+        "status": "not_acquired",
+        "localFileName": null,
+        "sha256": null,
+        "byteSize": null,
+        "pageCount": null,
+        "rightsReview": "pending",
+        "processingPermission": false,
+        "redistributionPermission": "unknown",
+        "factualVerification": "not_performed"
+      }
     },
     {
       "id": "unitree-go2-product-page",
@@ -128,7 +139,18 @@
           "unit": "kg",
           "catalogSourceId": "src-0003"
         }
-      ]
+      ],
+      "acquisition": {
+        "status": "not_acquired",
+        "localFileName": null,
+        "sha256": null,
+        "byteSize": null,
+        "pageCount": null,
+        "rightsReview": "pending",
+        "processingPermission": false,
+        "redistributionPermission": "unknown",
+        "factualVerification": "not_performed"
+      }
     },
     {
       "id": "unitree-h1-product-page",
@@ -183,7 +205,18 @@
           "unit": "N·m",
           "catalogSourceId": "src-0005"
         }
-      ]
+      ],
+      "acquisition": {
+        "status": "not_acquired",
+        "localFileName": null,
+        "sha256": null,
+        "byteSize": null,
+        "pageCount": null,
+        "rightsReview": "pending",
+        "processingPermission": false,
+        "redistributionPermission": "unknown",
+        "factualVerification": "not_performed"
+      }
     },
     {
       "id": "ur5e-user-manual-sw5-26",
@@ -246,7 +279,18 @@
           "unit": "",
           "catalogSourceId": "src-0006"
         }
-      ]
+      ],
+      "acquisition": {
+        "status": "not_acquired",
+        "localFileName": null,
+        "sha256": null,
+        "byteSize": null,
+        "pageCount": null,
+        "rightsReview": "pending",
+        "processingPermission": false,
+        "redistributionPermission": "unknown",
+        "factualVerification": "not_performed"
+      }
     },
     {
       "id": "ur20-user-manual-sw5-26",
@@ -309,7 +353,18 @@
           "unit": "mm",
           "catalogSourceId": "src-0008"
         }
-      ]
+      ],
+      "acquisition": {
+        "status": "not_acquired",
+        "localFileName": null,
+        "sha256": null,
+        "byteSize": null,
+        "pageCount": null,
+        "rightsReview": "pending",
+        "processingPermission": false,
+        "redistributionPermission": "unknown",
+        "factualVerification": "not_performed"
+      }
     },
     {
       "id": "abb-gofa-crb15000-datasheet",
@@ -365,7 +420,18 @@
           "unit": "mm",
           "catalogSourceId": "src-0015"
         }
-      ]
+      ],
+      "acquisition": {
+        "status": "not_acquired",
+        "localFileName": null,
+        "sha256": null,
+        "byteSize": null,
+        "pageCount": null,
+        "rightsReview": "pending",
+        "processingPermission": false,
+        "redistributionPermission": "unknown",
+        "factualVerification": "not_performed"
+      }
     },
     {
       "id": "kuka-kr6-r700-sixx-c-v4-1",
@@ -429,7 +495,18 @@
           "unit": "kg",
           "catalogSourceId": "src-0012"
         }
-      ]
+      ],
+      "acquisition": {
+        "status": "not_acquired",
+        "localFileName": null,
+        "sha256": null,
+        "byteSize": null,
+        "pageCount": null,
+        "rightsReview": "pending",
+        "processingPermission": false,
+        "redistributionPermission": "unknown",
+        "factualVerification": "not_performed"
+      }
     }
   ]
 }
