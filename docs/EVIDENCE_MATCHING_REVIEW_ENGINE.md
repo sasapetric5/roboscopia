@@ -20,6 +20,8 @@ The report reads `data/robots.json`, `data/source-verification-report.json`, and
 
 - Compare normalized specification fields, then model identity and configuration scope.
 - Compare numeric values and units exactly or through explicit, dimension-specific conversions for supported units. Original catalog and evidence values are preserved; conversions are comparison-only.
+- Require compatible units even for non-scalar text values such as dimensions. Axis/joint labels are normalized as a count only for degrees-of-freedom comparisons.
+- Ranges, approximate values and tolerances (for example `2–4 h`, `≈7–8 kg`, `±0.03 mm`) are never reduced to a single scalar; they receive a human-review status.
 - Flag value, unit, model and configuration mismatches separately.
 - Keep multiple plausible exact matches as ambiguous; never select one silently.
 - Surface the extracted quote, document hash, revision/date, source URL, model/configuration hints and page/line/section locator.
