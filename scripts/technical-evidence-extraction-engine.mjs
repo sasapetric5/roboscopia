@@ -78,7 +78,7 @@ function containsExactModelName(documentText, modelName) {
   if (!modelName) return null;
   const escaped = Array.from(modelName).map((character) => "\\^$.*+?()[]{}|".includes(character) ? "\\\\" + character : character).join("");
   // A suffixed variant such as H1-2 must not count as the exact H1 model.
-  const pattern = new RegExp("(^|[^\\\\p{L}\\\\p{N}])" + escaped + "(?![\\\\p{L}\\\\p{N}-])", "iu");
+  const pattern = new RegExp("(^|[^\\p{L}\\p{N}])" + escaped + "(?![\\p{L}\\p{N}-])", "iu");
   return pattern.test(documentText);
 }
 export function extractEvidenceCandidates({
