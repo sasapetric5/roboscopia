@@ -37,3 +37,6 @@ jobs:
 
       - name: Generate source verification report
         run: node scripts/source-verification-engine.mjs --json
+
+      - name: Validate evidence extraction CLI
+        run: node scripts/technical-evidence-extraction-engine.mjs --help
