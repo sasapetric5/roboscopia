@@ -7,7 +7,7 @@ Acquire and process manufacturer-primary documents for the 39 existing robot cat
 ## Registered sources
 
 The controlled source inventory is `data/evidence-document-registry.json`. It currently registers seven model-source records:
-- Boston Dynamics Spot Instructions for Use v5.1 (PDF)
+- Boston Dynamics Spot current-production specification page (HTML); the current Product Safety page lists Spot 5.2 Instructions for Use
 - Unitree Go2 official specification page (HTML)
 - Unitree H1 official specification page (HTML)
 - Universal Robots UR5e manual / technical specifications SW5_26 (PDF + HTML locator)
@@ -15,7 +15,7 @@ The controlled source inventory is `data/evidence-document-registry.json`. It cu
 - ABB GoFa CRB 15000 datasheet (PDF)
 - KUKA KR 6 R700 sixx C technical data V4.1 (PDF)
 
-A registered URL is a source lead, not proof that the file is currently reachable, authentic, current, or licensed for redistribution. Unitree Go2 and H1 are HTML-first entries in the registry and must not be represented as acquired PDFs unless the manufacturer supplies a PDF.
+A registered URL is a source lead, not proof that a file is currently reachable, authentic, current, or licensed for redistribution. Spot, Unitree Go2 and Unitree H1 are HTML-first entries and must not be represented as acquired PDFs unless the manufacturer supplies a PDF. The registry now points Spot to the current-production specifications page; the older 5.1 CloudFront PDF link is not treated as acquired or verified.
 
 ## Acquisition and rights gate
 
