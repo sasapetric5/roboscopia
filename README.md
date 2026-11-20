@@ -9,7 +9,7 @@
 - **Data foundation:** 39 specification claims across 7 models, source provenance, read-only data audit, human review queues and source-verification reporting.
 - **Evidence tools:** local technical-evidence extraction, claim-to-evidence matching, a 7-source manufacturer registry and a permission-gated PDF processing CLI.
 - **What is tested:** GitHub Actions is configured to run every `tests/*.test.mjs` file with Node.js 22, then run the audit and reporting CLIs. The 10 review-queue tests are included in that test command; local manual execution is not claimed.
-- **What is not yet verified/delivered:** the latest CI run status has not been independently confirmed; manufacturer PDFs have not yet been acquired and processed; extracted claims still require human review.
+- **CI evidence:** workflow run [44807571168](https://github.com/sasapetric5/roboscopia/actions/runs/44807571168) was checked and its test, audit and review-queue steps completed successfully. This run predates the latest README/evidence-tool commits; CI for the current HEAD has not yet been confirmed.
 - **Public availability:** Cloudflare Pages automatic deployment is disabled. The repository contains the website implementation, but no live public deployment is claimed. Production deployment remains subject to the owner's explicit approval.
 
 ROBOSCOPIA is being developed as a global robotics and CNC knowledge and intelligence platform. The current implementation is an initial, working repository foundation—not a finished marketplace or a fully verified technical encyclopedia.
@@ -172,7 +172,7 @@ Kvalitetna i proverljiva baza podataka predstavlja temelj platforme. Marketplace
 - Data Quality Review Queue u `scripts/data-quality-review-queue.mjs` pretvara nalaze audita u stabilne zadatke za ljudsku proveru. Odluke recenzenata čuvaju se odvojeno u `data/review-decisions.json`; red za proveru nikada sam ne menja kanonski katalog robota.
 - Uputstvo i ograničenja: [docs/DATA_QUALITY_REVIEW_QUEUE.md](docs/DATA_QUALITY_REVIEW_QUEUE.md). Deset ciljanih testova uključeno je u GitHub Actions komandu `node --test tests/*.test.mjs`; lokalno ručno izvršavanje ne tvrdimo.
 
-- [x] GitHub Actions workflow `.github/workflows/data-quality.yml` is configured to run the complete `tests/*.test.mjs` Node.js suite, the read-only data audit, review-queue generation, source verification and evidence reports on pushes to `main`. Previous run reference: [workflow run 44807571168](https://github.com/sasapetric5/roboscopia/actions/runs/44807571168). Its current status has not been independently confirmed; do not treat this link alone as proof of a current green build.
+- [x] GitHub Actions workflow `.github/workflows/data-quality.yml` is configured to run the complete `tests/*.test.mjs` Node.js suite, the read-only data audit, review-queue generation, source verification and evidence reports on pushes to `main`. Previous run reference: [workflow run 44807571168](https://github.com/sasapetric5/roboscopia/actions/runs/44807571168). This run was checked: its automated-test, audit and review-queue steps completed with `success`. It predates the latest commits, so it does not certify the current HEAD.
 
 
 ## Source Verification Engine
