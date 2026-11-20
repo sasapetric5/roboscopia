@@ -59,3 +59,26 @@ test("audit never mutates the supplied database", () => {
   auditDatabase(input);
   assert.equal(JSON.stringify(input), before);
 });
+
+
+test("audit flags conflicting values without choosing a winner", () => {
+  const changed = clone(db);
+  const original = changed.records[0].specifications[0];
+  const conflict = clone(original);
+  conflict.value = Number(original.value) + 1;
+  changed.records[0].specifications.push(conflict);
+
+  const report = auditDatabase(changed);
+  assert.ok(report.issues.some((issue) => issue.code === "POTENTIAL_SPECIFICATION_CONFLICT"));
+  assert.equal(changed.records[0].specifications.at(-1).value, Number(original.value) + 1);
+});
+
+test("audit flags old verified values for re-review", () => {
+  const changed = clone(db);
+  const spec = changed.records[0].specifications[0];
+  spec.provenance.verificationStatus = "verified";
+  spec.provenance.checkedAt = "2000-01-01";
+
+  const report = auditDatabase(changed);
+  assert.ok(report.issues.some((issue) => issue.code === "STALE_VERIFIED_SPECIFICATION"));
+});
