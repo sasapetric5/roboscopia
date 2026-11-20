@@ -13,6 +13,15 @@ node scripts/source-verification-engine.mjs --json
 
 The report reads the canonical robot catalog and the separate decision store at `data/source-verification-decisions.json`. It is read-only with respect to the catalog.
 
+## Initial catalog baseline (2026-11-20)
+
+- 15 registered source URLs.
+- 39 specification claims linked to a source ID.
+- All 39 claims currently remain `source_linked_unverified` in the canonical catalog.
+- No source claim has been automatically approved by this engine.
+- Source URLs are concentrated on the manufacturers' domains already represented in the catalog; a manufacturer-domain candidate classification does not verify page content or claim applicability.
+- No live URL checks or page downloads were run as part of this implementation.
+
 ## Claim identity
 
 Each claim receives a stable SHA-256-derived identifier based on:
@@ -83,4 +92,4 @@ node --test tests/*.test.mjs
 node scripts/source-verification-engine.mjs --json
 ```
 
-GitHub Actions runs the tests and report generation. Live URL probes are deliberately excluded from CI to avoid unapproved external requests and flaky results.
+Nine focused source-verification tests are committed. The latest GitHub Actions run passed the full test suite, the existing data-quality audit, review-queue generation and this source-verification report. Live URL probes are deliberately excluded from CI to avoid unapproved external requests and flaky results.
