@@ -156,6 +156,8 @@ Kvalitetna i proverljiva baza podataka predstavlja temelj platforme. Marketplace
 - Quality statuses and conservative duplicate-handling rules are documented in [docs/DATA_ENGINE.md](docs/DATA_ENGINE.md).
 - No scraping, automated crawling, database provisioning or media copying was activated.
 
+- The Data Quality Review Queue at `scripts/data-quality-review-queue.mjs` turns audit findings into stable human-review items. Reviewer decisions are stored separately in `data/review-decisions.json` and recorded through a validating local command; the canonical robot catalog is never edited by the queue.
+- Queue workflow and limitations: [docs/DATA_QUALITY_REVIEW_QUEUE.md](docs/DATA_QUALITY_REVIEW_QUEUE.md). Eight focused review-queue tests are committed but have not yet been executed in Node.js.
 - A read-only Data Quality Audit is implemented at `scripts/data-quality-audit.mjs`; it flags broken references, missing provenance, potential duplicate identities, conflicting values, stale verified claims, source-review gaps and media-rights gaps.
 - Audit behavior and commands are documented in [docs/DATA_QUALITY_AUDIT.md](docs/DATA_QUALITY_AUDIT.md). Seven focused tests are committed, but have not yet been executed in a Node.js environment.
 
