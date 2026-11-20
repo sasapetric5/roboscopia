@@ -6,6 +6,13 @@
 
 The engine is an evidence-candidate generator, not a fact-checker. Every output remains `extracted_unverified`.
 
+## Initial implementation verification (2026-11-20)
+
+- Nine focused tests cover extraction of labelled technical values, page boundaries, stable candidate IDs, source URL validation, model/configuration hints, size limits and non-approval semantics.
+- The full repository Node.js test suite passed in GitHub Actions on commit `04ec892387d5cc56a0fbfc8d72c2bc5dd9dabfdf`.
+- CI also successfully generated the data quality audit, review queue and source verification report.
+- CI validates the extractor CLI help output. It does not install Poppler or run the local-PDF extraction path; that path still requires an operator environment with Poppler installed.
+
 ## Current supported fields
 
 The initial conservative pattern set looks for explicitly labelled values for:
