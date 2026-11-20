@@ -149,17 +149,21 @@ Kvalitetna i proverljiva baza podataka predstavlja temelj platforme. Marketplace
 
 ## Data Engine — provenance and quality foundation
 
-- Canonical data schema is now `2.1.0`.
-- A normalized `sources[]` registry assigns stable IDs to the 12 currently recorded source URLs.
+- Canonical data schema is `2.1.0`.
+- A normalized `sources[]` registry assigns stable IDs to the 15 currently recorded source URLs.
 - The 39 existing specification values now carry field-level provenance references and the explicit status `source_linked_unverified`; source URLs have not yet been independently checked against each exact claim.
 - Media entries carry `permission_not_confirmed` unless reuse rights are documented.
 - Quality statuses and conservative duplicate-handling rules are documented in [docs/DATA_ENGINE.md](docs/DATA_ENGINE.md).
 - No scraping, automated crawling, database provisioning or media copying was activated.
 
+- A read-only Data Quality Audit is implemented at `scripts/data-quality-audit.mjs`; it flags broken references, missing provenance, potential duplicate identities, conflicting values, stale verified claims, source-review gaps and media-rights gaps.
+- Audit behavior and commands are documented in [docs/DATA_QUALITY_AUDIT.md](docs/DATA_QUALITY_AUDIT.md). Seven focused tests are committed, but have not yet been executed in a Node.js environment.
+
+
 ## Canonical catalog data model
 
 - `data/robots.json` is the single source of truth for the current catalog and technical dossiers.
-- Schema version `2.0.0` adds normalized manufacturer, product-family and model identity references, controlled categories, and configuration placeholders.
+- Schema version `2.1.0` includes normalized manufacturer, product-family and model identity references, controlled categories, and configuration placeholders.
 - The catalog loads model records from the JSON file and supports category and manufacturer filtering, search, sorting and comparison of up to three models.
 - Technical dossiers load the same model records from the JSON file.
 - Configuration placeholders are not verified technical profiles. Unitree Go2 AIR / PRO / X / EDU are identity/research entries only; their specifications have not been asserted.
