@@ -6,6 +6,7 @@ import { pathToFileURL } from "node:url";
 const OUTCOMES = new Set(["supported", "partially_supported", "contradicted", "not_applicable"]);
 const sha = (value) => createHash("sha256").update(value).digest("hex").slice(0, 24);
 const norm = (value) => String(value ?? "").normalize("NFKC").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim().replace(/\s+/g, " ");
+const normUnit = (value) => String(value ?? "").normalize("NFKC").toLowerCase().replace(/\s+/g, "");
 const FIELD_ALIASES = new Map([
   ["mass", ["mass", "weight", "mass with battery", "weight with battery"]],
   ["payload", ["payload", "maximum payload", "rated payload"]],
@@ -30,7 +31,7 @@ const UNIT_GROUPS = {
   power: { w: 1, kw: 1000 },
 };
 function fieldFor(spec) {
-  const direct = FIELD_BY_LABEL.get(norm(spec?.field ?? spec?.name ?? spec?.fieldLabel));
+  const direct = FIELD_BY_LABEL.get(norm(spec?.field ?? spec?.name ?? spec?.specification ?? spec?.fieldLabel));
   if (direct) return direct;
   for (const [field, labels] of FIELD_ALIASES) if (labels.some((label) => norm(spec?.name).includes(norm(label)))) return field;
   return null;
@@ -47,8 +48,8 @@ function compareValue(claim, candidate, field) {
     return String(claim.value).trim().toLowerCase() === String(candidate.extractedValue).trim().toLowerCase()
       ? "equal" : "mismatch";
   }
-  const claimUnit = norm(claim.unit).replace(/ /g, "");
-  const evidenceUnit = norm(candidate.unit).replace(/ /g, "");
+  const claimUnit = normUnit(claim.unit);
+  const evidenceUnit = normUnit(candidate.unit);
   if (claimUnit === evidenceUnit) return Math.abs(a - b) <= Math.max(0.000001, Math.abs(a) * 0.000001) ? "equal" : "mismatch";
   const group = UNIT_GROUPS[field];
   const left = group?.[claimUnit];
