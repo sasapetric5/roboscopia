@@ -123,3 +123,26 @@ test("decision recorder refuses unknown queue items", () => {
     decidedBy: "reviewer",
   }, new Set(queue.items.map((item) => item.id))));
 });
+
+
+test("review queue resolves source context for specification findings", () => {
+  const changed = clone(db);
+  changed.records[0].specifications[0].provenance = null;
+  const queue = buildReviewQueue(changed);
+  const item = queue.items.find((entry) => entry.code === "MISSING_PROVENANCE");
+
+  assert.ok(item);
+  assert.equal(item.source.id, changed.records[0].specifications[0].sourceId);
+});
+
+test("review queue ignores decisions that fail validation", () => {
+  const queue = buildReviewQueue(db);
+  const item = queue.items[0];
+  const nextQueue = buildReviewQueue(db, auditDatabase(db), [{
+    itemId: item.id,
+    status: "resolved",
+    note: " ",
+  }]);
+
+  assert.equal(nextQueue.items.find((entry) => entry.id === item.id).status, "open");
+});
