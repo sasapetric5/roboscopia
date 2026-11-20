@@ -19,15 +19,15 @@
       "modelIds": [
         "spot"
       ],
-      "documentType": "pdf",
-      "title": "Spot Instructions for Use",
-      "revision": "Version 5.1",
+      "documentType": "html",
+      "title": "Spot Specifications — current production hardware",
+      "revision": "Live Boston Dynamics support specification; current Spot 5.2 IFU listed separately",
       "documentDate": "2025",
       "sourcePageUrl": "https://support.bostondynamics.com/s/article/spot-specifications",
-      "downloadUrl": "https://d3cjkvgbik1jtv.cloudfront.net/translations/spot-5_1/spot-user-manual-en.pdf",
+      "downloadUrl": null,
       "officialHost": "bostondynamics.com",
       "deliveryHost": "d3cjkvgbik1jtv.cloudfront.net",
-      "expectedLocator": "§1.5.2, Spot Specifications, printed page 10; physical properties and power tables",
+      "expectedLocator": "Physical Properties table; Power table; related Spot Instructions for Use via Product Safety page",
       "claims": [
         "mass with battery",
         "maximum speed",
@@ -35,7 +35,7 @@
         "typical runtime"
       ],
       "rightsStatus": "review_required",
-      "notes": "Official Boston Dynamics instructions; current support page separately notes production hardware and payload-related runtime changes. Verify IP and payload against correct table/source before linking.",
+      "notes": "Use current production hardware specifications. The support page states older Spot models may differ. Do not treat the earlier 5.1 CloudFront URL as acquired or verified. The current Product Safety page lists Spot 5.2 Instructions for Use.",
       "catalogClaims": [
         {
           "specification": "Mass with battery",
@@ -271,7 +271,7 @@
         "repeatability"
       ],
       "rightsStatus": "review_required",
-      "notes": "Manual states 20 kg standard, 25 kg with boundary conditions, approximately 5 m/s TCP speed, ±0.1 mm repeatability and 64 kg arm weight.",
+      "notes": "Catalog model label UR20-1750. Manufacturer FAQ says UR20-1750 is a naming update for UR20, mechanically unchanged and compatible with Generation 7 components; retain generation/controller context if applicable. Manual states 20 kg standard, 25 kg with boundary conditions, approximately 5 m/s TCP speed, ±0.1 mm repeatability and 64 kg arm weight.",
       "catalogClaims": [
         {
           "specification": "Standard payload",
