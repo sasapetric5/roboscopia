@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08111f">
+  <meta name="description" content="ROBOSCOPIA — Global Robotics & CNC Intelligence Platform. Discover, compare, understand and verify robotics and CNC technology.">
+  <meta property="og:title" content="ROBOSCOPIA — Robotics & CNC Intelligence">
+  <meta property="og:description" content="A global knowledge and intelligence platform for robotics and CNC technology.">
+  <meta property="og:type" content="website">
+  <title>ROBOSCOPIA — Global Robotics & CNC Intelligence</title>
+  <style>
+    :root{color-scheme:dark;--bg:#07111f;--panel:#0d1b2d;--panel2:#10233a;--line:#203650;--text:#edf5ff;--muted:#9db0c7;--blue:#54a9ff;--cyan:#68e0e8;--max:1180px}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(ellipse at 75% 0%,#102b49 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(var(--max),calc(100% - 40px));margin-inline:auto}
+    .topline{height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan),transparent)}
+    header{border-bottom:1px solid #ffffff12;background:#07111fdd;backdrop-filter:blur(14px);position:sticky;top:0;z-index:10}
+    .nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.14em;font-size:18px}
+    .mark{width:34px;height:34px;border:1px solid #4ba9ff88;border-radius:10px;display:grid;place-items:center;color:var(--cyan);font-size:19px;background:linear-gradient(145deg,#16375a,#0a192b)}
+    .navlinks{display:flex;align-items:center;gap:26px;color:var(--muted);font-size:13px}
+    .navlinks a:hover{color:var(--text)}
+    .lang{border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--text);padding:8px 13px;font:inherit;font-size:12px;cursor:pointer}
+    .hero{padding:104px 0 86px;position:relative;overflow:hidden}
+    .hero:after{content:"";position:absolute;width:520px;height:520px;border:1px solid #4da8ff1a;border-radius:50%;right:-150px;top:10px;box-shadow:0 0 0 55px #4da8ff08,0 0 0 110px #4da8ff05;pointer-events:none}
+    .eyebrow{color:var(--cyan);text-transform:uppercase;letter-spacing:.2em;font-size:11px;font-weight:750}
+    h1{font-size:clamp(42px,7vw,78px);line-height:1.04;letter-spacing:-.055em;max-width:850px;margin:20px 0}
+    h1 span{background:linear-gradient(90deg,#f1f7ff 15%,#70caff 65%,#73e4e6);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{max-width:690px;color:#b5c5d8;font-size:clamp(17px,2vw,20px);line-height:1.7}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:8px;font-weight:700;font-size:13px;border:1px solid var(--line)}
+    .primary{background:linear-gradient(100deg,#2585df,#36b5d1);border-color:transparent;color:#04101c}
+    .secondary{background:#ffffff08;color:var(--text)}
+    .micro{margin-top:20px;color:#7f95ae;font-size:12px}
+    .section{padding:76px 0;border-top:1px solid #ffffff12}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:30px}
+    h2{font-size:clamp(27px,4vw,40px);line-height:1.15;letter-spacing:-.035em;margin:8px 0}
+    .section-intro{max-width:520px;color:var(--muted);font-size:14px}
+    .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#10233a,#0a1728);padding:25px;min-height:220px}
+    .number{color:var(--cyan);font-size:12px;letter-spacing:.12em;font-weight:800}
+    .card h3{font-size:19px;margin:18px 0 8px}
+    .card p{color:var(--muted);font-size:14px;margin:0}
+    .categories{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .category{padding:16px;border:1px solid var(--line);border-radius:9px;background:#0b192a;color:#cbd9e9;font-size:13px}
+    .category:before{content:"";display:block;width:24px;height:2px;background:var(--blue);margin-bottom:12px}
+    .principles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .principle{display:flex;gap:13px;padding:17px;border:1px solid #203650;border-radius:9px;background:#0b192a}
+    .tick{color:var(--cyan);font-weight:900}
+    .principle strong{display:block;font-size:13px}
+    .principle small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+    .status{border:1px solid #275276;background:linear-gradient(110deg,#0e2944,#0c1c2e);border-radius:13px;padding:25px;display:flex;justify-content:space-between;align-items:center;gap:25px}
+    .status p{margin:6px 0 0;color:var(--muted);font-size:13px}
+    .status-label{white-space:nowrap;color:#9ce8db;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+    footer{padding:30px 0 45px;color:#8195ad;font-size:12px;border-top:1px solid #ffffff12}
+    footer .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    @media(max-width:760px){.navlinks{display:none}.hero{padding:76px 0 66px}.section{padding:58px 0}.section-head{display:block}.pillars{grid-template-columns:1fr}.categories{grid-template-columns:repeat(2,1fr)}.principles{grid-template-columns:1fr}.status{display:block}.status-label{display:inline-block;margin-top:16px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#" aria-label="ROBOSCOPIA home"><span class="mark" aria-hidden="true">R</span><span>ROBOSCOPIA</span></a>
+      <nav class="navlinks" aria-label="Main navigation">
+        <a href="#platform" data-en="Platform" data-sr="Platforma">Platform</a>
+        <a href="#domains" data-en="Technology" data-sr="Tehnologije">Technology</a>
+        <a href="#principles" data-en="Principles" data-sr="Principi">Principles</a>
+      </nav>
+      <button class="lang" id="languageToggle" type="button" aria-label="Switch language">SR / EN</button>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow" data-en="Global Robotics & CNC Intelligence Platform" data-sr="Globalna platforma za robotiku i CNC inteligenciju">Global Robotics & CNC Intelligence Platform</div>
+        <h1 data-en-html="Discover. Compare.<br><span>Understand. Verify.</span>" data-sr-html="Otkrij. Uporedi.<br><span>Razumi. Proveri.</span>">Discover. Compare.<br><span>Understand. Verify.</span></h1>
+        <p class="lead" data-en="A new way to explore the machines shaping our world — from industrial robots and humanoids to CNC systems, autonomous platforms and emerging technologies." data-sr="Novi način istraživanja mašina koje oblikuju naš svet — od industrijskih robota i humanoida do CNC sistema, autonomnih platformi i tehnologija u razvoju.">A new way to explore the machines shaping our world — from industrial robots and humanoids to CNC systems, autonomous platforms and emerging technologies.</p>
+        <div class="actions">
+          <a class="btn primary" href="#platform" data-en="Explore the platform" data-sr="Istražite platformu">Explore the platform</a>
+          <a class="btn secondary" href="#principles" data-en="Our approach" data-sr="Naš pristup">Our approach</a>
+        </div>
+        <div class="micro" data-en="Independent project · Evidence-led information · International by design" data-sr="Nezavisan projekat · Informacije zasnovane na dokazima · Međunarodno usmerenje">Independent project · Evidence-led information · International by design</div>
+      </div>
+    </section>
+    <section class="section" id="platform">
+      <div class="wrap">
+        <div class="section-head">
+          <div><div class="eyebrow" data-en="One connected ecosystem" data-sr="Jedinstven povezani ekosistem">One connected ecosystem</div><h2 data-en="Three pillars. One trusted source." data-sr="Tri stuba. Jedan pouzdan izvor.">Three pillars. One trusted source.</h2></div>
+          <p class="section-intro" data-en="The platform is being developed around structured technical knowledge first, with intelligence and marketplace capabilities built on top of reliable, traceable data." data-sr="Platforma se razvija tako da kvalitetna tehnička baza bude temelj, a da se inteligentne funkcije i tržište grade na pouzdanim podacima sa proverljivim izvorima.">The platform is being developed around structured technical knowledge first, with intelligence and marketplace capabilities built on top of reliable, traceable data.</p>
+        </div>
+        <div class="pillars">
+          <article class="card"><div class="number">01 / KNOWLEDGE</div><h3 data-en="Knowledge Base" data-sr="Baza znanja">Knowledge Base</h3><p data-en="Manufacturer and model profiles, generations, configurations, technical specifications and documentation — connected to their sources." data-sr="Profili proizvođača i modela, generacije, konfiguracije, tehničke specifikacije i dokumentacija — povezani sa izvornim podacima.">Manufacturer and model profiles, generations, configurations, technical specifications and documentation — connected to their sources.</p></article>
+          <article class="card"><div class="number">02 / INTELLIGENCE</div><h3 data-en="Robotics Intelligence" data-sr="Robotics Intelligence">Robotics Intelligence</h3><p data-en="Powerful discovery, structured comparison and technical analysis with transparent evidence and confidence indicators." data-sr="Napredno pronalaženje, strukturisano poređenje i tehnička analiza uz transparentne dokaze i pokazatelje pouzdanosti.">Powerful discovery, structured comparison and technical analysis with transparent evidence and confidence indicators.</p></article>
+          <article class="card"><div class="number">03 / MARKET</div><h3 data-en="Marketplace" data-sr="Marketplace">Marketplace</h3><p data-en="A planned marketplace for new and used robots, CNC machines, components, spare parts and accessories." data-sr="Planirano tržište novih i polovnih robota, CNC mašina, komponenti, rezervnih delova i pribora.">A planned marketplace for new and used robots, CNC machines, components, spare parts and accessories.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="domains">
+      <div class="wrap">
+        <div class="eyebrow" data-en="Technology landscape" data-sr="Oblasti tehnologije">Technology landscape</div>
+        <h2 data-en="Across the world of robotics." data-sr="Kroz čitav svet robotike.">Across the world of robotics.</h2>
+        <p class="section-intro" data-en="A broad, connected taxonomy designed to cover established industries and emerging fields." data-sr="Široka, povezana taksonomija koja obuhvata razvijene industrije i nove oblasti.">A broad, connected taxonomy designed to cover established industries and emerging fields.</p>
+        <div class="categories" style="margin-top:25px">
+          <div class="category" data-en="Industrial robotics" data-sr="Industrijska robotika">Industrial robotics</div>
+          <div class="category" data-en="Humanoid robots" data-sr="Humanoidni roboti">Humanoid robots</div>
+          <div class="category" data-en="Quadruped robots" data-sr="Četvoronožni roboti">Quadruped robots</div>
+          <div class="category" data-en="AMR & AGV systems" data-sr="AMR i AGV sistemi">AMR & AGV systems</div>
+          <div class="category" data-en="Medical robotics" data-sr="Medicinska robotika">Medical robotics</div>
+          <div class="category" data-en="Agricultural robotics" data-sr="Poljoprivredna robotika">Agricultural robotics</div>
+          <div class="category" data-en="Construction & mining" data-sr="Građevina i rudarstvo">Construction & mining</div>
+          <div class="category" data-en="Aerial & underwater" data-sr="Vazdušni i podvodni sistemi">Aerial & underwater</div>
+          <div class="category" data-en="Research platforms" data-sr="Istraživačke platforme">Research platforms</div>
+          <div class="category" data-en="CNC machines" data-sr="CNC mašine">CNC machines</div>
+          <div class="category" data-en="Components & tooling" data-sr="Komponente i alati">Components & tooling</div>
+          <div class="category" data-en="Autonomous systems" data-sr="Autonomni sistemi">Autonomous systems</div>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="principles">
+      <div class="wrap">
+        <div class="eyebrow" data-en="Built on trust" data-sr="Izgrađeno na poverenju">Built on trust</div>
+        <h2 data-en="Evidence before claims." data-sr="Dokazi pre tvrdnji.">Evidence before claims.</h2>
+        <p class="section-intro" data-en="Technical information is only useful when its origin, context and verification status are clear." data-sr="Tehničke informacije imaju vrednost samo kada su njihovo poreklo, kontekst i status provere jasni.">Technical information is only useful when its origin, context and verification status are clear.</p>
+        <div class="principles" style="margin-top:25px">
+          <div class="principle"><span class="tick">✓</span><div><strong data-en="Traceable sources" data-sr="Proverljivi izvori">Traceable sources</strong><small data-en="Facts linked to manufacturers, documents or reliable references." data-sr="Podaci povezani sa proizvođačima, dokumentima ili pouzdanim referencama.">Facts linked to manufacturers, documents or reliable references.</small></div></div>
+          <div class="principle"><span class="tick">✓</span><div><strong data-en="Clear verification status" data-sr="Jasan status verifikacije">Clear verification status</strong><small data-en="Verified facts are distinguished from submissions and unverified claims." data-sr="Proverene činjenice razlikuju se od korisničkih unosa i nepotvrđenih tvrdnji.">Verified facts are distinguished from submissions and unverified claims.</small></div></div>
+          <div class="principle"><span class="tick">✓</span><div><strong data-en="Independent comparisons" data-sr="Nezavisna poređenja">Independent comparisons</strong><small data-en="Commercial relationships must never determine technical rankings." data-sr="Komercijalni odnosi ne smeju određivati tehnička rangiranja.">Commercial relationships must never determine technical rankings.</small></div></div>
+          <div class="principle"><span class="tick">✓</span><div><strong data-en="Respect for rights" data-sr="Poštovanje autorskih prava">Respect for rights</strong><small data-en="Media and documents are published only with appropriate rights or permission." data-sr="Mediji i dokumenti objavljuju se samo uz odgovarajuća prava ili dozvole.">Media and documents are published only with appropriate rights or permission.</small></div></div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap">
+        <div class="status">
+          <div><div class="eyebrow" data-en="Project status" data-sr="Status projekta">Project status</div><h2 data-en="The foundation is taking shape." data-sr="Temelji platforme se postavljaju.">The foundation is taking shape.</h2><p data-en="ROBOSCOPIA is in its research and architecture phase. Product databases, search, comparisons and marketplace features are not yet live." data-sr="ROBOSCOPIA je u fazi istraživanja i definisanja arhitekture. Baze proizvoda, pretraga, poređenja i marketplace funkcije još nisu aktivne.">ROBOSCOPIA is in its research and architecture phase. Product databases, search, comparisons and marketplace features are not yet live.</p></div>
+          <div class="status-label" data-en="In development" data-sr="U razvoju">In development</div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap foot"><span>© <span id="year">2026</span> ROBOSCOPIA</span><span data-en="Discover. Compare. Understand. Verify." data-sr="Otkrij. Uporedi. Razumi. Proveri.">Discover. Compare. Understand. Verify.</span></div></footer>
+  <script>
+    (() => {
+      const button = document.getElementById('languageToggle');
+      let language = 'en';
+      button.addEventListener('click', () => {
+        language = language === 'en' ? 'sr' : 'en';
+        document.documentElement.lang = language;
+        document.querySelectorAll('[data-en]').forEach((element) => {
+          element.textContent = element.dataset[language];
+        });
+        document.querySelectorAll('[data-en-html]').forEach((element) => {
+          element.innerHTML = element.dataset[language + 'Html'];
+        });
+        button.setAttribute('aria-label', language === 'en' ? 'Switch to Serbian' : 'Switch to English');
+      });
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
