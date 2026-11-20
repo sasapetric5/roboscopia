@@ -59,8 +59,14 @@ function findSource(db, issue) {
   const sourceMatch = issue.path.match(/sources\[(\d+)\]/);
   if (sourceMatch) return db.sources?.[Number(sourceMatch[1])] ?? null;
 
-  const spec = getAtPath(db, issue.path);
-  const sourceId = spec?.sourceId ?? spec?.provenance?.sourceId;
+  const specificationMatch = issue.path.match(/^records\\[(\\d+)\\]\\.specifications\\[(\\d+)\\]/);
+  if (specificationMatch) {
+    const record = db.records?.[Number(specificationMatch[1])];
+    const spec = record?.specifications?.[Number(specificationMatch[2])];
+    const sourceId = spec?.sourceId ?? spec?.provenance?.sourceId;
+    if (sourceId) return db.sources?.find((source) => source.id === sourceId) ?? null;
+  }
+  const sourceId = getAtPath(db, issue.path)?.sourceId;
   if (!sourceId) return null;
   return db.sources?.find((source) => source.id === sourceId) ?? null;
 }
@@ -70,9 +76,11 @@ function findSource(db, issue) {
  * Decisions are kept separately from canonical model data.
  */
 export function buildReviewQueue(db, report = auditDatabase(db), decisions = []) {
+  const knownItemIds = new Set(report.issues.map(stableId));
   const decisionMap = new Map();
   for (const decision of decisions) {
     if (!decision || typeof decision.itemId !== "string") continue;
+    if (validateReviewDecision(decision, knownItemIds).length > 0) continue;
     decisionMap.set(decision.itemId, decision);
   }
 
