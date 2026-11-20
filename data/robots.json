@@ -69,11 +69,11 @@
       ],
       "sources": [
         {
-          "label": "Official product page and specifications",
+          "label": "Boston Dynamics Spot current product specifications",
           "url": "https://bostondynamics.com/products/spot/"
         },
         {
-          "label": "Spot support specification reference",
+          "label": "Boston Dynamics Spot specifications support reference",
           "url": "https://support.bostondynamics.com/s/article/spot-specifications"
         }
       ],
@@ -130,7 +130,7 @@
           "name": "Maximum running speed",
           "value": 5,
           "unit": "m/s",
-          "qualifier": "Approximate laboratory-tested maximum; varies by version",
+          "qualifier": "Approx. 5 m/s laboratory-tested maximum; standard variant speeds differ",
           "source": "https://www.unitree.com/go2/"
         },
         {
@@ -143,12 +143,12 @@
       ],
       "sources": [
         {
-          "label": "Official Go2 product page and variant specifications",
+          "label": "Unitree Go2 official product page with AIR / PRO / X / EDU specifications",
           "url": "https://www.unitree.com/go2/"
         },
         {
-          "label": "Go2 battery variants",
-          "url": "https://www.unitree.com/mobile/go2/battery/"
+          "label": "Unitree Go2 mobile product page",
+          "url": "https://www.unitree.com/mobile/go2/"
         }
       ],
       "media": [],
@@ -436,12 +436,12 @@
       ],
       "sources": [
         {
-          "label": "ABB GoFa family product page and variant table",
+          "label": "ABB GoFa product page and variant table",
           "url": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa"
         },
         {
           "label": "ABB GoFa CRB 15000 datasheet",
-          "url": "https://library.e.abb.com/public/d4c38d5b4bcf40df8504ee417cb0e830/GoFa%20CRB%2015000%20Datasheet.pdf"
+          "url": "https://library.e.abb.com/public/88cd85f2acbd47f9844e5d1861a4a275/200526%20GoFa%20CRB%2015000%20Datasheet.pdf"
         }
       ],
       "media": [],
