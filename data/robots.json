@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "2.0.0",
+  "schemaVersion": "2.1.0",
   "updated": "2026-11-20",
   "mediaPolicy": "No third-party product imagery is embedded until reuse rights or explicit permission are documented. Official manufacturer links are provided for reference, not as a grant of image rights.",
   "records": [
@@ -33,38 +33,92 @@
           "name": "Mass with battery",
           "value": 33.8,
           "unit": "kg",
-          "source": "https://bostondynamics.com/products/spot/"
+          "source": "https://bostondynamics.com/products/spot/",
+          "sourceId": "src-0001",
+          "provenance": {
+            "sourceId": "src-0001",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "spot",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Maximum speed",
           "value": 1.6,
           "unit": "m/s",
-          "source": "https://bostondynamics.com/products/spot/"
+          "source": "https://bostondynamics.com/products/spot/",
+          "sourceId": "src-0001",
+          "provenance": {
+            "sourceId": "src-0001",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "spot",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Maximum payload",
           "value": 14,
           "unit": "kg",
-          "source": "https://bostondynamics.com/products/spot/"
+          "source": "https://bostondynamics.com/products/spot/",
+          "sourceId": "src-0001",
+          "provenance": {
+            "sourceId": "src-0001",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "spot",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Battery capacity",
           "value": 564,
           "unit": "Wh",
-          "source": "https://bostondynamics.com/products/spot/"
+          "source": "https://bostondynamics.com/products/spot/",
+          "sourceId": "src-0001",
+          "provenance": {
+            "sourceId": "src-0001",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "spot",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Typical runtime",
           "value": 90,
           "unit": "min",
           "qualifier": "Average; varies with payload and environment",
-          "source": "https://bostondynamics.com/products/spot/"
+          "source": "https://bostondynamics.com/products/spot/",
+          "sourceId": "src-0001",
+          "provenance": {
+            "sourceId": "src-0001",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "spot",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Ingress protection",
           "value": "IP54",
           "unit": "",
-          "source": "https://bostondynamics.com/products/spot/"
+          "source": "https://bostondynamics.com/products/spot/",
+          "sourceId": "src-0001",
+          "provenance": {
+            "sourceId": "src-0001",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "spot",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         }
       ],
       "sources": [
@@ -83,7 +137,9 @@
           "url": "https://i.blogs.es/d540f2/spotmini1/1366_2000.jpg",
           "source": "Xataka — Spot product photograph",
           "sourceUrl": "https://www.xataka.com/robotica-e-ia/boston-dynamics-pone-a-venta-a-spot-su-perro-robot-atlas-aprende-nuevas-e-impresiones-rutinas-gimnasia",
-          "note": "Third-party editorial image; reuse permission not confirmed."
+          "note": "Third-party editorial image; reuse permission not confirmed.",
+          "rightsStatus": "permission_not_confirmed",
+          "sourceId": null
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
@@ -124,34 +180,79 @@
           "value": 15,
           "unit": "kg",
           "qualifier": "Approximate; manufacturer page",
-          "source": "https://www.unitree.com/go2/"
+          "source": "https://www.unitree.com/go2/",
+          "sourceId": "src-0003",
+          "provenance": {
+            "sourceId": "src-0003",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "go2",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Standing dimensions",
           "value": "70 × 31 × 40",
           "unit": "cm",
-          "source": "https://www.unitree.com/go2/"
+          "source": "https://www.unitree.com/go2/",
+          "sourceId": "src-0003",
+          "provenance": {
+            "sourceId": "src-0003",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "go2",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Battery endurance",
           "value": "2–4",
           "unit": "h",
           "qualifier": "Manufacturer-stated long endurance; configuration and conditions matter",
-          "source": "https://www.unitree.com/go2/"
+          "source": "https://www.unitree.com/go2/",
+          "sourceId": "src-0003",
+          "provenance": {
+            "sourceId": "src-0003",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "go2",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Maximum running speed",
           "value": 5,
           "unit": "m/s",
           "qualifier": "Approx. 5 m/s laboratory-tested maximum; standard variant speeds differ",
-          "source": "https://www.unitree.com/go2/"
+          "source": "https://www.unitree.com/go2/",
+          "sourceId": "src-0003",
+          "provenance": {
+            "sourceId": "src-0003",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "go2",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Payload",
           "value": "≈7–8",
           "unit": "kg",
           "qualifier": "Variant-dependent; maximum claims differ by configuration",
-          "source": "https://www.unitree.com/go2/"
+          "source": "https://www.unitree.com/go2/",
+          "sourceId": "src-0003",
+          "provenance": {
+            "sourceId": "src-0003",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "go2",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         }
       ],
       "sources": [
@@ -170,7 +271,9 @@
           "url": "https://www.maverickdrone.com/cdn/shop/files/Go2EDU.png?v=1718291125",
           "source": "Maverick Drone — Unitree Go2 product image",
           "sourceUrl": "https://www.maverickdrone.com/products/go2",
-          "note": "Distributor product image; reuse permission not confirmed."
+          "note": "Distributor product image; reuse permission not confirmed.",
+          "rightsStatus": "permission_not_confirmed",
+          "sourceId": null
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
@@ -237,33 +340,78 @@
           "value": 180,
           "unit": "cm",
           "qualifier": "Approximate",
-          "source": "https://www.unitree.com/h1/"
+          "source": "https://www.unitree.com/h1/",
+          "sourceId": "src-0005",
+          "provenance": {
+            "sourceId": "src-0005",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "h1",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Mass",
           "value": 47,
           "unit": "kg",
           "qualifier": "Approximate; H1 variant",
-          "source": "https://www.unitree.com/h1/"
+          "source": "https://www.unitree.com/h1/",
+          "sourceId": "src-0005",
+          "provenance": {
+            "sourceId": "src-0005",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "h1",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Moving speed",
           "value": 3.3,
           "unit": "m/s",
           "qualifier": "Manufacturer-stated",
-          "source": "https://www.unitree.com/h1/"
+          "source": "https://www.unitree.com/h1/",
+          "sourceId": "src-0005",
+          "provenance": {
+            "sourceId": "src-0005",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "h1",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Battery capacity",
           "value": 864,
           "unit": "Wh",
-          "source": "https://www.unitree.com/h1/"
+          "source": "https://www.unitree.com/h1/",
+          "sourceId": "src-0005",
+          "provenance": {
+            "sourceId": "src-0005",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "h1",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Maximum joint torque",
           "value": 360,
           "unit": "N·m",
-          "source": "https://www.unitree.com/h1/"
+          "source": "https://www.unitree.com/h1/",
+          "sourceId": "src-0005",
+          "provenance": {
+            "sourceId": "src-0005",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "h1",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         }
       ],
       "sources": [
@@ -278,7 +426,9 @@
           "url": "https://www.crkennedy.co.nz/ts1757387305/attachments/Product/45820/uth1.tag.1.webp",
           "source": "C.R. Kennedy — Unitree H1 product image",
           "sourceUrl": "https://www.crkennedy.co.nz/products/uth1/unitree-h1-universal-humanoid-robot",
-          "note": "Distributor product image; reuse permission not confirmed."
+          "note": "Distributor product image; reuse permission not confirmed.",
+          "rightsStatus": "permission_not_confirmed",
+          "sourceId": null
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
@@ -318,37 +468,90 @@
           "name": "Maximum payload",
           "value": 5,
           "unit": "kg",
-          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm",
+          "sourceId": "src-0006",
+          "provenance": {
+            "sourceId": "src-0006",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur5e",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Reach",
           "value": 850,
           "unit": "mm",
-          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm",
+          "sourceId": "src-0006",
+          "provenance": {
+            "sourceId": "src-0006",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur5e",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Degrees of freedom",
           "value": 6,
           "unit": "rotating joints",
-          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm",
+          "sourceId": "src-0006",
+          "provenance": {
+            "sourceId": "src-0006",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur5e",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Pose repeatability",
           "value": "±0.03",
           "unit": "mm",
-          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm",
+          "sourceId": "src-0006",
+          "provenance": {
+            "sourceId": "src-0006",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur5e",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Robot arm mass",
           "value": 20.7,
           "unit": "kg",
-          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_24/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_24/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm",
+          "provenance": {
+            "sourceId": null,
+            "verificationStatus": "missing_source",
+            "checkedAt": null,
+            "applicableModelId": "ur5e",
+            "configurationId": null,
+            "notes": "No source URL is attached to this value."
+          }
         },
         {
           "name": "Ingress protection",
           "value": "IP54",
           "unit": "",
-          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm"
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm",
+          "sourceId": "src-0006",
+          "provenance": {
+            "sourceId": "src-0006",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur5e",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         }
       ],
       "sources": [
@@ -367,7 +570,9 @@
           "url": "https://cdn.shopify.com/s/files/1/0253/6200/6096/products/Universal_Robots_UR5e_1200p_f78c96b9-4e5c-4494-b93d-bd90725241a0_1600x.jpg?v=1572368358",
           "source": "Thinkbot Solutions — UR5e product image",
           "sourceUrl": "https://thinkbotsolutions.com/products/universal-robots-ur5e",
-          "note": "Distributor product image; reuse permission not confirmed."
+          "note": "Distributor product image; reuse permission not confirmed.",
+          "rightsStatus": "permission_not_confirmed",
+          "sourceId": null
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
@@ -407,38 +612,92 @@
           "name": "Standard payload",
           "value": 20,
           "unit": "kg",
-          "source": "https://www.universal-robots.com/products/ur20-1750/"
+          "source": "https://www.universal-robots.com/products/ur20-1750/",
+          "sourceId": "src-0008",
+          "provenance": {
+            "sourceId": "src-0008",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur20",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Extended payload",
           "value": 25,
           "unit": "kg",
           "qualifier": "Subject to boundary conditions in manufacturer documentation",
-          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW10_9/Content/prod-usr-man/complianceUR20/H_g5_sections/appendix_g5/tech_spec_UR20.htm"
+          "source": "https://www.universal-robots.com/manuals/EN/HTML/SW10_9/Content/prod-usr-man/complianceUR20/H_g5_sections/appendix_g5/tech_spec_UR20.htm",
+          "sourceId": "src-0009",
+          "provenance": {
+            "sourceId": "src-0009",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur20",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Reach",
           "value": 1750,
           "unit": "mm",
-          "source": "https://www.universal-robots.com/products/ur20-1750/"
+          "source": "https://www.universal-robots.com/products/ur20-1750/",
+          "sourceId": "src-0008",
+          "provenance": {
+            "sourceId": "src-0008",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur20",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Maximum TCP speed",
           "value": 5,
           "unit": "m/s",
-          "source": "https://www.universal-robots.com/products/ur20-1750/"
+          "source": "https://www.universal-robots.com/products/ur20-1750/",
+          "sourceId": "src-0008",
+          "provenance": {
+            "sourceId": "src-0008",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur20",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Robot mass",
           "value": 64,
           "unit": "kg",
-          "source": "https://www.universal-robots.com/products/ur20-1750/"
+          "source": "https://www.universal-robots.com/products/ur20-1750/",
+          "sourceId": "src-0008",
+          "provenance": {
+            "sourceId": "src-0008",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur20",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Repeatability",
           "value": "±0.01",
           "unit": "mm",
-          "source": "https://www.universal-robots.com/products/ur20-1750/"
+          "source": "https://www.universal-robots.com/products/ur20-1750/",
+          "sourceId": "src-0008",
+          "provenance": {
+            "sourceId": "src-0008",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "ur20",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         }
       ],
       "sources": [
@@ -457,7 +716,9 @@
           "url": "https://uploads.unchainedrobotics.de/media/file_upload/Universal%20Robots%20UR20e_fc871527.png",
           "source": "Unchained Robotics — UR20 product image",
           "sourceUrl": "https://unchainedrobotics.de/en/products/robot/cobot/universal-robots-ur20e",
-          "note": "Distributor product image; reuse permission not confirmed."
+          "note": "Distributor product image; reuse permission not confirmed.",
+          "rightsStatus": "permission_not_confirmed",
+          "sourceId": null
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
@@ -498,31 +759,74 @@
           "name": "Payload",
           "value": 5,
           "unit": "kg",
-          "source": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa"
+          "source": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa",
+          "sourceId": "src-0010",
+          "provenance": {
+            "sourceId": "src-0010",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "gofa5",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Reach to wrist",
           "value": 950,
           "unit": "mm",
-          "source": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa"
+          "source": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa",
+          "sourceId": "src-0010",
+          "provenance": {
+            "sourceId": "src-0010",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "gofa5",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Reach to flange",
           "value": 1050,
           "unit": "mm",
-          "source": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa"
+          "source": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa",
+          "sourceId": "src-0010",
+          "provenance": {
+            "sourceId": "src-0010",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "gofa5",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Axes",
           "value": 6,
           "unit": "",
-          "source": "https://library.e.abb.com/public/d4c38d5b4bcf40df8504ee417cb0e830/GoFa%20CRB%2015000%20Datasheet.pdf"
+          "source": "https://library.e.abb.com/public/d4c38d5b4bcf40df8504ee417cb0e830/GoFa%20CRB%2015000%20Datasheet.pdf",
+          "provenance": {
+            "sourceId": null,
+            "verificationStatus": "missing_source",
+            "checkedAt": null,
+            "applicableModelId": "gofa5",
+            "configurationId": null,
+            "notes": "No source URL is attached to this value."
+          }
         },
         {
           "name": "Pose repeatability",
           "value": "0.02",
           "unit": "mm",
-          "source": "https://library.e.abb.com/public/7c359cda481943cfa98182b818b89878/UPDATED%20ABB_Collaborative_robotics_portfolio_2023_v4%20kopia.pdf"
+          "source": "https://library.e.abb.com/public/7c359cda481943cfa98182b818b89878/UPDATED%20ABB_Collaborative_robotics_portfolio_2023_v4%20kopia.pdf",
+          "provenance": {
+            "sourceId": null,
+            "verificationStatus": "missing_source",
+            "checkedAt": null,
+            "applicableModelId": "gofa5",
+            "configurationId": null,
+            "notes": "No source URL is attached to this value."
+          }
         }
       ],
       "sources": [
@@ -541,7 +845,9 @@
           "url": "https://cdn11.bigcommerce.com/s-hf5p6bxj3i/images/stencil/1280x1280/products/47138/51274/abb_gofa_800x800_72dpi__01448.1692212564.jpg?c=1",
           "source": "Carolina Motion Controls — ABB GoFa 5 product image",
           "sourceUrl": "https://carolinamotioncontrols.com/gofa-crb-15000-5-5kg-payload-with-95m-reach/",
-          "note": "Distributor product image; reuse permission not confirmed."
+          "note": "Distributor product image; reuse permission not confirmed.",
+          "rightsStatus": "permission_not_confirmed",
+          "sourceId": null
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
@@ -581,40 +887,94 @@
           "name": "Maximum reach",
           "value": 706.7,
           "unit": "mm",
-          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf",
+          "sourceId": "src-0012",
+          "provenance": {
+            "sourceId": "src-0012",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "kr6",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Rated payload",
           "value": 3,
           "unit": "kg",
           "qualifier": "For optimized dynamic performance",
-          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf",
+          "sourceId": "src-0012",
+          "provenance": {
+            "sourceId": "src-0012",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "kr6",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Maximum payload",
           "value": 6,
           "unit": "kg",
           "qualifier": "Conditional; depends on load centre distances and supplementary loads",
-          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf",
+          "sourceId": "src-0012",
+          "provenance": {
+            "sourceId": "src-0012",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "kr6",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Axes",
           "value": 6,
           "unit": "",
-          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf",
+          "sourceId": "src-0012",
+          "provenance": {
+            "sourceId": "src-0012",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "kr6",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Pose repeatability",
           "value": "±0.03",
           "unit": "mm",
-          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf",
+          "sourceId": "src-0012",
+          "provenance": {
+            "sourceId": "src-0012",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "kr6",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         },
         {
           "name": "Robot mass",
           "value": 50,
           "unit": "kg",
           "qualifier": "Approximate",
-          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf"
+          "source": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf",
+          "sourceId": "src-0012",
+          "provenance": {
+            "sourceId": "src-0012",
+            "verificationStatus": "source_linked_unverified",
+            "checkedAt": null,
+            "applicableModelId": "kr6",
+            "configurationId": null,
+            "notes": "A source URL is recorded, but the value-to-source match has not yet been independently verified."
+          }
         }
       ],
       "sources": [
@@ -629,7 +989,9 @@
           "url": "https://www.robotmp.com/image/cache/wkseller/21/products_2022/KR-6-R700-CR-750x750.jpg.webp",
           "source": "RobotMP — KUKA KR 6 R700 CR family image",
           "sourceUrl": "https://www.robotmp.com/kuka-kr-6-r700-cr-robot",
-          "note": "Related KR 6 R700 CR family variant; not confirmed as the exact sixx C-CR variant. Reuse permission not confirmed."
+          "note": "Related KR 6 R700 CR family variant; not confirmed as the exact sixx C-CR variant. Reuse permission not confirmed.",
+          "rightsStatus": "permission_not_confirmed",
+          "sourceId": null
         }
       ],
       "mediaStatus": "External product image preview; reuse permission not confirmed",
@@ -802,6 +1164,177 @@
       "modelIds": [
         "kr6"
       ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-0001",
+      "url": "https://bostondynamics.com/products/spot/",
+      "domain": "unknown",
+      "label": "Boston Dynamics Spot current product specifications",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0002",
+      "url": "https://support.bostondynamics.com/s/article/spot-specifications",
+      "domain": "unknown",
+      "label": "Boston Dynamics Spot specifications support reference",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0003",
+      "url": "https://www.unitree.com/go2/",
+      "domain": "unknown",
+      "label": "Unitree Go2 official product page with AIR / PRO / X / EDU specifications",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0004",
+      "url": "https://www.unitree.com/mobile/go2/",
+      "domain": "unknown",
+      "label": "Unitree Go2 mobile product page",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0005",
+      "url": "https://www.unitree.com/h1/",
+      "domain": "unknown",
+      "label": "Official H1 / H1-2 product information",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0006",
+      "url": "https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm",
+      "domain": "unknown",
+      "label": "UR5e technical specifications (current manual)",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0007",
+      "url": "https://www.universal-robots.com/media/1807465/ur5e_e-series_datasheets_web.pdf",
+      "domain": "unknown",
+      "label": "UR5e datasheet",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0008",
+      "url": "https://www.universal-robots.com/products/ur20-1750/",
+      "domain": "unknown",
+      "label": "Official UR20-1750 product page",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0009",
+      "url": "https://www.universal-robots.com/manuals/EN/HTML/SW10_9/Content/prod-usr-man/complianceUR20/H_g5_sections/appendix_g5/tech_spec_UR20.htm",
+      "domain": "unknown",
+      "label": "UR20 technical specifications and payload conditions",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0010",
+      "url": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa",
+      "domain": "unknown",
+      "label": "ABB GoFa product page and variant table",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0011",
+      "url": "https://library.e.abb.com/public/88cd85f2acbd47f9844e5d1861a4a275/200526%20GoFa%20CRB%2015000%20Datasheet.pdf",
+      "domain": "unknown",
+      "label": "ABB GoFa CRB 15000 datasheet",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    },
+    {
+      "id": "src-0012",
+      "url": "https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf",
+      "domain": "unknown",
+      "label": "KUKA KR 6 R700 sixx C technical data sheet",
+      "sourceType": "third_party",
+      "authorityTier": "third_party_secondary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-20",
+      "notes": "URL recorded from the existing profile. Page content, currentness and individual claims have not yet been independently reviewed."
+    }
+  ],
+  "dataQuality": {
+    "policyVersion": "1.0",
+    "statuses": [
+      "source_linked_unverified",
+      "verified",
+      "conflicting",
+      "outdated",
+      "missing_source",
+      "rejected"
+    ],
+    "confidencePolicy": "No numeric confidence score is assigned until a documented review methodology is implemented.",
+    "duplicatePolicy": "Potential duplicates are flagged for human review; records are never automatically merged.",
+    "reviewPolicy": "A URL being present does not mean its contents or the linked technical value have been verified.",
+    "lastQualityAuditAt": null
+  },
+  "changeLog": [
+    {
+      "id": "chg-2026-11-20-provenance",
+      "date": "2026-11-20",
+      "type": "schema_metadata",
+      "summary": "Added source registry, field-level provenance metadata and explicit media rights status.",
+      "recordsAffected": 7,
+      "automatedVerification": "Reference integrity and JSON syntax checks only; no external source content was reviewed."
     }
   ]
 }
