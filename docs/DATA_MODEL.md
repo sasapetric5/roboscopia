@@ -2,7 +2,7 @@
 
 ## Status
 
-Schema version: 2.0.0  
+Schema version: 2.1.0  
 Canonical file: `data/robots.json`
 
 This is the current application-facing JSON model. It is intentionally backward-compatible with the existing catalog and dossier readers: `records[]` remains the list of robot profiles.
