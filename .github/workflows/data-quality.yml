@@ -1,0 +1,36 @@
+name: ROBOSCOPIA Data Quality
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Audit and test data quality tools
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run automated tests
+        run: node --test tests/*.test.mjs
+
+      - name: Run data quality audit
+        run: node scripts/data-quality-audit.mjs --json
+
+      - name: Generate review queue
+        run: node scripts/data-quality-review-queue.mjs --json
