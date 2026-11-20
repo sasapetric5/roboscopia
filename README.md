@@ -178,6 +178,18 @@ The claim-level source verification engine is implemented at `scripts/source-ver
 - GitHub Actions runs tests and report generation. Live HTTP HEAD probes are opt-in only and are not part of CI.
 - The engine does not fetch page bodies, scrape content, approve claims automatically or mutate the canonical robot catalog.
 
+
+## Technical Evidence Extraction Engine
+
+The initial evidence extractor is implemented at `scripts/technical-evidence-extraction-engine.mjs`. It extracts labelled engineering specification candidates from local PDF or UTF-8 text files and preserves document SHA-256, page/line locators, exact matched text, source URL metadata and model/configuration hints.
+
+- PDF input uses a locally installed Poppler `pdftotext` executable; no PDF is downloaded from a source URL.
+- Text input supports deterministic extraction tests and page breaks.
+- Every candidate remains `extracted_unverified`; no automatic factual approval or catalog mutation occurs.
+- OCR, complex table parsing, live URL fetching and cloud document processing are not enabled.
+- Usage and limits: [docs/TECHNICAL_EVIDENCE_EXTRACTION_ENGINE.md](docs/TECHNICAL_EVIDENCE_EXTRACTION_ENGINE.md).
+- PDF/OCR open-source evaluation: [docs/OPEN_SOURCE_EVALUATION_EVIDENCE_EXTRACTION.md](docs/OPEN_SOURCE_EVALUATION_EVIDENCE_EXTRACTION.md).
+
 ## Canonical catalog data model
 
 - `data/robots.json` is the single source of truth for the current catalog and technical dossiers.
