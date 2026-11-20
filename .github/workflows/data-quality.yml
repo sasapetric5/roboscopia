@@ -43,3 +43,6 @@ jobs:
 
       - name: Validate evidence extraction CLI
         run: node scripts/technical-evidence-extraction-engine.mjs --help
+
+      - name: Validate evidence document acquisition CLI
+        run: node scripts/evidence-document-acquisition.mjs --help
