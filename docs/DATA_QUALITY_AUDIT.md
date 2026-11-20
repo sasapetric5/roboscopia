@@ -62,4 +62,4 @@ The 365-day stale-value threshold is a review trigger, not proof that a specific
 - Does not prove that an HTTPS URL is reachable.
 - Does not validate copyright ownership or grant media rights.
 - Does not replace human technical review or future schema-level validation.
-- The tests are committed but must still be executed in a Node.js environment before this implementation is considered verified.
+- The committed tests and the audit command passed in the latest GitHub Actions run.
