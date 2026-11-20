@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08111f">
+<meta name="description" content="Explore sourced robotics profiles in the ROBOSCOPIA Knowledge Base.">
+<title>Knowledge Base — ROBOSCOPIA</title>
+<style>
+:root{color-scheme:dark;--bg:#07111f;--panel:#0d1b2d;--panel2:#10233a;--line:#203650;--text:#edf5ff;--muted:#9db0c7;--blue:#54a9ff;--cyan:#68e0e8;--max:1180px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% 0%,#102b49 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.6 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}.wrap{width:min(var(--max),calc(100% - 36px));margin:auto}.topline{height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan),transparent)}
+header{border-bottom:1px solid #ffffff18;background:#07111fdd}.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-weight:850;letter-spacing:.14em;text-decoration:none}.navright{display:flex;gap:12px;align-items:center}.back,.lang{border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:#ffffff08;color:var(--text);text-decoration:none;font:inherit;font-size:12px;cursor:pointer}
+main{padding:54px 0 80px}.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}h1{font-size:clamp(36px,6vw,60px);line-height:1.06;letter-spacing:-.05em;margin:12px 0}.intro{max-width:760px;color:var(--muted);font-size:16px}
+.toolbar{display:grid;grid-template-columns:minmax(200px,1fr) 240px auto;gap:12px;margin:30px 0 18px}.field{width:100%;border:1px solid var(--line);border-radius:9px;background:#0b192a;color:var(--text);padding:13px 14px;font:inherit}.count{align-self:center;color:var(--muted);font-size:12px;text-align:right}
+.results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#10233a,#0a1728);padding:22px;display:flex;flex-direction:column;min-height:280px}.top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.type{color:var(--cyan);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:800}.status{font-size:10px;color:#a6e7dc;border:1px solid #36776d;border-radius:99px;padding:4px 8px;white-space:nowrap}.card h2{font-size:23px;margin:12px 0 2px}.maker{color:var(--muted);font-size:13px}.desc{color:#c2d1e2;font-size:13px;margin:14px 0}.specs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 16px}.spec{background:#071523;border:1px solid #1d344d;border-radius:8px;padding:9px}.spec b{display:block;font-size:15px}.spec small{color:var(--muted);font-size:10px}.actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}.source{font-size:12px;color:#86caff}.compare{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:12px}.compare input{accent-color:#58b8e8;width:16px;height:16px}
+.notice{margin:18px 0;border:1px solid #274966;background:#0c2034;border-radius:10px;padding:14px;color:#b8cce0;font-size:12px}.comparebox{margin-top:26px;border:1px solid #36718a;background:#0b1d2d;border-radius:12px;padding:18px;display:none}.comparebox.visible{display:block}.comparebox h2{margin:0 0 12px;font-size:20px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:10px;border-bottom:1px solid #24415b;vertical-align:top}th{color:var(--cyan)}
+.empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:12px;padding:35px;text-align:center;color:var(--muted)}
+footer{border-top:1px solid #ffffff16;color:#8298b2;padding:25px 0;font-size:11px}
+@media(max-width:680px){.toolbar{grid-template-columns:1fr}.count{text-align:left}.results{grid-template-columns:1fr}.specs{grid-template-columns:repeat(3,1fr)}main{padding-top:38px}}
+</style>
+</head>
+<body>
+<div class="topline"></div>
+<header><div class="wrap nav"><a class="brand" href="index.html">ROBOSCOPIA</a><div class="navright"><a class="back" href="index.html" data-en="Home" data-sr="Početna">Home</a><button class="lang" id="languageToggle" type="button">SR / EN</button></div></div></header>
+<main class="wrap">
+<div class="eyebrow" data-en="Knowledge Base · Early release" data-sr="Baza znanja · Početno izdanje">Knowledge Base · Early release</div>
+<h1 data-en="Explore robotics." data-sr="Istražite robotiku.">Explore robotics.</h1>
+<p class="intro" data-en="A growing index of robotics and industrial technology. Search the current sample profiles, filter by category, and compare sourced specifications. Every displayed specification links to its source." data-sr="Baza robota i industrijskih tehnologija koja se postepeno širi. Pretražite početne profile, filtrirajte ih po kategoriji i uporedite specifikacije sa izvorima. Svaka prikazana specifikacija povezana je sa izvorom.">A growing index of robotics and industrial technology. Search the current sample profiles, filter by category, and compare sourced specifications. Every displayed specification links to its source.</p>
+<div class="toolbar">
+<input class="field" id="search" type="search" placeholder="Search model, manufacturer or application…" aria-label="Search the knowledge base">
+<select class="field" id="category" aria-label="Filter by category"><option value="all">All categories</option><option value="quadruped">Quadruped robots</option><option value="cobot">Collaborative robot arms</option></select>
+<div class="count" id="count" aria-live="polite">2 profiles</div>
+</div>
+<div class="notice" data-en="Data policy: only specifications visible in the cited manufacturer source are shown. Missing values are intentionally omitted. This is an initial sample, not a complete product catalogue." data-sr="Pravila podataka: prikazuju se samo specifikacije koje postoje u navedenom izvoru proizvođača. Nepoznate vrednosti se namerno izostavljaju. Ovo je početni uzorak, a ne kompletan katalog.">Data policy: only specifications visible in the cited manufacturer source are shown. Missing values are intentionally omitted. This is an initial sample, not a complete product catalogue.</div>
+<section class="results" id="results" aria-live="polite"></section>
+<section class="comparebox" id="comparebox" aria-live="polite"><h2 data-en="Side-by-side comparison" data-sr="Direktno poređenje">Side-by-side comparison</h2><div class="tablewrap" id="comparetable"></div></section>
+</main>
+<footer><div class="wrap">© 2026 ROBOSCOPIA · <span data-en="Source-linked sample records" data-sr="Primeri zapisa sa izvorima">Source-linked sample records</span></div></footer>
+<script>
+(() => {
+const records = [
+ {id:"spot",name:"Spot",maker:"Boston Dynamics",category:"quadruped",categoryEn:"Quadruped robot",categorySr:"Četvoronožni robot",summaryEn:"Mobile quadruped robot for inspection, sensing and work in industrial, construction and research environments.",summarySr:"Mobilni četvoronožni robot za inspekciju, prikupljanje podataka i rad u industrijskim, građevinskim i istraživačkim okruženjima.",specs:[["33.8 kg","Mass with battery","Masa sa baterijom"],["1.6 m/s","Max speed","Maks. brzina"],["14 kg","Max payload","Maks. nosivost"]],source:"https://bostondynamics.com/products/spot/",sourceLabel:"Manufacturer specifications",sourceLabelSr:"Specifikacije proizvođača",reviewed:"2026-11-20"},
+ {id:"ur5e",name:"UR5e",maker:"Universal Robots",category:"cobot",categoryEn:"Collaborative robot arm",categorySr:"Kolaborativna robotska ruka",summaryEn:"Six-axis collaborative industrial robot arm. The manufacturer lists payload and reach in its technical specification sheet.",summarySr:"Šestoosna kolaborativna industrijska robotska ruka. Proizvođač navodi nosivost i radni dohvat u tehničkoj specifikaciji.",specs:[["5 kg","Max payload","Maks. nosivost"],["850 mm","Reach","Dohvat"],["6","Rotating joints","Rotacionih zglobova"]],source:"https://www.universal-robots.com/manuals/EN/HTML/SW10_10/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm",sourceLabel:"Manufacturer technical sheet",sourceLabelSr:"Tehnička specifikacija proizvođača",reviewed:"2026-11-20"}
+];
+let language = "en";
+const selected = new Set();
+const el = id => document.getElementById(id);
+const t = (en,sr) => language === "en" ? en : sr;
+function render(){
+ const query=el("search").value.trim().toLowerCase(), category=el("category").value;
+ const list=records.filter(r=>(category==="all"||r.category===category)&&[r.name,r.maker,r.categoryEn,r.summaryEn,r.categorySr,r.summarySr].join(" ").toLowerCase().includes(query));
+ el("count").textContent=list.length+" "+t("profiles","profila");
+ el("results").innerHTML=list.length?list.map(r=>'<article class="card"><div class="top"><span class="type">'+t(r.categoryEn,r.categorySr)+'</span><span class="status">'+t("Source linked","Izvor povezan")+'</span></div><h2>'+r.name+'</h2><div class="maker">'+r.maker+'</div><p class="desc">'+t(r.summaryEn,r.summarySr)+'</p><div class="specs">'+r.specs.map(s=>'<div class="spec"><b>'+s[0]+'</b><small>'+t(s[1],s[2])+'</small></div>').join("")+'</div><div class="actions"><a class="source" href="'+r.source+'" target="_blank" rel="noopener noreferrer">'+t(r.sourceLabel,r.sourceLabelSr)+' ↗</a><label class="compare"><input type="checkbox" data-compare="'+r.id+'" '+(selected.has(r.id)?"checked":"")+'> '+t("Compare","Uporedi")+'</label></div></article>').join(""):'<div class="empty">'+t("No profiles match your search. Try another term or category.","Nema profila za zadatu pretragu. Pokušajte drugi pojam ili kategoriju.")+'</div>';
+ el("results").querySelectorAll("[data-compare]").forEach(input=>input.addEventListener("change",e=>{const id=e.target.dataset.compare;if(e.target.checked){if(selected.size>=2){e.target.checked=false;return;}selected.add(id);}else selected.delete(id);renderCompare();}));
+ renderCompare();
+}
+function renderCompare(){
+ const box=el("comparebox"), chosen=records.filter(r=>selected.has(r.id));
+ box.classList.toggle("visible",chosen.length>0);
+ if(!chosen.length){el("comparetable").innerHTML="";return;}
+ const rows=[["Manufacturer","Proizvođač",r=>r.maker],["Category","Kategorija",r=>t(r.categoryEn,r.categorySr)],["Source","Izvor",r=>'<a class="source" href="'+r.source+'" target="_blank" rel="noopener noreferrer">'+t("Open source","Otvori izvor")+' ↗</a>']];
+ const keys=[...new Set(chosen.flatMap(r=>r.specs.map(s=>s[1])))];
+ keys.forEach(key=>rows.push([key,key,r=>{const s=r.specs.find(x=>x[1]===key);return s?s[0]:"—";}]));
+ el("comparetable").innerHTML='<table><thead><tr><th>'+t("Attribute","Karakteristika")+'</th>'+chosen.map(r=>'<th>'+r.name+'</th>').join("")+'</tr></thead><tbody>'+rows.map(row=>'<tr><th>'+t(row[0],row[1])+'</th>'+chosen.map(r=>'<td>'+row[2](r)+'</td>').join("")+'</tr>').join("")+'</tbody></table>';
+}
+el("search").addEventListener("input",render);el("category").addEventListener("change",render);
+el("languageToggle").addEventListener("click",()=>{language=language==="en"?"sr":"en";document.documentElement.lang=language;document.querySelectorAll("[data-en]").forEach(n=>n.textContent=n.dataset[language]);el("search").placeholder=t("Search model, manufacturer or application…","Pretraži model, proizvođača ili primenu…");const options=el("category").options;options[0].text=t("All categories","Sve kategorije");options[1].text=t("Quadruped robots","Četvoronožni roboti");options[2].text=t("Collaborative robot arms","Kolaborativne robotske ruke");render();});
+render();
+})();
+</script>
+</body></html>
