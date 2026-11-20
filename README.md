@@ -108,12 +108,14 @@ The first major technical focus is expected to be the **Data Engine**: dependabl
 
 - [x] GitHub repository created.
 - [x] Initial README created.
-- [ ] Competitive intelligence research completed.
-- [ ] Reusable components evaluated.
+- [ ] Competitive intelligence research completed (initial candidate discovery started).
+- [x] Preliminary open-source discovery across 10 robotics-related GitHub repositories; license and scope checks started. No third-party code or datasets imported.
+- [ ] Full security, maintenance and compatibility evaluation of selected reusable components.
 - [ ] Architecture and technology choices finalized.
-- [x] First functional unit prototype implemented: source-linked Knowledge Base with search, category filtering and side-by-side comparison (two initial sample profiles).
-- [ ] Functional and mobile-browser verification completed.
-- [x] Cloudflare Pages production deployment approved; custom-domain verification may still be in progress.
+- [x] Knowledge Base catalog upgraded: 7 source-linked profiles across 4 categories, bilingual interface, search, category filters, sorting, expandable source details and comparison of up to 3 models.
+- [x] Original inline SVG illustrations added as temporary interface artwork; they are explicitly not represented as product photographs.
+- [ ] Functional, accessibility and mobile-browser verification completed.
+- [x] Cloudflare Pages deployment from `main` approved; domain setup previously confirmed by the project owner.
 
 ---
 
@@ -130,6 +132,14 @@ ROBOSCOPIA je planirana kao međunarodna platforma za otkrivanje, razumevanje, p
 3. **Marketplace** — postepeno uvođenje ponuda novih i polovnih robota, CNC mašina, rezervnih delova i pribora.
 
 Kvalitetna i proverljiva baza podataka predstavlja temelj platforme. Marketplace se razvija postepeno i ne sme da utiče na objektivnost tehničkih informacija.
+
+### Trenutna isporučena celina — Knowledge Base
+
+- Početni katalog sadrži 7 profila: Boston Dynamics Spot, Unitree Go2, Unitree H1, Universal Robots UR5e, Universal Robots UR20-1750, ABB GoFa 5 i KUKA KR 6 R700 sixx C.
+- Dostupni su pretraga, filteri po kategoriji, sortiranje, SR/EN promena jezika i poređenje do tri modela.
+- Svaki profil vodi do izvora proizvođača. Prikazane vrednosti su odabrane specifikacije, a ne potpuna tehnička dokumentacija.
+- Grafički prikazi su originalne SVG ilustracije interfejsa, ne fotografije stvarnih proizvoda.
+- Katalog je početna verzija; funkcionalnost u mobilnom pregledaču i dostupnost na produkcionom domenu još zahtevaju praktičnu proveru.
 
 ## Planirane funkcionalne oblasti
 
