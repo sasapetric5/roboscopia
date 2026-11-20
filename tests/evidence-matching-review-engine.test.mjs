@@ -60,3 +60,32 @@ test("keeps ambiguous exact matches visible instead of choosing one", () => {
   assert.equal(report.matches.length, 2);
   assert.ok(report.matches.every((item) => item.status === "ambiguous_match"));
 });
+
+test("maps every catalog specification label to its normalized field", () => {
+  const cases = [
+    ["Battery endurance", "runtime"], ["Maximum running speed", "speed"],
+    ["Moving speed", "speed"], ["Maximum TCP speed", "speed"],
+    ["Robot arm mass", "mass"], ["Robot mass", "mass"],
+    ["Standard payload", "payload"], ["Maximum payload", "payload"],
+    ["Maximum reach", "reach"], ["Reach to wrist", "reach"],
+    ["Reach to flange", "reach"], ["Pose repeatability", "repeatability"],
+    ["Axes", "degrees_of_freedom"], ["Height", "height"],
+    ["Standing dimensions", "dimensions"], ["Maximum joint torque", "torque"],
+  ];
+  for (const [specification, expectedField] of cases) {
+    const localClaim = { ...claim, specification, value: 1, unit: "" };
+    const report = buildEvidenceMatchingReport(db, { claims: [localClaim] }, [{ candidates: [candidate({ field: expectedField, extractedValue: 1, unit: "" })] }]);
+    assert.equal(report.matches[0].field, expectedField, specification);
+    assert.notEqual(report.matches[0].status, "no_matching_evidence", specification);
+  }
+});
+test("keeps approximate values, ranges and tolerances for human review", () => {
+  const ranged = buildEvidenceMatchingReport(db, { claims: [{ ...claim, value: "2–4", unit: "h" }] }, [{ candidates: [candidate({ field: "runtime", extractedValue: "2–4", unit: "h", valueQualifier: true })] }]);
+  assert.equal(ranged.matches[0].status, "non_scalar_review");
+  const tolerance = buildEvidenceMatchingReport(db, { claims: [{ ...claim, specification: "Pose repeatability", value: "±0.03", unit: "mm" }] }, [{ candidates: [candidate({ field: "repeatability", extractedValue: 0.03, unit: "mm", valueQualifier: true })] }]);
+  assert.equal(tolerance.matches[0].status, "non_scalar_review");
+});
+test("does not treat evidence without model identity as an exact match", () => {
+  const report = buildEvidenceMatchingReport(db, sourceReport, [{ candidates: [candidate({ modelId: null })] }]);
+  assert.equal(report.matches[0].status, "model_identity_unverified");
+});
