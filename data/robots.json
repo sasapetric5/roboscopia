@@ -1349,6 +1349,30 @@
       "lastReviewedAt": null,
       "firstRecordedAt": "2026-11-20",
       "notes": "Official manufacturer-controlled domain identified from the registered HTTPS hostname (library.e.abb.com). Domain origin is classified as manufacturer-primary; page or PDF contents, currentness, exact claim applicability, and processing/reuse permissions remain pending human review. Historical 2023 portfolio PDF; retain as historical context only until currentness and model-specific applicability are checked. Existing claim verification and document-processing rights are not granted by domain classification."
+    },
+    {
+      "id": "src-0016",
+      "url": "https://www.universal-robots.com/manuals/EN/PDF/SW5_26/user-manual-UR20-PDF_online/718-818-00_UR20_User_Manual_en_Global.pdf",
+      "domain": "universal-robots.com",
+      "label": "Universal Robots UR20 User Manual — official PDF (PolyScope SW5_26)",
+      "sourceType": "manufacturer_primary",
+      "authorityTier": "manufacturer_primary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-21",
+      "notes": "Direct manufacturer-hosted UR20 User Manual PDF. Document identity and revision are taken from the registered URL/path and registry metadata; PDF contents, publication metadata, exact claim applicability, and processing/reuse permissions remain pending human review. Separate from the UR20-1750 product page (src-0008) and SW10.9 online technical specification (src-0009)."
+    },
+    {
+      "id": "src-0017",
+      "url": "https://library.e.abb.com/public/24de2251a42d4f9badda0232508ff242/9AKK107991A8564_en_F_GoFa%E2%84%A2%20CRB%2015000%20datasheet.pdf",
+      "domain": "library.e.abb.com",
+      "label": "ABB GoFa CRB 15000 Datasheet — official PDF (9AKK107991A8564)",
+      "sourceType": "manufacturer_primary",
+      "authorityTier": "manufacturer_primary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-21",
+      "notes": "Direct ABB-hosted GoFa CRB 15000 datasheet PDF corresponding to the evidence-document registry download URL. PDF contents, publication metadata, variant-specific claim applicability, relationship to src-0011 and src-0014, and processing/reuse permissions remain pending human review. The ABB product family page is separately registered as src-0010; the 2023 portfolio is historical context (src-0015)."
     }
   ],
   "dataQuality": {

@@ -311,7 +311,7 @@
       "documentType": "pdf",
       "title": "UR20 User Manual",
       "revision": "PolyScope SW5_26",
-      "sourcePageUrl": "https://www.universal-robots.com/products/ur20-1750/",
+      "sourcePageUrl": "https://www.universal-robots.com/manuals/EN/PDF/SW5_26/user-manual-UR20-PDF_online/718-818-00_UR20_User_Manual_en_Global.pdf",
       "downloadUrl": "https://www.universal-robots.com/manuals/EN/PDF/SW5_26/user-manual-UR20-PDF_online/718-818-00_UR20_User_Manual_en_Global.pdf",
       "officialHost": "universal-robots.com",
       "deliveryHost": "universal-robots.com",
@@ -325,7 +325,7 @@
         "repeatability"
       ],
       "rightsStatus": "review_required",
-      "notes": "Catalog model label UR20-1750. Manufacturer FAQ says UR20-1750 is a naming update for UR20, mechanically unchanged and compatible with Generation 7 components; retain generation/controller context if applicable. Manual states 20 kg standard, 25 kg with boundary conditions, approximately 5 m/s TCP speed, ±0.1 mm repeatability and 64 kg arm weight.",
+      "notes": "Direct source is the manufacturer's UR20 User Manual PDF (src-0016). Keep the UR20-1750 product page (src-0008) and PolyScope SW10.9 online technical specification (src-0009) as distinct related sources. Existing claim-to-source assignments are retained unchanged and remain unverified; manual contents, exact applicability, and rights require human review.",
       "catalogClaims": [
         {
           "specification": "Standard payload",
@@ -375,8 +375,9 @@
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
       },
-      "canonicalSourceId": "src-0008",
+      "canonicalSourceId": "src-0016",
       "relatedSourceIds": [
+        "src-0008",
         "src-0009"
       ]
     },
@@ -389,7 +390,7 @@
       "documentType": "pdf",
       "title": "GoFa CRB 15000 Datasheet",
       "revision": "9AKK107991A8564",
-      "sourcePageUrl": "https://www.abb.com/global/en/areas/robotics/products/robots/collaborative-robots/gofa",
+      "sourcePageUrl": "https://library.e.abb.com/public/24de2251a42d4f9badda0232508ff242/9AKK107991A8564_en_F_GoFa%E2%84%A2%20CRB%2015000%20datasheet.pdf",
       "downloadUrl": "https://library.e.abb.com/public/24de2251a42d4f9badda0232508ff242/9AKK107991A8564_en_F_GoFa%E2%84%A2%20CRB%2015000%20datasheet.pdf",
       "officialHost": "abb.com",
       "deliveryHost": "library.e.abb.com",
@@ -402,7 +403,7 @@
         "pose repeatability"
       ],
       "rightsStatus": "review_required",
-      "notes": "Variant columns distinguish GoFa 5, GoFa 10 and GoFa 12; preserve the GoFa 5 column.",
+      "notes": "Direct source is the ABB-hosted GoFa CRB 15000 datasheet PDF (src-0017). Keep the GoFa product family page (src-0010), earlier/other datasheet records (src-0011 and src-0014), and historical 2023 collaborative robotics portfolio (src-0015) distinct. The relationship and revision identity between src-0011 and src-0014 remain unresolved pending PDF metadata/hash comparison. Existing claim-to-source assignments and values are retained unchanged and remain unverified; variant applicability and rights require human review.",
       "catalogClaims": [
         {
           "specification": "Payload",
@@ -446,8 +447,10 @@
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
       },
-      "canonicalSourceId": "src-0010",
+      "canonicalSourceId": "src-0017",
       "relatedSourceIds": [
+        "src-0010",
+        "src-0011",
         "src-0014",
         "src-0015"
       ]
