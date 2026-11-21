@@ -21,7 +21,9 @@ function compare(a,b) {
   if (a.value == null || b.value == null) return {status:"value_missing",evidenceStatus,left:a.value??null,right:b.value??null,leftUnit:a.unit??null,rightUnit:b.unit??null,interpretation:"not_ranked"};
   if (typeof a.value === "number" && typeof b.value === "number") {
     if (!Number.isFinite(a.value) || !Number.isFinite(b.value)) return {status:"invalid_numeric_value",evidenceStatus,interpretation:"not_ranked"};
-    if (typeof a.unit !== "string" || !a.unit.trim() || a.unit !== b.unit)
+    const leftUnit = typeof a.unit === "string" ? a.unit.trim() : "";
+    const rightUnit = typeof b.unit === "string" ? b.unit.trim() : "";
+    if (leftUnit !== rightUnit)
       return {status:"unit_mismatch",evidenceStatus,left:a.value,right:b.value,leftUnit:a.unit??null,rightUnit:b.unit??null,interpretation:"not_ranked"};
     return {status:a.value===b.value?"same_value":"different_values",evidenceStatus,left:a.value,right:b.value,unit:a.unit,leftUnit:a.unit??null,rightUnit:b.unit??null,interpretation:"not_ranked"};
   }
