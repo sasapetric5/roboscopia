@@ -26,7 +26,7 @@ The current repository is an early foundation. Phase 1 remains blocked until its
 7. **Reuse first:** discover and evaluate suitable maintained open-source components before building equivalent functionality.
 8. **Cost discipline:** prefer deterministic code and local processing for parsing, filtering, calculations and validation. No paid model, API, service or infrastructure without explicit owner approval.
 9. **Security and privacy:** keep secrets server-side, enforce authorization and quotas, validate tools, and treat retrieved documents/listings as untrusted data.
-10. **International by design:** Serbian and English initially, with extensible multilingual support.
+10. **Language independence:** automatically detect and respond in the user's language, without a fixed supported-language list, subject to the selected model's actual capabilities.
 
 ## 3. Knowledge domains
 
@@ -108,7 +108,7 @@ Seller-submitted claims remain separate from canonical manufacturer specificatio
 This is a logical design, not a declaration of deployed services.
 
 ### 5.1 User interface
-A central, responsive assistant available throughout the site, with conversation context, page-aware prompts, citations, comparison tables, links to profiles/listings, full-profile rendering, Serbian/English support and accessible mobile/desktop behavior.
+A central, responsive assistant available throughout the site, with conversation context, page-aware prompts, citations, comparison tables, links to profiles/listings, full-profile rendering, automatic multilingual interaction and accessible mobile/desktop behavior.
 
 ### 5.2 Supervisor and task router
 A supervisor identifies the user's intent and selects the smallest suitable workflow. Request types include general explanation, site navigation, catalogue lookup, document question, model identification, comparison, compatibility, replacement search, profile exploration and Marketplace search. Do not invoke every specialist for every question.
@@ -146,6 +146,23 @@ Support PDF text/table extraction, OCR where necessary, section/page/table/figur
 
 ### 5.6 Model/provider gateway
 Call models through a server-side provider abstraction. Route deterministic parsing, validation, filtering and calculations to code/local tools; simple classification to efficient models; complex technical reasoning to stronger models; and high-impact claims through independent verification. Configure budgets, quotas, fallback and logging. Never expose API keys in browser code or public repository files. No paid provider or billable service without explicit approval.
+
+### 5.8 Automatic multilingual behavior
+
+The assistant must automatically detect the language of each user message and normally respond in that same language. This is a core product requirement, not an optional translation feature, and must not be limited to Serbian and English or to a hard-coded list of languages.
+
+Requirements:
+- detect the language from the current message and conversational context; do not require a manual language selector;
+- allow the user to switch languages naturally at any point in an ongoing conversation;
+- retrieve from the same shared knowledge archive regardless of the language used in the question;
+- support cross-language retrieval, such as a question in Serbian answered using an English manufacturer datasheet;
+- preserve manufacturer names, model identifiers, part numbers, standards, protocol names, units and other technical identifiers exactly where translation would damage meaning;
+- answer in the user's language while retaining original document titles, source quotations and citations as appropriate;
+- translate explanations and summaries, not canonical source records or technical values;
+- when language detection is uncertain, ask a concise clarification or use the strongest contextual signal rather than silently assuming;
+- be transparent when a selected model/provider has limited capability in a particular language.
+
+The language capability must be provider-independent. Do not make Gemini, or any single model provider, a mandatory dependency. Evaluate language detection, technical terminology and cross-language retrieval across representative languages and scripts. Do not claim support for every language until it has been tested; the requirement is an extensible, automatically adapting design rather than a fixed Serbian/English restriction.
 
 ### 5.7 Security, governance and audit
 Require authentication/authorization for protected actions, rate limits, strict tool schemas, server-side validation, audit trails, data minimization and retention controls. Treat documents, webpages, listings and uploads as untrusted data, never as system instructions. No arbitrary code execution or unrestricted network access. Require human approval for canonical data changes, publishing, seller verification, commercial actions and sensitive operations. Separate public content from private seller/customer data.
@@ -195,7 +212,9 @@ Measure:
 - abstention quality when evidence is insufficient;
 - profile completeness and fabricated-field rate;
 - latency, model/API cost and recovery behavior;
-- Serbian/English quality;
+- language detection accuracy and answer quality across a broad, changing set of user languages;
+- cross-language retrieval quality when the question and source documents use different languages;
+- preservation of technical names, model codes, part numbers, units and source quotations across languages;
 - prompt-injection resistance, authorization and data isolation.
 
 Test similar model names, aliases, generations, conflicting documents, missing/outdated evidence, ambiguous part numbers, superficially similar incompatible components, seller claims that conflict with manufacturer data, unavailable features and attempts to obtain secrets or trigger unauthorized actions. Do not rely on one aggregate score; high-risk compatibility and verification criteria need explicit thresholds and human review.
@@ -249,7 +268,7 @@ The first public release requires:
 - answers grounded in approved site data with supporting citations;
 - clear distinction between verified, unverified, conflicting and general knowledge;
 - abstention instead of guessing missing model/configuration details;
-- Serbian and English search;
+- automatic language detection and responses in the user's language, evaluated across a broad multilingual test set;
 - navigation to relevant existing profile pages;
 - tested authentication, quotas, tool permissions and secret handling;
 - passing prompt-injection and data-isolation tests;
