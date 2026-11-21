@@ -204,10 +204,12 @@ test("preserves registered source identity on the document and every extracted c
     text: "Spot specifications\\nMaximum payload: 14 kg",
     sourceUrl: "https://bostondynamics.com/products/spot/",
     sourceId: "src-0001",
+    relatedSourceIds: ["src-0002"],
     modelId: "spot",
     modelName: "Spot",
   });
   assert.equal(report.document.sourceId, "src-0001");
+  assert.deepEqual(report.document.relatedSourceIds, ["src-0002"]);
   assert.ok(report.candidates.length > 0);
-  assert.ok(report.candidates.every((item) => item.sourceId === "src-0001"));
+  assert.ok(report.candidates.every((item) => item.sourceId === "src-0001" && item.relatedSourceIds.includes("src-0002")));
 });
