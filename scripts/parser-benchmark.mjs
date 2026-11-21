@@ -14,6 +14,16 @@ export function scoreOutput(output,expected,rows=[],expectedRows=[]){
  const matched=checks.filter(x=>x.found).length,tm=tableChecks.filter(x=>x.found).length;
  return {expectedCount:checks.length,matchedCount:matched,evidenceRecall:checks.length?matched/checks.length:null,checks,expectedTableRows:tableChecks.length,matchedTableRows:tm,tableRowRecall:tableChecks.length?tm/tableChecks.length:null,tableChecks};
 }
+export function extractPopplerTableRows(text){
+ const rows=[];
+ for(const rawLine of String(text??"").split(/\\r?\\n/)){
+  const line=rawLine.trim();
+  if(!line||/^[-_=\\s]+$/.test(line))continue;
+  const cells=line.split(/\\s{2,}/).map(value=>value.trim()).filter(Boolean);
+  if(cells.length>=2)rows.push(cells);
+ }
+ return rows;
+}
 async function run(adapter,pdf,timeout){
  const start=Date.now();
  if(adapter==="poppler"){
