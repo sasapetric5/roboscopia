@@ -69,13 +69,17 @@ async function compare(){
    return (url?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(ref||"Source link")+'</a>':esc(ref||"No source link"))+' <span class="source-meta">· '+esc(state)+'</span>';
   };
   const rows=response.result.comparisons.flatMap(pair=>pair.specifications.map(item=>{
-   const left=item.left==null?"—":String(item.left)+(item.unit?" "+item.unit:"");
-   const right=item.right==null?"—":String(item.right)+(item.unit?" "+item.unit:"");
+   const leftUnit=item.leftUnit??item.unit??"";
+   const rightUnit=item.rightUnit??item.unit??"";
+   const left=item.left==null?"—":String(item.left)+(leftUnit?" "+leftUnit:"");
+   const right=item.right==null?"—":String(item.right)+(rightUnit?" "+rightUnit:"");
    const pairName=pair.leftModel.name+" ↔ "+pair.rightModel.name;
-   return '<tr><td>'+esc(pairName)+'</td><th>'+esc(item.specification)+'</th><td>'+esc(left)+'<br>'+esc(right)+'</td><td>'+esc(statusText[item.status]||item.status)+'</td><td>'+esc(evidenceText[item.evidenceStatus]||item.evidenceStatus||"—")+'</td><td>'+provenance(pair.leftModel.id,item.specification)+'<br>'+provenance(pair.rightModel.id,item.specification)+'</td></tr>';
+   const leftCell='<strong>'+esc(pair.leftModel.name)+'</strong><br>'+esc(left);
+   const rightCell='<strong>'+esc(pair.rightModel.name)+'</strong><br>'+esc(right);
+   return '<tr><td>'+esc(pairName)+'</td><th>'+esc(item.specification)+'</th><td>'+leftCell+'</td><td>'+rightCell+'</td><td>'+esc(statusText[item.status]||item.status)+'</td><td>'+esc(evidenceText[item.evidenceStatus]||item.evidenceStatus||"—")+'</td><td>'+provenance(pair.leftModel.id,item.specification)+'<br>'+provenance(pair.rightModel.id,item.specification)+'</td></tr>';
   }));
   const note=lang==="en"?"Agent output is a structured comparison, not factual verification, compatibility approval or a performance ranking. Linked sources are provenance only.":"Rezultat agenta je strukturisano poređenje, a ne činjenična verifikacija, potvrda kompatibilnosti ili rangiranje performansi. Povezani izvori predstavljaju samo poreklo podataka.";
-  $("compareTable").innerHTML='<p class="source-meta">'+esc(note)+'</p><table><thead><tr><th>'+(lang==="en"?"Model pair":"Par modela")+'</th><th>'+esc(t("specification"))+'</th><th>'+(lang==="en"?"Values (left / right)":"Vrednosti (levo / desno)")+'</th><th>'+(lang==="en"?"Agent comparison":"Poređenje agenta")+'</th><th>'+(lang==="en"?"Review status":"Status pregleda")+'</th><th>'+(lang==="en"?"Source provenance":"Poreklo izvora")+'</th></tr></thead><tbody>'+rows.join("")+'</tbody></table>';
+  $("compareTable").innerHTML='<p class="source-meta">'+esc(note)+'</p><table><thead><tr><th>'+(lang==="en"?"Model pair":"Par modela")+'</th><th>'+esc(t("specification"))+'</th><th>'+(lang==="en"?"Left model / value":"Levi model / vrednost")+'</th><th>'+(lang==="en"?"Right model / value":"Desni model / vrednost")+'</th><th>'+(lang==="en"?"Agent comparison":"Poređenje agenta")+'</th><th>'+(lang==="en"?"Review status":"Status pregleda")+'</th><th>'+(lang==="en"?"Source provenance":"Poreklo izvora")+'</th></tr></thead><tbody>'+rows.join("")+'</tbody></table>';
   $("comparePanel").scrollIntoView({behavior:"smooth",block:"nearest"});
  }catch(error){
   $("compareTable").innerHTML='<p>'+esc(lang==="en"?"Comparison could not be completed.":"Poređenje nije moglo da se izvrši.")+' ('+esc(error.message)+')</p>';

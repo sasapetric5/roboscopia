@@ -25,6 +25,24 @@ test("compares claims without ranking and marks unreviewed evidence",async()=>{
  assert.equal(s.find(x=>x.specification==="speed").evidenceStatus,"neither_human_reviewed");
  assert.equal(r.policy.ranking,false);assert.equal(r.policy.compatibilityDecision,false);assert.equal(r.reviewRequired,true);
 });
+test("unit mismatch keeps each model's own unit",async()=>{
+ const {agent}=fixture({getClaims:async id=>id==="spot"?[c(id,"speed",1.6,"m/s")]:[c(id,"speed",3,"km/h")]});
+ const r=await agent.run({modelIds:["spot","go2"]});
+ const speed=r.comparisons[0].specifications[0];
+ assert.equal(speed.status,"unit_mismatch");
+ assert.equal(speed.leftUnit,"m/s");
+ assert.equal(speed.rightUnit,"km/h");
+});
+test("missing claims retain the available model unit",async()=>{
+ const {agent}=fixture({getClaims:async id=>id==="spot"?[c(id,"height",180,"cm")]:[]});
+ const r=await agent.run({modelIds:["spot","go2"]});
+ const height=r.comparisons[0].specifications[0];
+ assert.equal(height.status,"not_available_for_one_model");
+ assert.equal(height.left,180);
+ assert.equal(height.leftUnit,"cm");
+ assert.equal(height.right,null);
+ assert.equal(height.rightUnit,null);
+});
 test("rejects invalid, duplicate, or excessive model selections before lookups",async()=>{
  const {agent,calls}=fixture();
  assert.equal((await agent.run({modelIds:["spot"]})).code,"INVALID_MODEL_IDS");

@@ -18,15 +18,15 @@ const reviewed = c => plain(c.humanReview) && c.humanReview.outcome === "support
 function compare(a,b) {
   const evidenceStatus = reviewed(a) && reviewed(b) ? "both_human_reviewed" :
     reviewed(a) ? "left_human_reviewed" : reviewed(b) ? "right_human_reviewed" : "neither_human_reviewed";
-  if (a.value == null || b.value == null) return {status:"value_missing",evidenceStatus,left:a.value??null,right:b.value??null,interpretation:"not_ranked"};
+  if (a.value == null || b.value == null) return {status:"value_missing",evidenceStatus,left:a.value??null,right:b.value??null,leftUnit:a.unit??null,rightUnit:b.unit??null,interpretation:"not_ranked"};
   if (typeof a.value === "number" && typeof b.value === "number") {
     if (!Number.isFinite(a.value) || !Number.isFinite(b.value)) return {status:"invalid_numeric_value",evidenceStatus,interpretation:"not_ranked"};
     if (typeof a.unit !== "string" || !a.unit.trim() || a.unit !== b.unit)
       return {status:"unit_mismatch",evidenceStatus,left:a.value,right:b.value,leftUnit:a.unit??null,rightUnit:b.unit??null,interpretation:"not_ranked"};
-    return {status:a.value===b.value?"same_value":"different_values",evidenceStatus,left:a.value,right:b.value,unit:a.unit,interpretation:"not_ranked"};
+    return {status:a.value===b.value?"same_value":"different_values",evidenceStatus,left:a.value,right:b.value,unit:a.unit,leftUnit:a.unit??null,rightUnit:b.unit??null,interpretation:"not_ranked"};
   }
   if (typeof a.value === "string" && typeof b.value === "string")
-    return {status:a.value===b.value?"same_value":"different_values",evidenceStatus,left:a.value,right:b.value,unit:a.unit??null,interpretation:"not_ranked"};
+    return {status:a.value===b.value?"same_value":"different_values",evidenceStatus,left:a.value,right:b.value,unit:a.unit??null,leftUnit:a.unit??null,rightUnit:b.unit??null,interpretation:"not_ranked"};
   return {status:"incomparable_value_types",evidenceStatus,interpretation:"not_ranked"};
 }
 export function createComparisonCompatibilityAgent({getModel,getClaims}={}) {
@@ -62,7 +62,8 @@ export function createComparisonCompatibilityAgent({getModel,getClaims}={}) {
               ? (reviewed(x) ? "left_human_reviewed" : "neither_human_reviewed")
               : (reviewed(y) ? "right_human_reviewed" : "neither_human_reviewed");
             return {specification:k,status:"not_available_for_one_model",evidenceStatus,
-              left:x?.value??null,right:y?.value??null,interpretation:"not_ranked"};
+              left:x?.value??null,right:y?.value??null,leftUnit:x?.unit??null,rightUnit:y?.unit??null,
+              interpretation:"not_ranked"};
           }
           return {specification:k,...compare(x,y)};
         })});

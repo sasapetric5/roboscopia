@@ -74,4 +74,8 @@ test("public knowledge base initializes the shared comparison runtime after cata
   assert.ok(runtimeInitialization > catalogValidation, "runtime must initialize after schema validation");
   assert.ok(recordFiltering > runtimeInitialization, "runtime must initialize before the page renders records");
   assert.match(html, /comparisonRuntime\.compareModels\(chosen\.map\(r=>r\.id\)\)/);
+  assert.match(html, /item\.leftUnit\?\?item\.unit/);
+  assert.match(html, /item\.rightUnit\?\?item\.unit/);
+  assert.match(html, /Left model \/ value/);
+  assert.match(html, /Right model \/ value/);
 });
