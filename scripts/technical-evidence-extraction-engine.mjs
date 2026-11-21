@@ -13,19 +13,19 @@ const MAX_EXTRACTED_CHARS = 10 * 1024 * 1024;
 const PDF_TIMEOUT_MS = 30_000;
 
 const PATTERNS = [
-  { id: "mass", label: "Mass / weight", regex: /\b(?:(?:robot\s+arm|robot)?\s*(?:mass|weight))(?:\s+with\s+battery)?\s*[:=–-]?\s*(\d+(?:[.,]\d+)?)\s*(kg|g|lb|lbs)\b/i },
-  { id: "payload", label: "Payload", regex: /\b(?:(?:maximum|max\.?|rated|standard)\s+)?payload\s*[:=–-]?\s*(≈|~)?\s*(\d+(?:[.,]\d+)?(?:\s*[–—-]\s*\d+(?:[.,]\d+)?)?)\s*(kg|g|lb|lbs)\b/i },
-  { id: "speed", label: "Speed", regex: /\b(?:(?:maximum|max\.?|top)\s+)?(?:running\s+|moving\s+|TCP\s+)?speed\s*[:=–-]?\s*(\d+(?:[.,]\d+)?)\s*(m\/s|km\/h|mm\/s|mph)\b/i },
-  { id: "runtime", label: "Runtime", regex: /\b(?:typical\s+)?(?:runtime|run\s*time|operating\s*time|battery\s+life|battery\s+endurance)\s*[:=–-]?\s*(\d+(?:[.,]\d+)?(?:\s*[–—-]\s*\d+(?:[.,]\d+)?)?)\s*(min(?:utes?)?|h(?:ours?)?)\b/i },
-  { id: "battery_capacity", label: "Battery capacity / energy", regex: /\b(?:battery\s+)?(?:capacity|energy)\s*[:=–-]?\s*(\d+(?:[.,]\d+)?)\s*(Wh|kWh|Ah|mAh)\b/i },
-  { id: "reach", label: "Reach", regex: /\b(?:(?:working|maximum|max\.?)\s+)?reach(?:\s+to\s+(?:wrist|flange))?\s*[:=–-]?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|m|in|inch(?:es)?)\b/i },
-  { id: "repeatability", label: "Repeatability", regex: /\b(?:pose\s+)?repeatability\s*[:=–-]?\s*(?:±|\+\/-)?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|in)\b/i },
-  { id: "degrees_of_freedom", label: "Degrees of freedom / axes", regex: /\b(?:degrees?\s+of\s+freedom|DOF|axes)\s*[:=–-]?\s*(\d+)\s*(?:axes?)?\b/i },
-  { id: "ingress_protection", label: "Ingress protection", regex: /\b(?:ingress\s+protection|IP\s+rating|IP)\s*[:=–-]?\s*(IP\s*\d{2}[A-K]?)\b/i },
-  { id: "power", label: "Power", regex: /\b(?:rated\s+)?power(?:\s+consumption)?\s*[:=–-]?\s*(\d+(?:[.,]\d+)?)\s*(W|kW)\b/i },
-  { id: "height", label: "Height", regex: /\b(?:overall\s+|standing\s+)?height\s*[:=–-]?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|m|in)\b/i },
-  { id: "dimensions", label: "Dimensions", regex: /\b(?:standing\s+)?dimensions\s*[:=–-]?\s*(\d+(?:[.,]\d+)?\s*[×x]\s*\d+(?:[.,]\d+)?\s*[×x]\s*\d+(?:[.,]\d+)?)\s*(mm|cm|m)\b/i },
-  { id: "torque", label: "Torque", regex: /\b(?:maximum\s+|max\.?\s+)?(?:joint\s+)?torque\s*[:=–-]?\s*(\d+(?:[.,]\d+)?)\s*(N\s*[·⋅]?\s*m|kN\s*[·⋅]?\s*m)\b/i },
+  { id: "mass", label: "Mass / weight", regex: /\b(?:(?:robot\s+arm|robot)?\s*(?:mass|weight))(?:\s+with\s+battery)?\s*(?:[:=–-]|\|)?\s*(\d+(?:[.,]\d+)?)\s*(kg|g|lb|lbs)\b/i },
+  { id: "payload", label: "Payload", regex: /\b(?:(?:maximum|max\.?|rated|standard)\s+)?payload\s*(?:[:=–-]|\|)?\s*(≈|~)?\s*(\d+(?:[.,]\d+)?(?:\s*[–—-]\s*\d+(?:[.,]\d+)?)?)\s*(kg|g|lb|lbs)\b/i },
+  { id: "speed", label: "Speed", regex: /\b(?:(?:maximum|max\.?|top)\s+)?(?:running\s+|moving\s+|TCP\s+)?speed\s*(?:[:=–-]|\|)?\s*(\d+(?:[.,]\d+)?)\s*(m\/s|km\/h|mm\/s|mph)\b/i },
+  { id: "runtime", label: "Runtime", regex: /\b(?:typical\s+)?(?:runtime|run\s*time|operating\s*time|battery\s+life|battery\s+endurance)\s*(?:[:=–-]|\|)?\s*(\d+(?:[.,]\d+)?(?:\s*[–—-]\s*\d+(?:[.,]\d+)?)?)\s*(min(?:utes?)?|h(?:ours?)?)\b/i },
+  { id: "battery_capacity", label: "Battery capacity / energy", regex: /\b(?:battery\s+)?(?:capacity|energy)\s*(?:[:=–-]|\|)?\s*(\d+(?:[.,]\d+)?)\s*(Wh|kWh|Ah|mAh)\b/i },
+  { id: "reach", label: "Reach", regex: /\b(?:(?:working|maximum|max\.?)\s+)?reach(?:\s+to\s+(?:wrist|flange))?\s*(?:[:=–-]|\|)?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|m|in|inch(?:es)?)\b/i },
+  { id: "repeatability", label: "Repeatability", regex: /\b(?:pose\s+)?repeatability\s*(?:[:=–-]|\|)?\s*(?:±|\+\/-)?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|in)\b/i },
+  { id: "degrees_of_freedom", label: "Degrees of freedom / axes", regex: /\b(?:degrees?\s+of\s+freedom|DOF|axes)\s*(?:[:=–-]|\|)?\s*(\d+)\s*(?:axes?)?\b/i },
+  { id: "ingress_protection", label: "Ingress protection", regex: /\b(?:ingress\s+protection|IP\s+rating|IP)\s*(?:[:=–-]|\|)?\s*(IP\s*\d{2}[A-K]?)\b/i },
+  { id: "power", label: "Power", regex: /\b(?:rated\s+)?power(?:\s+consumption)?\s*(?:[:=–-]|\|)?\s*(\d+(?:[.,]\d+)?)\s*(W|kW)\b/i },
+  { id: "height", label: "Height", regex: /\b(?:overall\s+|standing\s+)?height\s*(?:[:=–-]|\|)?\s*(\d+(?:[.,]\d+)?)\s*(mm|cm|m|in)\b/i },
+  { id: "dimensions", label: "Dimensions", regex: /\b(?:standing\s+)?dimensions\s*(?:[:=–-]|\|)?\s*(\d+(?:[.,]\d+)?\s*[×x]\s*\d+(?:[.,]\d+)?\s*[×x]\s*\d+(?:[.,]\d+)?)\s*(mm|cm|m)\b/i },
+  { id: "torque", label: "Torque", regex: /\b(?:maximum\s+|max\.?\s+)?(?:joint\s+)?torque\s*(?:[:=–-]|\|)?\s*(\d+(?:[.,]\d+)?)\s*(N\s*[·⋅]?\s*m|kN\s*[·⋅]?\s*m)\b/i },
 ];
 
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
