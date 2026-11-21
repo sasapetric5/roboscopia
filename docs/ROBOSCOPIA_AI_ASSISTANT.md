@@ -381,3 +381,103 @@ Before production use, test at minimum:
 - accurate distinction between complete, partial, blocked and failed outcomes.
 
 **Release condition:** the reliability layer is not production-ready until these tests pass against the actual durable storage, queue and provider adapters—not only mocks. Provider credentials and paid usage remain separately gated by explicit owner approval.
+
+## 14. Dual resource pools: AI providers and technical data sources
+
+ROBOSCOPIA should maintain two separate, independently governed resource pools. They serve different purposes and must not be conflated.
+
+### 14.1 Pool A — free AI API providers
+
+Purpose: provide language-model inference and specialist reasoning for permitted workflows, while avoiding dependency on a single provider.
+
+Requirements:
+- register each provider, model and credential reference separately; never store raw API keys in source code, repository files, frontend bundles or logs;
+- reuse existing owner-controlled free API accounts/keys only after checking current provider terms, project ownership, rate limits, data handling and whether website use is permitted;
+- store credentials in server-side secret storage and identify them through secret references, not copied values;
+- record provider/model capabilities, context limits, supported modalities, rate limits, pricing/free-tier conditions, privacy/data-retention terms and last verification date;
+- use per-provider health checks and bounded request quotas; avoid sending unnecessary health-check requests that consume free quotas;
+- route tasks according to capability and policy: classification, multilingual assistance, summarization, technical reasoning or document interpretation;
+- maintain per-key usage, errors, cooldown and quota state without exposing credentials;
+- use bounded retries and failover only to another provider explicitly enabled for that task and approved data class;
+- keep paid models and paid fallback disabled unless the owner explicitly approves a provider and budget;
+- treat a provider's advertised free tier as subject to change; re-check current terms and pricing before activation.
+
+The AI pool is an inference resource, not a source of truth. Model-generated statements must be grounded in retrieved evidence and retain the response/evidence status defined in Section 6.
+
+### 14.2 Pool B — robotics, CNC and industrial technical data sources
+
+Purpose: discover and retrieve traceable product, engineering and documentation information from reliable sources.
+
+Maintain a source registry with, at minimum:
+- source ID, organization/publisher and official domain;
+- source class: manufacturer, standards/regulatory body, technical publication, research institution, distributor, integrator, marketplace or community;
+- covered domains: robots, CNC machine tools, controllers, servo systems, motors, drives, reducers, sensors, end effectors, tooling, spare parts and industrial components;
+- supported access method: official API, downloadable document, RSS/feed, permitted webpage access, user-supplied file or manual review;
+- exact product/model/variant scope and source language;
+- authority level and intended use;
+- terms of use, robots.txt/access restrictions, copyright and processing/redistribution rights status;
+- last checked date, source revision/date and availability status;
+- evidence acquisition record, content hash and precise page/section/table/figure locator when a document is lawfully acquired and processed;
+- source owner/contact or correction route where available.
+
+Prioritize sources in this order:
+1. exact-model manufacturer documentation: datasheets, manuals, technical specifications, CAD/STEP files and official product pages;
+2. manufacturer support portals, official compatibility lists, software/firmware documentation and spare-parts catalogues;
+3. recognized standards bodies, regulators and official safety/technical publications;
+4. reputable robotics/CNC technical publications, research institutions and engineering organizations;
+5. authorized distributors and integrators, clearly labelled as secondary sources;
+6. marketplaces and community sources, used for discovery or corroboration only—not as automatic proof of manufacturer specifications.
+
+The source registry should cover both major manufacturers and specialist component makers, not only complete robot/CNC brands. Search coverage should include industrial and collaborative robots, mobile and humanoid robots, CNC mills/lathes/machining centers, CNC controls, servo motors/drives, encoders, reducers, spindles, linear motion, tooling, grippers, sensors and safety components.
+
+### 14.3 Source access and rights gate
+
+- A website being prominent, official or publicly accessible does not automatically grant permission to crawl, process, store or redistribute its content.
+- Prefer documented official APIs, feeds, manufacturer downloads with permitted use, licensed datasets and files supplied by the owner.
+- Respect robots.txt, website terms, rate limits, authentication boundaries and copyright restrictions. Do not bypass access controls or download gated/bulk content without authorization.
+- Store source metadata and permitted factual references separately from copyrighted document binaries and media.
+- Do not republish full manuals, datasheets, images, CAD files or videos unless the applicable license or permission allows it.
+- When rights are unclear, record the source as discoverable but processing/redistribution restricted or unknown; request permission or use an allowed alternative.
+- Keep all newly discovered records in quarantine/review. No automatic writes to canonical catalogue data.
+
+### 14.4 Retrieval and evidence pipeline
+
+The intended flow is:
+
+1. identify the user's task and exact manufacturer/model/variant or component;
+2. query the source registry for relevant, permitted sources;
+3. retrieve only through an allowed access method;
+4. record provenance, revision, acquisition method and rights status;
+5. extract text/tables/figures locally where possible, retaining exact locators and SHA-256 for acquired files;
+6. match extracted candidates to the exact entity and claim;
+7. detect conflicts, outdated revisions, variant mismatches and missing qualifiers;
+8. send only the minimum necessary context to an approved AI provider when model reasoning is useful and permitted;
+9. produce a cited draft with verification status and uncertainty;
+10. require human review before canonical approval or publication.
+
+AI providers must not be treated as data providers, and source websites must not be treated as AI inference providers. If an AI provider fails, the source registry and deterministic/local document tools remain usable. If a source website is unavailable, the system may use previously lawfully acquired, versioned evidence while displaying its date and status.
+
+### 14.5 Operational independence from CEOAI
+
+Existing CEOAI free-provider configuration and research capabilities may be evaluated for reuse, but ROBOSCOPIA must not depend on CEOAI being production-ready. Reuse only components whose behavior, security, licensing, data boundaries and free-tier conditions have been verified.
+
+Initially, ROBOSCOPIA should own its source registry, evidence archive, job state, review queue and canonical catalogue. A later secured CEOAI integration may be an optional adapter, not a critical dependency. No CEOAI deployment, crawler activation, paid API use or new paid infrastructure is implied by this architecture decision.
+
+### 14.6 Pool-level monitoring and acceptance
+
+For the AI pool, monitor provider availability, quota exhaustion, cost, latency, failure rate, privacy eligibility and failover correctness.
+
+For the data-source pool, monitor source availability, revision freshness, acquisition permission, extraction quality, exact-model applicability, duplicate sources, conflicting claims and evidence-review status.
+
+Acceptance tests must prove:
+- one unavailable AI provider does not corrupt or lose a job;
+- failover never silently selects a paid or unapproved provider;
+- API keys are not exposed in browser traffic, repository content, logs or errors;
+- source ranking prefers applicable manufacturer evidence over weaker secondary material;
+- an inaccessible or rights-restricted source is not crawled or processed through a prohibited route;
+- conflicting manufacturer documents remain visible as conflicts;
+- variant/generation mismatches are rejected;
+- AI-generated claims cannot bypass evidence and human-review gates;
+- source records and evidence remain usable when the AI pool is unavailable.
+
+**Status:** dual-pool architecture proposal only. No API key has been imported, no provider activated, no crawler started and no new data source granted permission by this section.
