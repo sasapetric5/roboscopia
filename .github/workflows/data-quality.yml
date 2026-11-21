@@ -31,6 +31,8 @@ jobs:
           sudo apt-get install -y poppler-utils
           python -m pip install --upgrade pip
           python -m pip install reportlab opendataloader-pdf==2.5.23 docling==2.151.1
+      - name: Prepare Phase 1 report directory
+        run: mkdir -p artifacts/phase1
       - name: Generate synthetic PDF fixture
         run: python scripts/create-parser-benchmark-fixtures.py "$RUNNER_TEMP/parser-fixtures"
       - name: Run actual parser benchmark
@@ -48,6 +50,81 @@ jobs:
               if result["tableRowsAvailable"] > 0:
                   assert result["tableRowRecall"] == 1.0, f"{name} table recall: {result}"
           PY
+      - name: Run full test suite including end-to-end lifecycle
+        env:
+          ROBOSCOPIA_BENCHMARK_PDF: ${{ runner.temp }}/parser-fixtures/roboscopia-synthetic-spec.pdf
+        run: node --test tests/*.test.mjs
+      - name: Compile parser adapters
+        run: python -m py_compile adapters/docling_adapter.py adapters/opendataloader_adapter.py scripts/create-parser-benchmark-fixtures.py
+      - name: Generate Phase 1 audit reports
+        run: |
+          node scripts/data-quality-audit.mjs --json > artifacts/phase1/data-quality-audit.json
+          node scripts/data-quality-review-queue.mjs --json > artifacts/phase1/review-queue.json
+          node scripts/source-verification-engine.mjs --json > artifacts/phase1/source-verification-report.json
+          node scripts/evidence-matching-review-engine.mjs --json --source-report artifacts/phase1/source-verification-report.json > artifacts/phase1/evidence-matching-report.json
+          node scripts/run-automated-verification.mjs --json > artifacts/phase1/automated-verification-report.json
+      - name: Calculate explicit Phase 1 readiness status
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path("artifacts/phase1")
+          read=lambda name: json.loads((root/name).read_text(encoding="utf-8"))
+          audit=read("data-quality-audit.json")
+          queue=read("review-queue.json")
+          source=read("source-verification-report.json")
+          matching=read("evidence-matching-report.json")
+          verification=read("automated-verification-report.json")
+          packages=json.loads(Path("data/automated-evidence-packages.json").read_text(encoding="utf-8"))
+          package_count=len(packages.get("packages", []))
+          counts=matching.get("counts", {})
+          if package_count == 0 or counts.get("candidates", 0) == 0:
+              status="BLOCKED_NO_EVIDENCE"
+              reason="No evidence packages or no extracted evidence candidates are available; successful tool execution is not evidence coverage."
+          elif queue.get("counts", {}).get("open", 0) or verification.get("counts", {}).get("quarantined", 0):
+              status="REVIEW_REQUIRED"
+              reason="Evidence exists, but open review items or quarantined claims remain."
+          else:
+              status="HUMAN_VALIDATION_REQUIRED"
+              reason="Automated checks completed; human source, rights and claim review is still required before readiness can be approved."
+          report={
+            "schemaVersion":"1.0.0",
+            "status":status,
+            "reason":reason,
+            "executionStatus":"completed",
+            "catalogMutation":False,
+            "metrics":{
+              "catalogRecords":audit.get("counts",{}).get("records"),
+              "auditErrors":audit.get("counts",{}).get("error"),
+              "auditWarnings":audit.get("counts",{}).get("warning"),
+              "reviewQueueOpen":queue.get("counts",{}).get("open"),
+              "sources":source.get("counts",{}).get("sources"),
+              "claims":source.get("counts",{}).get("claims"),
+              "evidencePackages":package_count,
+              "evidenceCandidates":counts.get("candidates",0),
+              "claimsWithoutEvidence":counts.get("noMatchingEvidence",0),
+              "eligibleClaims":verification.get("counts",{}).get("eligible"),
+              "quarantinedClaims":verification.get("counts",{}).get("quarantined")
+            },
+            "reports":[
+              "data-quality-audit.json","review-queue.json","source-verification-report.json",
+              "evidence-matching-report.json","automated-verification-report.json"
+            ]
+          }
+          (root/"phase1-readiness.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
+          print(json.dumps(report,indent=2))
+          PY
+      - name: Validate extraction CLI
+        run: node scripts/technical-evidence-extraction-engine.mjs --help
+      - name: Validate acquisition CLI
+        run: node scripts/evidence-document-acquisition.mjs --help
+      - name: Upload Phase 1 reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: roboscopia-phase1-audit-reports
+          path: artifacts/phase1/
+          if-no-files-found: error
+          retention-days: 30
       - name: Upload parser benchmark report
         uses: actions/upload-artifact@v4
         with:
@@ -55,23 +132,3 @@ jobs:
           path: artifacts/parser-benchmark-report.json
           if-no-files-found: error
           retention-days: 14
-      - name: Run full test suite including end-to-end lifecycle
-        env:
-          ROBOSCOPIA_BENCHMARK_PDF: ${{ runner.temp }}/parser-fixtures/roboscopia-synthetic-spec.pdf
-        run: node --test tests/*.test.mjs
-      - name: Compile parser adapters
-        run: python -m py_compile adapters/docling_adapter.py adapters/opendataloader_adapter.py scripts/create-parser-benchmark-fixtures.py
-      - name: Run data quality audit
-        run: node scripts/data-quality-audit.mjs --json
-      - name: Generate review queue
-        run: node scripts/data-quality-review-queue.mjs --json
-      - name: Generate source verification report
-        run: node scripts/source-verification-engine.mjs --json > "$RUNNER_TEMP/source-verification-report.json"
-      - name: Generate evidence matching report
-        run: node scripts/evidence-matching-review-engine.mjs --json --source-report "$RUNNER_TEMP/source-verification-report.json"
-      - name: Run automated evidence gate
-        run: node scripts/run-automated-verification.mjs --json > "$RUNNER_TEMP/automated-verification-report.json"
-      - name: Validate extraction CLI
-        run: node scripts/technical-evidence-extraction-engine.mjs --help
-      - name: Validate acquisition CLI
-        run: node scripts/evidence-document-acquisition.mjs --help
