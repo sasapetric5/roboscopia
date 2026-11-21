@@ -29,7 +29,7 @@ async function run(adapter,pdf,timeout){
  if(adapter==="poppler"){
   const r=await execFile("pdftotext",["-layout","-enc","UTF-8",resolve(pdf),"-"],{timeout,maxBuffer:32*1024*1024,encoding:"utf8"});
   const v=await execFile("pdftotext",["-v"],{timeout:10000,encoding:"utf8"});
-  return {version:(v.stderr||v.stdout).trim().split("\n")[0],status:"success",text:r.stdout,page_count:r.stdout.split("\f").filter(p=>p.trim()).length,table_count:null,table_rows:[],elapsed_seconds:(Date.now()-start)/1000,local_only:true};
+  return {version:(v.stderr||v.stdout).trim().split("\n")[0],status:"success",text:r.stdout,page_count:r.stdout.split("\f").filter(p=>p.trim()).length,table_count:null,table_rows:extractPopplerTableRows(r.stdout),elapsed_seconds:(Date.now()-start)/1000,local_only:true};
  }
  const script=resolve("adapters",adapter==="docling"?"docling_adapter.py":"opendataloader_adapter.py");
  const r=await execFile(process.env.PYTHON??"python3",[script,resolve(pdf)],{timeout,maxBuffer:32*1024*1024,encoding:"utf8"});
