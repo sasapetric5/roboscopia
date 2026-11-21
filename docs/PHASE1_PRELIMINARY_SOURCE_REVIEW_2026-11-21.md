@@ -340,3 +340,68 @@ Commits in this source-lineage change series:
 5. No catalogue values or source review decisions were modified.
 
 **Phase 1 remains `BLOCKED_NO_EVIDENCE`.**
+
+
+## 13. Follow-up official-source inspection — 21 November 2026
+
+This section records additional official manufacturer material inspected during the current continuation. It is a research update only. No binary source document was saved into the controlled evidence intake, no SHA-256 was generated for a source document, and no processing or redistribution permission is inferred.
+
+### 13.1 Boston Dynamics Spot — versioned safety manual located
+
+Official source:
+- [Spot Instructions for Use — Safety and Operations Manual, version 5.1](https://d3cjkvgbik1jtv.cloudfront.net/translations/spot-5_1/spot-user-manual-en.pdf)
+
+The manufacturer manual identifies itself as Version 5.1, Original Instructions, December 2025, copyright © 2025 Boston Dynamics (PDF cover, lines 0–12). Its table of contents includes product specifications, safety overview, risk assessment, operating modes, stopping functions, environmental restrictions and handling (lines 23–68).
+
+The manual is applicable to specific hardware part numbers and software version 5.1; its applicability table must be used before attaching claims to a Spot hardware generation. The document itself directs users to the Boston Dynamics Support Center for complete user/developer documentation. Do not treat this publicly accessible manual as a blanket grant to redistribute its content.
+
+### 13.2 Unitree Go2 — exact configuration table inspected
+
+Official source:
+- [Unitree Go2 product page](https://www.unitree.com/go2/)
+
+The visible manufacturer table separates AIR, PRO, X and EDU (page lines 255–263). It gives approximately 15 kg with battery for each configuration (lines 286–294), and configuration-specific payloads (AIR ~7 kg; PRO/X/EDU ~8 kg) with separate maximum values (lines 335–353). The speed row distinguishes AIR 2.5 m/s, PRO 3.5 m/s, X and EDU 3.7 m/s, with a ~5 m/s laboratory maximum shown for X and EDU (lines 355–367). Climb angle differs: 30° for AIR and 40° for the other three variants (lines 379–387). The page also states that configurations vary and asks users to contact Unitree for details (lines 255–263).
+
+**Review control:** preserve the four variant columns and every qualifier. Do not convert the laboratory maximum into a normal operating-speed claim, and do not assign the highest payload to all variants.
+
+### 13.3 ABB GoFa 5 — official datasheet inspected directly
+
+Official source:
+- [ABB GoFa CRB 15000 datasheet](https://library.e.abb.com/public/6afac6eb34804cb7b5f8a4794a364295/GoFa%20CRB%2015000%20Datasheet.pdf)
+
+The PDF's specification table explicitly orders the columns GoFa 5, GoFa 12, GoFa 10 (PDF text lines 84–98). GoFa 5 is listed as 950 mm wrist reach, 1050 mm flange reach and 5 kg payload (lines 88–98); it has six axes (lines 103–106), IP54 protection (lines 107–110), and 0.02 mm pose repeatability (lines 216–219). The table also identifies an arm load of 1 kg mounted on axis 4 for GoFa 5 (lines 99–102). The document distinguishes the optional Ultra Accuracy feature: path accuracy down to 0.03 mm and absolute position accuracy of 0.1 mm (lines 32–37 and 220–231). These optional accuracy values must not be conflated with pose repeatability.
+
+**Review control:** retain the exact GoFa 5 column and separate pose repeatability from optional Ultra Accuracy metrics. Do not assign GoFa 10/12 payload or reach values to GoFa 5.
+
+### 13.4 KUKA KR 6 R700 sixx C — load conditions inspected directly
+
+Official source:
+- [KUKA KR 6 R700 sixx C Technical Data, document 0000-215-571, V4.1](https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000215571_en.pdf)
+
+The technical sheet confirms 706.7 mm maximum reach, 6 kg maximum payload, ±0.03 mm pose repeatability, six axes and approximately 50 kg mass (PDF text lines 4–11). It explicitly states that the robot is designed for a 3 kg rated payload for optimized dynamic performance; up to 6 kg is conditional on reduced load-centre distances and favorable supplementary loads, and the specific load case must be verified with KUKA (lines 23–28). The document is V4.1 dated 23 September 2022 (lines 40–43).
+
+**Review control:** store 3 kg rated payload and conditional maximum 6 kg as distinct claims, including the manufacturer's load-case warning.
+
+### 13.5 Unitree H1 and H1-2 — keep separate model identities
+
+Official source:
+- [Unitree H1 / H1-2 product page](https://www.unitree.com/h1/)
+
+The manufacturer's page has separate H1 and H1-2 model sections. The H1 overview states about 180 cm height, about 47 kg weight, 3.3 m/s moving speed, 864 Wh battery and 360 N·m maximum joint torque. The H1-2 section states about 178 cm height, about 70 kg weight, 27 degrees of freedom and distinct arm/leg joint torque data. Preserve model-specific section and parameter identity; never use H1-2 specifications as evidence for H1 or vice versa.
+
+### 13.6 Universal Robots UR5e — current technical specification page checked
+
+Official source:
+- [UR5e Technical Specifications — Universal Robots online manual](https://www.universal-robots.com/manuals/EN/HTML/SW5_26/Content/prod-usr-man/complianceUR5e/H_g5_sections/appendix_g5/tech_spec_sheet.htm)
+
+The current visible specification lists 5 kg maximum payload, 850 mm reach, six rotating joints, ±0.03 mm pose repeatability per ISO 9283, IP54 and 20.7 kg robot-arm weight. The robot-arm weight must remain distinct from any historical datasheet value explicitly including a cable. Record the exact software/manual revision with any evidence candidate.
+
+### 13.7 Evidence intake and rights gate remain unchanged
+
+The pages and document text above were inspected in the browser. This continuation did not download or save source binaries into the repository's controlled evidence intake, did not calculate source-document hashes or local byte sizes, and did not render and inspect locally acquired PDF pages. No document processing or redistribution permission was inferred from public availability. No canonical catalogue data, source registry decisions, or approval state was changed.
+
+### 13.8 CI confirmation for the source-lineage implementation
+
+The previously pending workflow #158 must not be treated as the latest status. The later GitHub Actions run #160 completed successfully for commit `74dc169a91cf4cda79e846419c83e864e4c177c0` on `main`. The successful workflow includes the full test suite and the Phase 1 audit/report steps. This verifies the implementation and workflow execution, not the factual correctness or rights status of the 39 catalogue claims.
+
+**Current Phase 1 status remains `BLOCKED_NO_EVIDENCE`.** The 39 canonical claims are not formally approved, and `catalogMutation:false` and `automaticApproval:false` remain unchanged.
