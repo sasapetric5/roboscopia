@@ -26,10 +26,14 @@ Sources: official OpenDataLoader benchmark and its comparison notes. The hybrid 
 
 ## What was actually tested
 
-- The new automatic verification gate was tested locally on Node.js 22 with ten deterministic tests.
-- Tests cover two-source acceptance, one-source quarantine, value/unit conflicts, model/configuration mismatch, rights failure, invalid URLs, invalid locators, duplicate hostnames, approximate/range values and non-mutation.
-- Real PDF parser quality has NOT yet been benchmarked on a ROBOSCOPIA sample corpus. The public leaderboard is not a substitute for that test. The current repository does not contain a representative, rights-cleared PDF fixture corpus, and this commit does not download or redistribute manufacturer documents.
+- The automated verification gate has deterministic Node.js tests in CI.
+- Tests cover manufacturer-primary acceptance, two independent primary sources, insufficient corroboration, value/unit conflicts, exact model/configuration, rights, hashes, source URLs, locators, duplicate source identities, approximate values, malformed claims and non-mutation.
+- Numeric quote matching uses complete numeric tokens and accepts decimal comma or decimal point; it rejects a value that appears only as a substring of a larger number.
+- Evidence packages are indexed by claim ID once and each package is validated once. The source-verification report groups claims by source ID once, avoiding repeated full-array scans.
+- Real PDF parser quality has NOT yet been benchmarked on a ROBOSCOPIA sample corpus. The public leaderboard is not a substitute for that test. The current repository does not contain a representative, rights-cleared PDF fixture corpus, and this change does not download or redistribute manufacturer documents.
 
 ## Safety boundary
 
-The gate creates decisions only; it never changes \`data/robots.json\`. Existing records without two independently hosted, rights-cleared evidence packages remain quarantined. This is intentional and prevents a false claim of verification. Human review is reserved for quarantined exceptions, calibration samples and periodic audits—not every ordinary record.
+The gate creates decisions only; it never changes \`data/robots.json\`. Existing records without sufficient, rights-cleared evidence remain quarantined. A single exact manufacturer primary source may qualify; otherwise two matching independent primary sources on distinct hosts are required. Human review is reserved for quarantined exceptions, calibration samples and periodic audits—not every ordinary record.
+
+The gate is a deterministic evidence-eligibility check, not proof of factual correctness. It does not yet fetch pages, extract automatically from live sources or semantically verify that a source genuinely belongs to the stated manufacturer/model.

@@ -23,7 +23,12 @@ function safeUrl(value) {
   } catch { return false; }
 }
 function host(value) {
-  try { return new URL(value).hostname.toLowerCase(); } catch { return null; }
+  try { return new URL(value).hostname.toLowerCase().replace(/^www\./, ""); } catch { return null; }
+}
+function quoteContainsNumber(quote, value) {
+  if (typeof quote !== "string" || !Number.isFinite(value)) return false;
+  const tokens = quote.match(/(?<![\d.,])[-+]?(?:\d+(?:[.,]\d+)?|[.,]\d+)(?![\d.,])/g) ?? [];
+  return tokens.some(token => Number(token.replace(",", ".")) === value);
 }
 function validateEvidence(item, index, claim) {
   const out = [];
@@ -45,7 +50,7 @@ function validateEvidence(item, index, claim) {
   if (!item.extraction || comparable(item.extraction.value) === null) issue(out, "INVALID_EXTRACTED_VALUE", path + ".extraction.value", "Value must be a finite number or non-empty string.");
   if (typeof item.extraction?.unit !== "string") issue(out, "MISSING_UNIT", path + ".extraction.unit", "Original unit must be retained as a string.");
   if (typeof item.extraction?.quote !== "string" || !item.extraction.quote.trim()) issue(out, "MISSING_EVIDENCE_QUOTE", path + ".extraction.quote", "An exact, minimal source excerpt is required.");
-  else if (typeof item.extraction?.value === "number" && !item.extraction.quote.includes(String(item.extraction.value))) issue(out, "QUOTE_VALUE_MISMATCH", path + ".extraction.quote", "The exact quoted excerpt must contain the extracted numeric value.");
+  else if (typeof item.extraction?.value === "number" && !quoteContainsNumber(item.extraction.quote, item.extraction.value)) issue(out, "QUOTE_VALUE_MISMATCH", path + ".extraction.quote", "The exact quoted excerpt must contain the extracted numeric value as a complete numeric token.");
   else if (typeof item.extraction?.value === "string" && !item.extraction.quote.toLowerCase().includes(item.extraction.value.toLowerCase())) issue(out, "QUOTE_VALUE_MISMATCH", path + ".extraction.quote", "The exact quoted excerpt must contain the extracted text value.");
   const locator = item.extraction?.locator;
   const pdf = locator?.type === "pdf" && Number.isInteger(locator.page) && locator.page > 0;
@@ -58,49 +63,75 @@ function validateEvidence(item, index, claim) {
   if (item.extraction?.unit !== (claim.unit ?? "")) issue(out, "UNIT_CONFLICT", path + ".extraction.unit", "Unit mismatch; automatic unit conversion is not allowed.");
   return out;
 }
+function isValidClaim(claim) {
+  return !!claim && typeof claim === "object" && !Array.isArray(claim) &&
+    typeof claim.claimId === "string" && !!claim.claimId.trim() &&
+    typeof claim.modelId === "string" && !!claim.modelId.trim() &&
+    comparable(claim.value) !== null &&
+    (claim.unit === null || claim.unit === undefined || typeof claim.unit === "string") &&
+    (claim.configurationId === null || claim.configurationId === undefined || typeof claim.configurationId === "string");
+}
 
-/**
- * Read-only pre-ingestion gate. It never changes canonical catalog records.
- * Requires two separately hosted primary sources: one manufacturer and one independent.
- */
+/** Read-only pre-ingestion gate. Evidence is indexed once; each package is validated once. */
 export function buildAutomatedVerificationReport({ claims, evidence, now = new Date().toISOString() }) {
   if (!Array.isArray(claims)) throw new TypeError("claims must be an array");
   if (!Array.isArray(evidence)) throw new TypeError("evidence must be an array");
+
+  const evidenceByClaim = new Map();
+  for (let index = 0; index < evidence.length; index++) {
+    const item = evidence[index];
+    const key = item && typeof item === "object" ? item.claimId : null;
+    if (typeof key !== "string" || !key) continue;
+    if (!evidenceByClaim.has(key)) evidenceByClaim.set(key, []);
+    evidenceByClaim.get(key).push({ item, index });
+  }
+
   const decisions = claims.map((claim, claimIndex) => {
     const issues = [];
-    if (!claim || typeof claim !== "object" || !claim.claimId || !claim.modelId || comparable(claim.value) === null ||
-        (claim.unit !== null && claim.unit !== undefined && typeof claim.unit !== "string")) {
-      issue(issues, "INVALID_CLAIM", "claims[" + claimIndex + "]", "Claim requires claimId, modelId, value and optional string unit.");
+    const validClaim = isValidClaim(claim);
+    if (!validClaim) issue(issues, "INVALID_CLAIM", "claims[" + claimIndex + "]", "Claim requires non-empty claimId/modelId, a finite number or non-empty string value, and valid optional unit/configuration fields.");
+
+    const related = validClaim ? (evidenceByClaim.get(claim.claimId) ?? []) : [];
+    const valid = [];
+    for (const entry of related) {
+      const evidenceIssues = validateEvidence(entry.item, entry.index, claim);
+      issues.push(...evidenceIssues);
+      if (evidenceIssues.length === 0) valid.push(entry.item);
     }
-    const related = evidence.filter(item => item?.claimId === claim?.claimId);
-    for (let i = 0; i < related.length; i++) issues.push(...validateEvidence(related[i], i, claim));
-    const valid = related.filter((item, i) => validateEvidence(item, i, claim).length === 0);
-    const hosts = valid.map(item => host(item.source.url));
+
     const sourceIds = valid.map(item => item.source.sourceId);
-    const authorities = new Set(valid.map(item => item.source.authority));
-    if (new Set(hosts).size !== hosts.length || new Set(sourceIds).size !== sourceIds.length) {
-      issue(issues, "DUPLICATE_SOURCE_IDENTITY", "claims[" + claimIndex + "]", "Sources must have distinct IDs and hostnames.");
+    if (new Set(sourceIds).size !== sourceIds.length) {
+      issue(issues, "DUPLICATE_SOURCE_IDENTITY", "claims[" + claimIndex + "]", "Evidence packages must use distinct source registry IDs.");
     }
+
     const manufacturerPrimaryCount = valid.filter(item => item.source.authority === "manufacturer_primary").length;
-    const independentPrimaryCount = valid.filter(item => item.source.authority === "independent_primary").length;
-    if (manufacturerPrimaryCount < 1 && independentPrimaryCount < 2) {
+    const independentHosts = new Set(valid
+      .filter(item => item.source.authority === "independent_primary")
+      .map(item => host(item.source.url))
+      .filter(Boolean));
+    if (manufacturerPrimaryCount < 1 && independentHosts.size < 2) {
       issue(issues, "INSUFFICIENT_INDEPENDENT_EVIDENCE", "claims[" + claimIndex + "]", "Require one exact, rights-cleared manufacturer primary source OR two matching independent primary sources on distinct hosts.");
     }
+
     const status = issues.length ? "quarantined" : "eligible_for_automatic_ingestion";
+    const allHosts = new Set(valid.map(item => host(item.source.url)).filter(Boolean));
+    const authorities = new Set(valid.map(item => item.source.authority));
     return {
       decisionId: createHash("sha256").update(String(claim?.claimId) + "|" + now).digest("hex").slice(0, 24),
       claimId: claim?.claimId ?? null,
       modelId: claim?.modelId ?? null,
       status,
       evidenceCount: related.length,
-      independentHostCount: new Set(hosts).size,
+      independentHostCount: independentHosts.size,
+      sourceHostCount: allHosts.size,
       sourceAuthorities: [...authorities].sort(),
       issues,
       catalogMutationAllowed: false
     };
   });
+
   return {
-    engineVersion: "1.0.0",
+    engineVersion: "1.1.0",
     generatedAt: now,
     policy: {
       automaticGate: true,
@@ -112,6 +143,8 @@ export function buildAutomatedVerificationReport({ claims, evidence, now = new D
       documentSha256Required: true,
       evidenceLocatorRequired: true,
       parserVersionRequired: true,
+      evidenceIndexedByClaim: true,
+      eachEvidenceValidatedOnce: true,
       catalogMutation: false,
       uncertainOrConflictingData: "quarantine"
     },

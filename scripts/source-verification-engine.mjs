@@ -35,7 +35,7 @@ function safeHttpsUrl(raw) {
 }
 
 function isOfficialDomainCandidate(host) {
-  return [...OFFICIAL_DOMAINS].some((domain) => host === domain || host.endsWith(`.${domain}`));
+  return [...OFFICIAL_DOMAINS].some((domain) => host === domain || host.endsWith("." + domain));
 }
 
 function fingerprintClaim(record, spec) {
@@ -65,12 +65,13 @@ function validDecision(decision, knownClaims) {
 export function buildSourceVerificationReport(db, decisions = []) {
   const sourceById = new Map((db.sources ?? []).map((source) => [source.id, source]));
   const claims = [];
+  const claimsBySource = new Map();
   for (const record of db.records ?? []) {
     for (const spec of record.specifications ?? []) {
       const sourceId = spec.sourceId ?? spec.provenance?.sourceId ?? null;
       const source = sourceId ? sourceById.get(sourceId) : null;
       const claimId = fingerprintClaim(record, spec);
-      claims.push({
+      const claim = {
         claimId,
         modelId: record.id,
         model: record.model ?? record.name ?? record.id,
@@ -87,7 +88,12 @@ export function buildSourceVerificationReport(db, decisions = []) {
         reviewerNote: null,
         reviewedBy: null,
         reviewedAt: null,
-      });
+      };
+      claims.push(claim);
+      if (sourceId) {
+        if (!claimsBySource.has(sourceId)) claimsBySource.set(sourceId, []);
+        claimsBySource.get(sourceId).push(claim);
+      }
     }
   }
 
@@ -108,7 +114,7 @@ export function buildSourceVerificationReport(db, decisions = []) {
   const sourceReports = (db.sources ?? []).map((source) => {
     const parsed = safeHttpsUrl(source.url);
     const host = parsed.ok ? parsed.host : null;
-    const linkedClaims = claims.filter((claim) => claim.sourceId === source.id);
+    const linkedClaims = claimsBySource.get(source.id) ?? [];
     const reviewedClaims = linkedClaims.filter((claim) => claim.outcome !== "pending");
     const supportedClaims = linkedClaims.filter((claim) => claim.outcome === "supported");
     return {
@@ -154,6 +160,7 @@ export function buildSourceVerificationReport(db, decisions = []) {
       sourcePageContentFetched: false,
       catalogMutated: false,
       autoApproval: false,
+      claimsGroupedBySource: true,
     },
     counts,
     sources: sourceReports,
@@ -220,17 +227,17 @@ async function main() {
     report.policy.liveCheckMethod = "HTTP HEAD only; no page content fetched; redirects are not followed";
   }
   if (jsonOutput) {
-    process.stdout.write(`${JSON.stringify(report, null, 2)}\n`);
+    process.stdout.write(JSON.stringify(report, null, 2) + "\n");
   } else {
     process.stdout.write([
-      `ROBOSCOPIA Source Verification Engine v${report.engineVersion}`,
-      `Sources: ${report.counts.sources} | Claims: ${report.counts.claims}`,
-      `Pending: ${report.counts.claimsPending} | Supported: ${report.counts.supported} | Partial: ${report.counts.partiallySupported} | Contradicted: ${report.counts.contradicted}`,
-      `Official-domain candidates (not yet content-verified): ${report.counts.officialDomainCandidates}`,
-      `Invalid source URLs: ${report.counts.invalidSourceUrls}`,
+      "ROBOSCOPIA Source Verification Engine v" + report.engineVersion,
+      "Sources: " + report.counts.sources + " | Claims: " + report.counts.claims,
+      "Pending: " + report.counts.claimsPending + " | Supported: " + report.counts.supported + " | Partial: " + report.counts.partiallySupported + " | Contradicted: " + report.counts.contradicted,
+      "Official-domain candidates (not yet content-verified): " + report.counts.officialDomainCandidates,
+      "Invalid source URLs: " + report.counts.invalidSourceUrls,
       "",
       ...report.sources.map((source) =>
-        `[${source.urlSyntax}] ${source.sourceId} — ${source.host ?? "unknown host"} — ${source.claimsCount} claims — ${source.authorityAssessment}`
+        "[" + source.urlSyntax + "] " + source.sourceId + " — " + (source.host ?? "unknown host") + " — " + source.claimsCount + " claims — " + source.authorityAssessment
       ),
     ].join("\n") + "\n");
   }
@@ -238,7 +245,7 @@ async function main() {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   main().catch((error) => {
-    process.stderr.write(`Source verification failed: ${error.message}\n`);
+    process.stderr.write("Source verification failed: " + error.message + "\n");
     process.exitCode = 2;
   });
 }

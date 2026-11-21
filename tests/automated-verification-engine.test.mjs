@@ -43,6 +43,17 @@ test("quarantines an extracted value that is absent from its evidence quote", ()
   const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [bad, independent()] });
   assert.ok(report.decisions[0].issues.some(item => item.code === "QUOTE_VALUE_MISMATCH"));
 });
+test("does not accept a numeric substring inside a larger value", () => {
+  const bad = evidence({ extraction: { ...evidence().extraction, quote: "Maximum speed: 11.6 m/s" } });
+  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [bad] });
+  assert.ok(report.decisions[0].issues.some(item => item.code === "QUOTE_VALUE_MISMATCH"));
+  assert.equal(report.decisions[0].status, "quarantined");
+});
+test("accepts decimal comma as the quoted representation of a numeric value", () => {
+  const localized = evidence({ extraction: { ...evidence().extraction, quote: "Maksimalna brzina: 1,6 m/s" } });
+  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [localized] });
+  assert.equal(report.decisions[0].status, "eligible_for_automatic_ingestion");
+});
 test("quarantines model and configuration mismatches", () => {
   const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [evidence({ modelId: "go2" }), independent({ configurationId: "edu" })] });
   assert.ok(report.decisions[0].issues.some(item => item.code === "MODEL_IDENTITY_MISMATCH"));
@@ -66,9 +77,16 @@ test("quarantines invalid source URL and unsafe locator", () => {
   assert.ok(report.decisions[0].issues.some(item => item.code === "INVALID_SOURCE_URL"));
   assert.ok(report.decisions[0].issues.some(item => item.code === "INVALID_EVIDENCE_LOCATOR"));
 });
-test("does not count duplicated source hostnames as independent evidence", () => {
-  const second = independent({ source: { sourceId: "independent-1", url: "https://manufacturer.example/other", authority: "independent_primary", rights: { processingPermitted: true } } });
-  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [evidence(), second] });
+test("does not count two independent sources on the same host", () => {
+  const first = independent();
+  const second = independent({ source: { sourceId: "independent-2", url: "https://www.independent.example/other", authority: "independent_primary", rights: { processingPermitted: true } } });
+  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [first, second] });
+  assert.ok(report.decisions[0].issues.some(item => item.code === "INSUFFICIENT_INDEPENDENT_EVIDENCE"));
+});
+test("quarantines duplicate source registry IDs", () => {
+  const first = evidence();
+  const second = independent({ source: { ...independent().source, sourceId: "manufacturer-1" } });
+  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [first, second] });
   assert.ok(report.decisions[0].issues.some(item => item.code === "DUPLICATE_SOURCE_IDENTITY"));
 });
 test("keeps uncertain range values out of automatic acceptance", () => {
@@ -76,6 +94,11 @@ test("keeps uncertain range values out of automatic acceptance", () => {
   const second = independent({ extraction: { ...independent().extraction, value: "1.4–1.6" } });
   const report = buildAutomatedVerificationReport({ claims: [{ ...claim, value: "1.4–1.6" }], evidence: [ranged, second] });
   assert.equal(report.decisions[0].status, "quarantined");
+});
+test("does not crash on malformed claims", () => {
+  const report = buildAutomatedVerificationReport({ claims: [null, { claimId: "bad", modelId: "", value: null }], evidence: [evidence()] });
+  assert.equal(report.counts.quarantined, 2);
+  assert.ok(report.decisions.every(item => item.issues.some(problem => problem.code === "INVALID_CLAIM")));
 });
 test("never mutates catalog input", () => {
   const input = structuredClone(claim);
