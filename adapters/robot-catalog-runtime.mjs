@@ -20,7 +20,7 @@ export async function createRobotCatalogRuntime({
     const raw = await readFile(catalogPath, "utf8");
     db = JSON.parse(raw);
   }
-  if (!plain(db) || !Array.isArray(db.records)) throw new TypeError("INVALID_ROBOT_CATALOG");
+  if (!plain(db) || !Array.isArray(db.records) || db.records.length === 0) throw new TypeError("INVALID_ROBOT_CATALOG");
   const records = new Map();
   for (const record of db.records) {
     if (!plain(record) || typeof record.id !== "string" || records.has(record.id) ||
