@@ -7,7 +7,9 @@ import { pathToFileURL } from "node:url";
 const execFile = promisify(execFileCallback);
 function normalize(value) {
   return String(value ?? "").toLocaleLowerCase()
-    .replaceAll("\\r", " ").replaceAll("\\n", " ").replaceAll("\\t", " ")
+    .replaceAll(String.fromCharCode(13), " ")
+    .replaceAll(String.fromCharCode(10), " ")
+    .replaceAll(String.fromCharCode(9), " ")
     .split(" ").filter(Boolean).join(" ");
 }
 function isTokenCharacter(character) {
@@ -82,9 +84,9 @@ async function main() {
     results
   };
   await mkdir(dirname(resolve(outputPath)), { recursive: true });
-  await writeFile(resolve(outputPath), JSON.stringify(report, null, 2) + "\\n", { flag: "wx" });
-  process.stdout.write(JSON.stringify({ corpusStatus: report.corpusStatus, fixtureCount: report.fixtureCount, output: resolve(outputPath) }) + "\\n");
+  await writeFile(resolve(outputPath), JSON.stringify(report, null, 2) + String.fromCharCode(10), { flag: "wx" });
+  process.stdout.write(JSON.stringify({ corpusStatus: report.corpusStatus, fixtureCount: report.fixtureCount, output: resolve(outputPath) }) + String.fromCharCode(10));
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  main().catch(error => { process.stderr.write(error.message + "\\n"); process.exitCode = 2; });
+  main().catch(error => { process.stderr.write(error.message + String.fromCharCode(10)); process.exitCode = 2; });
 }

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { scoreOutput } from "../scripts/parser-benchmark.mjs";
 
 test("scores exact normalized evidence snippets", () => {
-  const result = scoreOutput("Payload: 14 kg\\nSpeed: 1.6 m/s", [
+  const result = scoreOutput(["Payload: 14 kg", "Speed: 1.6 m/s"].join(String.fromCharCode(10)), [
     { id: "payload", text: "Payload: 14 kg" },
     { id: "speed", text: "Speed: 1.6 m/s" },
     { id: "mass", text: "Mass: 33.8 kg" }
