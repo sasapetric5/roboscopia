@@ -5,20 +5,33 @@ import { promisify } from "node:util";
 import { pathToFileURL } from "node:url";
 
 const execFile = promisify(execFileCallback);
-function escapeRegex(value) {
-  return Array.from(value).map((character) =>
-    "\\^$.*+?()[]{}|".includes(character) ? "\\\\" + character : character
-  ).join("");
+function normalize(value) {
+  return String(value ?? "").toLocaleLowerCase()
+    .replaceAll("\\r", " ").replaceAll("\\n", " ").replaceAll("\\t", " ")
+    .split(" ").filter(Boolean).join(" ");
+}
+function isTokenCharacter(character) {
+  return character !== undefined && /[A-Za-z0-9.,]/.test(character);
+}
+function containsExactSnippet(haystack, needle) {
+  if (!needle) return false;
+  let offset = 0;
+  while ((offset = haystack.indexOf(needle, offset)) !== -1) {
+    const before = offset > 0 ? haystack[offset - 1] : undefined;
+    const afterIndex = offset + needle.length;
+    const after = afterIndex < haystack.length ? haystack[afterIndex] : undefined;
+    if (!isTokenCharacter(before) && !isTokenCharacter(after)) return true;
+    offset += 1;
+  }
+  return false;
 }
 export function scoreOutput(output, expected) {
-  const normalized = String(output ?? "").toLocaleLowerCase().replace(/\\s+/g, " ").trim();
-  const checks = expected.map((item) => {
-    const needle = String(item.text).toLocaleLowerCase().replace(/\\s+/g, " ").trim();
-    const exact = needle
-      ? new RegExp("(?<![\\\\p{L}\\\\p{N}.,])" + escapeRegex(needle) + "(?![\\\\p{L}\\\\p{N}.,])", "u").test(normalized)
-      : false;
-    return { id: item.id, field: item.field ?? null, found: exact };
-  });
+  const normalizedOutput = normalize(output);
+  const checks = expected.map((item) => ({
+    id: item.id,
+    field: item.field ?? null,
+    found: containsExactSnippet(normalizedOutput, normalize(item.text))
+  }));
   const passed = checks.filter((item) => item.found).length;
   return { expectedCount: checks.length, matchedCount: passed, recall: checks.length ? passed / checks.length : null, checks };
 }
@@ -69,9 +82,9 @@ async function main() {
     results
   };
   await mkdir(dirname(resolve(outputPath)), { recursive: true });
-  await writeFile(resolve(outputPath), JSON.stringify(report, null, 2) + "\n", { flag: "wx" });
-  process.stdout.write(JSON.stringify({ corpusStatus: report.corpusStatus, fixtureCount: report.fixtureCount, output: resolve(outputPath) }) + "\n");
+  await writeFile(resolve(outputPath), JSON.stringify(report, null, 2) + "\\n", { flag: "wx" });
+  process.stdout.write(JSON.stringify({ corpusStatus: report.corpusStatus, fixtureCount: report.fixtureCount, output: resolve(outputPath) }) + "\\n");
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  main().catch(error => { process.stderr.write(error.message + "\n"); process.exitCode = 2; });
+  main().catch(error => { process.stderr.write(error.message + "\\n"); process.exitCode = 2; });
 }
