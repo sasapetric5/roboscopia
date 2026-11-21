@@ -163,3 +163,18 @@ No API keys were read, copied, tested or activated. No crawler, paid service, pr
 7. Only after explicit owner authorization, configure a Roboscopia-specific secret and run one bounded free-provider health check.
 
 **Release gate:** no provider is active until credentials, current zero-cost terms, data-use terms, quota behavior, secret storage and failure tests are verified. No source is evidence-approved until exact applicability, rights and human review are satisfied.
+
+## 7. Additional historical CEOAI configuration references
+
+Earlier CEOAI deployment context also contains the following provider-related configuration labels. They are included for inventory completeness only; they are not evidence that the credentials remain active, free, or reusable by ROBOSCOPIA.
+
+| Historical CEOAI label | Provider / interpretation | ROBOSCOPIA status |
+|---|---|---|
+| `ZAI_GLM_FLASH_KEY_1` | Z.ai / GLM Flash provider credential | Candidate; current model, quota, price and cross-app use must be verified |
+| `ZAI_GLM_FLASH_KEY_2` | Second Z.ai / GLM Flash credential label | Candidate; do not assume it creates an independent quota or may be used to bypass limits |
+| `TOKENHARBOR_API_KEY` | Token Harbor gateway credential; a DeepSeek V4.1 Flash free route was previously discussed | Candidate; exact route, upstream provider, current price, account terms and data handling must be checked |
+| `WORKERS_AI_ENABLED` | CEOAI feature/configuration flag, not an API key | Not a credential; ROBOSCOPIA must independently configure and verify its own Workers AI binding/entitlement |
+
+Other previously discussed CEOAI provider families include OpenRouter, Gemini, Cloudflare Workers AI and GLM. These labels are not secret values and must never be replaced with actual credential values in this document.
+
+**Important quota rule:** multiple keys under one provider may share project, organization, account or upstream limits. ROBOSCOPIA must not use multiple keys to evade provider quotas or rate limits. A distinct key is for application isolation, audit and revocation—not quota circumvention.
