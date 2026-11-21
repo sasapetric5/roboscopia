@@ -9,6 +9,7 @@ test("CNC research delegates evidence workflow only for registered CNC equipment
   let calls=0;
   const agent=createCncResearchAgent({
     getEquipment:async id=>({id,type:"cnc_mill"}),
+    resolveEvidenceIdentity:async ({equipment,sourceId,documentRef})=>({modelId:"cnc-mill-a",sourceId,documentRef}),
     researchEvidenceAgent:{run:async input=>{calls++;return {ok:true,reviewRequired:true,input};}}
   });
   const result=await agent.run({equipmentId:"mill-1",sourceId:"src-1",documentRef:"docs/manual.pdf"});
@@ -16,7 +17,7 @@ test("CNC research delegates evidence workflow only for registered CNC equipment
   assert.equal(result.policy.catalogMutation,false);
 });
 test("CNC research rejects non-CNC or unregistered equipment",async()=>{
-  const agent=createCncResearchAgent({getEquipment:async id=>({id,type:"industrial_robot"}),researchEvidenceAgent:{run:async()=>{throw Error("must not run");}}});
+  const agent=createCncResearchAgent({getEquipment:async id=>({id,type:"industrial_robot"}),resolveEvidenceIdentity:async()=>({modelId:"robot-1",sourceId:"src-1",documentRef:"manual.pdf"}),researchEvidenceAgent:{run:async()=>{throw Error("must not run");}}});
   assert.equal((await agent.run({equipmentId:"robot-1",sourceId:"src-1",documentRef:"manual.pdf"})).code,"CNC_EQUIPMENT_NOT_REGISTERED");
 });
 test("technical profile creates evidence-linked draft without inventing or approving values",async()=>{
@@ -51,4 +52,16 @@ test("supervisor rejects unknown tasks, missing agents and policy violations",as
   assert.equal((await supervisor.run({task:"unknown",input:{}})).code,"INVALID_TASK");
   assert.equal((await supervisor.run({task:"cnc_research",input:{}})).code,"AGENT_UNAVAILABLE");
   assert.equal((await supervisor.run({task:"technical_profile",input:{}})).code,"AGENT_POLICY_VIOLATION");
+});
+
+test("CNC research rejects unresolved or mismatched evidence identity before invoking research",async()=>{
+  let calls=0;
+  const agent=createCncResearchAgent({
+    getEquipment:async id=>({id,type:"cnc_mill"}),
+    resolveEvidenceIdentity:async()=>({modelId:"mill-1",sourceId:"different-source",documentRef:"manual.pdf"}),
+    researchEvidenceAgent:{run:async()=>{calls++;return {ok:true};}}
+  });
+  const result=await agent.run({equipmentId:"mill-1",sourceId:"src-1",documentRef:"manual.pdf"});
+  assert.equal(result.code,"EVIDENCE_IDENTITY_INVALID");
+  assert.equal(calls,0);
 });
