@@ -105,12 +105,16 @@ export function buildEvidenceMatchingReport(db, sourceReport, extractionReports 
       const claimHost = sourceHost(claim.sourceUrl);
       const evidenceHost = sourceHost(candidate.sourceUrl);
       const sameSourceHost = Boolean(claimHost && evidenceHost && claimHost === evidenceHost);
+      const sameSourceId = Boolean(claim.sourceId && candidate.sourceId && claim.sourceId === candidate.sourceId);
+      const sourceIdentityMissing = !claim.sourceId || !candidate.sourceId;
       const valueResult = compareValue(claim, candidate, field);
       let status = "candidate_review";
       if (!sameModel && !modelUnspecified) status = "model_mismatch";
       else if (!sameConfig && !configUnspecified) status = "configuration_mismatch";
       else if (candidate.modelMentionStatus === "not_found") status = "model_identity_unverified";
       else if (candidate.configurationMentionStatus === "not_found") status = "configuration_identity_unverified";
+      else if (sourceIdentityMissing) status = "source_identity_unverified";
+      else if (!sameSourceId) status = "source_mismatch";
       else if (modelUnspecified) status = "model_identity_unverified";
       else if (valueResult === "unit_mismatch") status = "unit_mismatch";
       else if (valueResult === "mismatch") status = "value_mismatch";
@@ -131,6 +135,8 @@ export function buildEvidenceMatchingReport(db, sourceReport, extractionReports 
           modelName: candidate.modelName ?? null,
           configurationId: candidate.configurationId ?? null,
           sourceUrl: candidate.sourceUrl ?? null,
+          sourceId: candidate.sourceId ?? null,
+          sameSourceId,
           sameSourceHost,
           documentName: candidate.documentName ?? null,
           documentSha256: candidate.documentSha256 ?? null,
@@ -144,7 +150,7 @@ export function buildEvidenceMatchingReport(db, sourceReport, extractionReports 
           extractionStatus: candidate.reviewStatus ?? "extracted_unverified",
         },
         valueComparison: valueResult,
-        identity: { sameModel, modelUnspecified, sameConfiguration: sameConfig, configurationUnspecified: configUnspecified, sameSourceHost },
+        identity: { sameModel, modelUnspecified, sameConfiguration: sameConfig, configurationUnspecified: configUnspecified, sameSourceId, sourceIdentityMissing, sameSourceHost },
         reviewRequired: true,
         catalogMutationAllowed: false,
       };
