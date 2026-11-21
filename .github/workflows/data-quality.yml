@@ -37,8 +37,8 @@ jobs:
           pdftotext -v
       - name: Install CPU-only PyTorch runtime
         run: |
-          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.15.0 torchvision==0.29.2
-          python -c "import torch; assert not torch.cuda.is_available(); print('CPU-only PyTorch:', torch.__version__)"
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+          python -c "import torch; assert not torch.cuda.is_available(); assert torch.version.cuda is None; print('CPU-only PyTorch:', torch.__version__)"
       - name: Install focused Python parser runtimes (pip cache enabled)
         run: |
           python -m pip install -r requirements-parser.txt
