@@ -7,7 +7,7 @@ const claim = { claimId: "claim-1", modelId: "spot", model: "Spot", specificatio
 const sourceReport = { claims: [claim] };
 const candidate = (overrides = {}) => ({
   candidateId: "candidate-1", field: "speed", extractedValue: 1.6, unit: "m/s", modelId: "spot",
-  configurationId: null, sourceUrl: "https://manufacturer.example/manual.pdf", documentSha256: "abc",
+  configurationId: null, sourceUrl: "https://manufacturer.example/manual.pdf", sourceId: "src-1", documentSha256: "abc",
   exactMatch: "Maximum speed 1.6 m/s", evidenceQuote: "Maximum speed 1.6 m/s",
   evidenceLocator: { page: 4, line: 12, section: "Performance" }, reviewStatus: "extracted_unverified", ...overrides,
 });
@@ -99,4 +99,17 @@ test("requires matching units for dimensions and normalizes axis-count labels", 
   const axesCandidate = candidate({ field: "degrees_of_freedom", extractedValue: 6, unit: "" });
   const axesReport = buildEvidenceMatchingReport(db, { claims: [axesClaim] }, [{ candidates: [axesCandidate] }]);
   assert.equal(axesReport.matches[0].valueComparison, "equal");
+});
+
+
+test("rejects evidence mapped to a different registered source even when model and value match", () => {
+  const report = buildEvidenceMatchingReport(db, sourceReport, [{ candidates: [candidate({ sourceId: "src-2" })] }]);
+  assert.equal(report.matches[0].status, "source_mismatch");
+  assert.equal(report.matches[0].identity.sameSourceId, false);
+  assert.equal(report.matches[0].catalogMutationAllowed, false);
+});
+
+test("does not treat evidence with missing source identity as an exact match", () => {
+  const report = buildEvidenceMatchingReport(db, sourceReport, [{ candidates: [candidate({ sourceId: null })] }]);
+  assert.equal(report.matches[0].status, "source_identity_unverified");
 });
