@@ -45,6 +45,8 @@ function validateEvidence(item, index, claim) {
   if (!item.extraction || comparable(item.extraction.value) === null) issue(out, "INVALID_EXTRACTED_VALUE", path + ".extraction.value", "Value must be a finite number or non-empty string.");
   if (typeof item.extraction?.unit !== "string") issue(out, "MISSING_UNIT", path + ".extraction.unit", "Original unit must be retained as a string.");
   if (typeof item.extraction?.quote !== "string" || !item.extraction.quote.trim()) issue(out, "MISSING_EVIDENCE_QUOTE", path + ".extraction.quote", "An exact, minimal source excerpt is required.");
+  else if (typeof item.extraction?.value === "number" && !item.extraction.quote.includes(String(item.extraction.value))) issue(out, "QUOTE_VALUE_MISMATCH", path + ".extraction.quote", "The exact quoted excerpt must contain the extracted numeric value.");
+  else if (typeof item.extraction?.value === "string" && !item.extraction.quote.toLowerCase().includes(item.extraction.value.toLowerCase())) issue(out, "QUOTE_VALUE_MISMATCH", path + ".extraction.quote", "The exact quoted excerpt must contain the extracted text value.");
   const locator = item.extraction?.locator;
   const pdf = locator?.type === "pdf" && Number.isInteger(locator.page) && locator.page > 0;
   const html = locator?.type === "html" && typeof locator.selector === "string" && !!locator.selector.trim();
