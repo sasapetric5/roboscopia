@@ -96,6 +96,7 @@ async function main() {
     documentSha256: digest,
     documentName: filePath.split(/[\\/]/).pop(),
     sourceUrl: canonicalSource.url,
+    sourceId: canonicalSource.id,
     modelId: source.modelIds.length === 1 ? source.modelIds[0] : null,
     modelName: args["model-name"] ?? null,
     configurationId: args["configuration-id"] ?? null,
