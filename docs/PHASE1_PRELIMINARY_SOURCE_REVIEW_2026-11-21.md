@@ -205,3 +205,81 @@ The current Spot product page and Spot 5.2 SDK both state a 14 kg maximum payloa
 No source in this review has been marked formally reviewed in the canonical source registry. No PDF was placed in the repository or redistributed. No processing permission was inferred from public availability. No source-verification decision was recorded, and no canonical catalogue value was changed.
 
 **Phase 1 remains `BLOCKED_NO_EVIDENCE`.**
+
+
+## 9. Additional official-document checks — 21 November 2026
+
+A further check of the manufacturers' current technical-document landing pages produced two important resolutions and one additional model-generation warning.
+
+### 9.1 UR20 — repeatability discrepancy is now largely resolved
+
+Universal Robots' current technical-data-sheet download index links a one-page official UR20 PDF:
+- [Current UR20 technical specification PDF](https://www.universal-robots.com/manuals/EN/DataSheets/UR20_techsheet_pdf_online/UR20_techsheet_en.pdf)
+- [Current UR20 product page](https://www.universal-robots.com/products/ur20/)
+
+The official PDF says:
+- standard payload 20 kg; 25 kg with boundary conditions according to the manual (PDF page 1, lines 2–5);
+- reach 1750 mm (page 1, lines 6–7);
+- maximum TCP speed 5 m/s (page 1, lines 27–29);
+- pose repeatability per ISO 9283 ±0.1 mm (page 1, lines 27–30);
+- weight without cable 64 kg (page 1, lines 69–76);
+- document states “Updated May 2025” (page 1, lines 50–51).
+
+The current UR20 product page independently displays ±0.1 mm, 20–25 kg, 1750 mm, 5 m/s and 64 kg.
+
+**Decision for the evidence review:** ±0.1 mm is the currently supported UR20 value from the manufacturer's current technical sheet and product page. The ±0.01 mm value previously seen on the UR20-1750 page is now a conflicting page-level statement and should not be used as the canonical value unless the manufacturer provides a specific explanation. This substantially resolves the earlier uncertainty, but the source discrepancy should remain documented in the review history.
+
+### 9.2 UR5e — current May 2025 technical sheet supersedes older mass ambiguity
+
+Universal Robots' current technical-data-sheet index links:
+- [Current UR5e technical specification PDF](https://www.universal-robots.com/manuals/EN/TechSheets/UR5e_techsheet_pdf_online/UR5e_techsheet_en.pdf)
+
+The one-page PDF states:
+- payload 5 kg, reach 850 mm, six rotating joints (page 1, lines 0–5);
+- pose repeatability per ISO 9283 ±0.03 mm and maximum TCP speed 4 m/s (page 1, lines 23–25);
+- IP54 (page 1, lines 45–47);
+- weight including cable 20.7 kg (page 1, lines 58–65);
+- updated May 2025 (page 1, lines 33–44).
+
+The previous December 2024 sheet stated 20.6 kg including cable, while the current May 2025 sheet states 20.7 kg including cable. The 20.7 kg claim is therefore supported by the newer sheet; retain the December 2024 value only as historical/revision-specific evidence. Do not describe the 20.6/20.7 difference as “with cable vs without cable”.
+
+### 9.3 Spot — generation-specific data must be separated
+
+The current Boston Dynamics product page lists 33.8 kg with battery, 564 Wh and a 14 kg payload-mounting maximum. The Spot SDK documentation's Spot Gamma specifications instead list 32.5 kg net weight and 605 Wh battery, with 14 kg maximum payload.
+
+**Decision for the evidence review:** this is an additional hardware-generation/configuration distinction, not a simple arithmetic conflict. The catalogue must not merge Spot Gamma SDK values and the current product-page values into a single undated generic Spot specification. Capture the product-page revision/model applicability and SDK Spot Gamma version separately. The 14 kg payload limit is consistent across both sources.
+
+### 9.4 Unitree official document portal
+
+The [Unitree Download Center](https://www.unitree-robot.com/mobile/download/) links Go2 and H1/H1-2 resources and directs users to the manufacturer's resource/document center. The Go2 product page is an official configuration table, but a separately downloadable, versioned Go2 technical datasheet has not yet been acquired in this review.
+
+The H1/H1-2 official page explicitly separates the two models. It gives H1 about 180 cm and 47 kg, 3.3 m/s stated moving speed, 864 Wh battery and 360 N·m maximum joint torque; H1-2 is about 178 cm and 70 kg with 27 degrees of freedom. The page's detailed parameter table also distinguishes their limb DOF, arm lengths, joint loads and computing configurations. Preserve those model columns and the manufacturer's warning that product parameters can differ between products.
+
+### 9.5 ABB GoFa — exact model values confirmed in current official datasheet
+
+The official ABB datasheet search result provides a direct table with GoFa 5 / GoFa 12 / GoFa 10 columns:
+- GoFa 5: 950 mm wrist reach, 1050 mm flange reach, 5 kg payload, six axes, 0.02 mm pose repeatability and 28 kg mass.
+- GoFa 12: 1270/1370 mm reach and 12 kg payload.
+- GoFa 10: 1520/1620 mm reach and 10 kg payload.
+
+This confirms the model-specific distinction and shows that the order of columns is GoFa 5, GoFa 12, GoFa 10. The exact document revision and SHA-256 still need to be captured from the actual PDF file.
+
+### 9.6 KUKA — rated/maximum load distinction confirmed
+
+The official KUKA V4.1 PDF identifies document 0000-215-571, dated 23 September 2022. It states:
+- maximum reach 706.7 mm;
+- maximum payload 6 kg;
+- pose repeatability ±0.03 mm;
+- six axes;
+- approximate weight 50 kg;
+- rated payload 3 kg for optimized dynamic performance; maximum up to 6 kg only with reduced load-centre distances and favorable supplementary loads, with the specific KUKA load case requiring verification.
+
+Do not reduce this to a single unqualified “6 kg payload” statement.
+
+## 10. Acquisition status — no false completion
+
+The current official UR5e and UR20 PDFs, ABB GoFa datasheets and KUKA V4.1 PDF have been inspected through browser-accessible document content. This session did not successfully save the source PDF bytes into the project's controlled evidence intake, so no SHA-256, byte size, local filename or local page-rendering audit is claimed for these files.
+
+The Unitree Download Center was inspected, but no versioned Go2/H1 PDF was acquired. Boston Dynamics public product and SDK pages were inspected, but no separately acquired Spot source package was created. No processing or redistribution permission has been inferred.
+
+**Current outcome:** several technical discrepancies are better resolved, but all 39 canonical claims remain formally unapproved until the actual evidence packages, hashes, exact locators, rights basis and human review decisions are recorded. Phase 1 remains `BLOCKED_NO_EVIDENCE`.
