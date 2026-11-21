@@ -1,62 +1,72 @@
 name: ROBOSCOPIA Data Quality
-
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   validate:
     name: Audit and test data quality tools
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 45
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Run automated tests
+      - name: Install Java for OpenDataLoader
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Install parser runtimes
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          python -m pip install --upgrade pip
+          python -m pip install reportlab opendataloader-pdf==2.5.23 docling==2.151.1
+      - name: Generate synthetic PDF fixture
+        run: python scripts/create-parser-benchmark-fixtures.py "$RUNNER_TEMP/parser-fixtures"
+      - name: Run actual parser benchmark
+        run: node scripts/parser-benchmark.mjs "$RUNNER_TEMP/parser-fixtures/parser-benchmark-manifest.json" artifacts/parser-benchmark-report.json
+      - name: Require all parser engines to execute
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open("artifacts/parser-benchmark-report.json",encoding="utf-8"))
+          assert r["fixtureCount"] >= 1
+          assert set(r["parsersExecuted"]) == {"poppler","opendataloader","docling"}, r["parsersExecuted"]
+          for name,result in r["results"][0]["parsers"].items():
+              assert result["status"] == "success", f"{name}: {result}"
+          PY
+      - name: Upload parser benchmark report
+        uses: actions/upload-artifact@v4
+        with:
+          name: roboscopia-parser-benchmark
+          path: artifacts/parser-benchmark-report.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Run full test suite including end-to-end lifecycle
         run: node --test tests/*.test.mjs
-
-      - name: Compile local parser adapters
-        run: python -m py_compile adapters/docling_adapter.py adapters/opendataloader_adapter.py
-
-      - name: Validate empty parser benchmark safely
-        run: node scripts/parser-benchmark.mjs data/parser-benchmark-corpus.json "$RUNNER_TEMP/parser-benchmark-report.json"
-
+      - name: Compile parser adapters
+        run: python -m py_compile adapters/docling_adapter.py adapters/opendataloader_adapter.py scripts/create-parser-benchmark-fixtures.py
       - name: Run data quality audit
         run: node scripts/data-quality-audit.mjs --json
-
       - name: Generate review queue
         run: node scripts/data-quality-review-queue.mjs --json
-
       - name: Generate source verification report
-        run: node scripts/source-verification-engine.mjs --json > data/source-verification-report.json
-
-      - name: Generate evidence matching review report
+        run: node scripts/source-verification-engine.mjs --json > "$RUNNER_TEMP/source-verification-report.json"
+      - name: Generate evidence matching report
         run: node scripts/evidence-matching-review-engine.mjs --json
-
-      - name: Run automated evidence verification gate
+      - name: Run automated evidence gate
         run: node scripts/run-automated-verification.mjs --json > "$RUNNER_TEMP/automated-verification-report.json"
-
-      - name: Validate evidence extraction CLI
+      - name: Validate extraction CLI
         run: node scripts/technical-evidence-extraction-engine.mjs --help
-
-      - name: Validate evidence document acquisition CLI
+      - name: Validate acquisition CLI
         run: node scripts/evidence-document-acquisition.mjs --help
