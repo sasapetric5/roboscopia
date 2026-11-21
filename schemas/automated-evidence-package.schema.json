@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roboscopia.com/schemas/automated-evidence-package.schema.json",
+  "title": "ROBOSCOPIA automated evidence package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["claimId", "modelId", "source", "document", "extraction"],
+  "properties": {
+    "claimId": {"type":"string","minLength":1},
+    "modelId": {"type":"string","minLength":1},
+    "configurationId": {"type":["string","null"]},
+    "source": {
+      "type":"object","additionalProperties":false,
+      "required":["sourceId","url","authority","rights"],
+      "properties":{
+        "sourceId":{"type":"string","minLength":1},
+        "url":{"type":"string","format":"uri"},
+        "authority":{"enum":["manufacturer_primary","independent_primary"]},
+        "rights":{"type":"object","required":["processingPermitted"],"properties":{"processingPermitted":{"const":true}}}
+      }
+    },
+    "document": {
+      "type":"object","required":["sha256","revision","capturedAt"],
+      "properties":{
+        "sha256":{"type":"string","pattern":"^[a-fA-F0-9]{64}$"},
+        "revision":{"type":"string","minLength":1},
+        "capturedAt":{"type":"string","format":"date-time"}
+      }
+    },
+    "extraction": {
+      "type":"object","required":["value","unit","quote","locator","parser"],
+      "properties":{
+        "value":{"type":["number","string"]},
+        "unit":{"type":"string"},
+        "quote":{"type":"string","minLength":1},
+        "locator":{"type":"object"},
+        "parser":{"type":"object","required":["name","version"],"properties":{"name":{"enum":["opendataloader-pdf","docling","paddleocr","poppler","manual-html"]},"version":{"type":"string","minLength":1}}}
+      }
+    }
+  }
+}
