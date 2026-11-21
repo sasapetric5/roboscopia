@@ -32,14 +32,14 @@ async function runPoppler(pdf,timeout){
 }
 async function runBatch(adapter,fixtures,timeout){
  const script=resolve("adapters",adapter==="docling"?"docling_adapter.py":"opendataloader_adapter.py");
- const paths=fixtures.map(f=>resolve(f.path));
+ const paths=fixtures.map(f=>resolve(f.path)),started=Date.now();
  const r=await execFile(process.env.PYTHON??"python3",[script,...paths],{timeout,maxBuffer:64*1024*1024,encoding:"utf8"});
  const outputs=JSON.parse(r.stdout);
  if(!Array.isArray(outputs)||outputs.length!==fixtures.length)throw Error("Batch adapter output count mismatch");
- return outputs.map((out,i)=>{
+ return {outputs:outputs.map((out,i)=>{
   if(out.document!==basename(fixtures[i].path)||out.local_only!==true||typeof out.text!=="string"||!Array.isArray(out.table_rows))throw Error("Batch adapter output contract invalid for "+fixtures[i].id);
   return out;
- });
+ }),wallSeconds:(Date.now()-started)/1000};
 }
 async function main(){
  const [manifestArg,outputArg]=process.argv.slice(2);
@@ -50,10 +50,14 @@ async function main(){
   if(!f.path||!Array.isArray(f.expectedEvidence))throw Error("Invalid benchmark fixture: "+f.id);
   eligible.push(f);
  }
- const batches={};
- for(const adapter of ["opendataloader","docling"]){
-  try{batches[adapter]=await runBatch(adapter,eligible,Math.max(...eligible.map(f=>f.timeoutMs??300000),300000));}
-  catch(e){batches[adapter]=eligible.map(()=>({status:"error",error:e.message,text:"",table_rows:[]}));}
+ const batches={},batchRuntimeSeconds={};
+ if(eligible.length){
+  for(const adapter of ["opendataloader","docling"]){
+   try{
+    const batch=await runBatch(adapter,eligible,Math.max(...eligible.map(f=>f.timeoutMs??300000),300000));
+    batches[adapter]=batch.outputs;batchRuntimeSeconds[adapter]=batch.wallSeconds;
+   }catch(e){batches[adapter]=eligible.map(()=>({status:"error",error:e.message,text:"",table_rows:[]}));batchRuntimeSeconds[adapter]=null;}
+  }
  }
  for(let i=0;i<eligible.length;i++){
   const f=eligible[i],item={fixtureId:f.id,document:basename(f.path),expectedPageCount:f.expectedPageCount??null,parsers:{}};
@@ -67,9 +71,9 @@ async function main(){
   }
   results.push(item);
  }
- const report={schemaVersion:"1.2.0",generatedAt:new Date().toISOString(),corpusStatus:results.length?"executed":"empty_no_benchmark_claim",fixtureCount:results.length,parsersExecuted:[...new Set(results.flatMap(x=>Object.keys(x.parsers??{})))],executionMode:"one persistent Python process per adapter batch; parser runtime initialized once per batch",scoring:"Exact normalized snippet and table-row recall; synthetic fixture only; no production accuracy claim.",rightsPolicy:"Only explicitly permitted fixtures are processed.",catalogMutation:false,results};
+ const report={schemaVersion:"1.3.0",generatedAt:new Date().toISOString(),corpusStatus:results.length?"executed":"empty_no_benchmark_claim",fixtureCount:results.length,parsersExecuted:[...new Set(results.flatMap(x=>Object.keys(x.parsers??{})))],executionMode:"one persistent Python process per adapter batch; parser runtime initialized once per batch",batchRuntimeSeconds,scoring:"Exact normalized snippet and table-row recall; synthetic fixture only; no production accuracy claim.",rightsPolicy:"Only explicitly permitted fixtures are processed.",catalogMutation:false,results};
  const out=resolve(outputArg??"artifacts/parser-benchmark-report.json");await mkdir(dirname(out),{recursive:true});
  await writeFile(out,JSON.stringify(report,null,2)+"\n",{flag:"wx"});
- process.stdout.write(JSON.stringify({corpusStatus:report.corpusStatus,fixtureCount:report.fixtureCount,parsersExecuted:report.parsersExecuted,executionMode:report.executionMode,output:out})+"\n");
+ process.stdout.write(JSON.stringify({corpusStatus:report.corpusStatus,fixtureCount:report.fixtureCount,parsersExecuted:report.parsersExecuted,batchRuntimeSeconds:report.batchRuntimeSeconds,executionMode:report.executionMode,output:out})+"\n");
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(resolve(process.argv[1])).href)main().catch(e=>{process.stderr.write(e.message+"\n");process.exitCode=2;});
