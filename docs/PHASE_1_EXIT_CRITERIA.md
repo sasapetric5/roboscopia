@@ -2,7 +2,7 @@
 
 **Status:** IN PROGRESS — NOT APPROVED FOR PHASE 2  
 **Scope:** Establish a reliable, traceable, rights-aware technical data and evidence pipeline for the initial Roboscopia catalogue.  
-**Current baseline:** 7 catalogue models, 39 technical claims, 15 registered manufacturer source URLs, and 7 evidence-document records.
+**Current baseline:** 7 catalogue models, 39 technical claims, 17 registered source entries, and 7 evidence-document records.
 
 This document is the operational acceptance checklist for Phase 1. A green CI run proves that automated checks passed; it does not prove that manufacturer documents were reviewed or that catalogue claims are factually verified.
 
