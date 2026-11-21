@@ -8,7 +8,7 @@
 - **Public demo:** [roboscopia.com](https://roboscopia.com) · [Cloudflare Pages preview](https://roboscopia-dpw.pages.dev/index.html).
 - **CI status:** use the live badge above and [the `main` workflow runs](https://github.com/sasapetric5/roboscopia/actions/workflows/data-quality.yml?query=branch%3Amain); the previously observed successful run predates the Phase 0 edits.
 
-[Engineering rules](docs/ENGINEERING_RULES.md) · [Phase 2 product requirements](docs/PRODUCT_REQUIREMENTS_PHASE_2.md) · [Phase 1 exit criteria](docs/PHASE_1_EXIT_CRITERIA.md) · [Demo deployment checklist](docs/DEMO_DEPLOY_CHECKLIST.md) · [Verification log](docs/VERIFICATION_LOG.md)
+[Technical Data Source Standard](docs/TECHNICAL_DATA_SOURCE_STANDARD.md) · [Engineering rules](docs/ENGINEERING_RULES.md) · [Phase 2 product requirements](docs/PRODUCT_REQUIREMENTS_PHASE_2.md) · [Phase 1 exit criteria](docs/PHASE_1_EXIT_CRITERIA.md) · [Demo deployment checklist](docs/DEMO_DEPLOY_CHECKLIST.md) · [Verification log](docs/VERIFICATION_LOG.md)
 
 ROBOSCOPIA is being developed as a global robotics and CNC knowledge and intelligence platform. The current implementation is an initial, working repository foundation—not a finished marketplace or a fully verified technical encyclopedia.
 
