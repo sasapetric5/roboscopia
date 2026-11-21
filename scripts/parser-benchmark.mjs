@@ -8,7 +8,8 @@ const norm=x=>String(x??"").normalize("NFKC").toLowerCase().replace(/\s+/g," ").
 const token=c=>c!==undefined&&/[A-Za-z0-9.,]/.test(c);
 function has(h,n){if(!n)return false;let i=0;while((i=h.indexOf(n,i))!==-1){const b=i?h[i-1]:undefined,a=i+n.length<h.length?h[i+n.length]:undefined;if(!token(b)&&!token(a))return true;i++;}return false;}
 export function scoreOutput(output,expected,rows=[],expectedRows=[]){
- const checks=expected.map(x=>({id:x.id,found:has(norm(output),norm(x.text))}));
+ const searchable=norm([output,...rows.map(row=>row.join(" "))].join(" "));
+ const checks=expected.map(x=>({id:x.id,found:has(searchable,norm(x.text))}));
  const tableChecks=expectedRows.map((e,index)=>({index,found:rows.some(r=>r.length===e.length&&e.every((c,i)=>norm(r[i])===norm(c)))}));
  const matched=checks.filter(x=>x.found).length,tm=tableChecks.filter(x=>x.found).length;
  return {expectedCount:checks.length,matchedCount:matched,evidenceRecall:checks.length?matched/checks.length:null,checks,expectedTableRows:tableChecks.length,matchedTableRows:tm,tableRowRecall:tableChecks.length?tm/tableChecks.length:null,tableChecks};

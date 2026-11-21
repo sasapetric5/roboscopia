@@ -16,5 +16,7 @@ def main():
     from importlib.metadata import version
     start=time.perf_counter(); result=DocumentConverter().convert(str(pdf)); doc=result.document
     md=doc.export_to_markdown(); found=tables(md)
-    print(json.dumps({"adapter":"docling","version":version("docling"),"status":str(getattr(result,"status","success")),"text":md,"page_count":len(getattr(doc,"pages",{}) or {}),"table_count":len(getattr(doc,"tables",[]) or []),"table_rows":found,"elapsed_seconds":round(time.perf_counter()-start,4),"local_only":True},ensure_ascii=False))
+    raw_status=str(getattr(result,"status","success"))
+    status="success" if "SUCCESS" in raw_status.upper() else "error"
+    print(json.dumps({"adapter":"docling","version":version("docling"),"status":status,"raw_status":raw_status,"text":md,"page_count":len(getattr(doc,"pages",{}) or {}),"table_count":len(getattr(doc,"tables",[]) or []),"table_rows":found,"elapsed_seconds":round(time.perf_counter()-start,4),"local_only":True},ensure_ascii=False))
 if __name__=="__main__": main()
