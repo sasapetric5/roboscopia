@@ -26,6 +26,10 @@ The platform is intended to support:
 - New and used equipment listings, components, spare parts and accessories.
 - Search and intelligence features that make complex technical information easier to explore.
 
+## Manufacturer partnerships and future distribution
+
+ROBOSCOPIA's long-term strategy includes becoming a trusted product-discovery and commercial referral channel for robotics and CNC manufacturers, authorized distributors and buyers. Manufacturer-controlled documentation is the preferred primary source for product facts. Technical independence must remain separate from commercial relationships: sponsorships and referrals are disclosed and must not influence factual specifications or objective comparisons. Any reseller, distributor or regional representation status requires a valid written agreement; no such status is implied today. See [Manufacturer Partnerships & Product Distribution Strategy](docs/MANUFACTURER_PARTNERSHIPS.md) for the staged plan and safeguards.
+
 ## Three connected pillars
 
 1. **Knowledge Base** — structured profiles for manufacturers, robot and machine models, technical specifications, documentation and development history.
