@@ -20,17 +20,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-parser.txt
       - name: Install Java for OpenDataLoader
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
-      - name: Install parser runtimes
+      - name: Install Poppler runtime
         run: |
           sudo apt-get update
           sudo apt-get install -y poppler-utils
-          python -m pip install --upgrade pip
-          python -m pip install reportlab opendataloader-pdf==2.5.23 docling==2.151.1
+          pdftotext -v
+      - name: Install Python parser runtimes (pip cache enabled)
+        run: |
+          python -m pip install -r requirements-parser.txt
+          python -c "import docling; import opendataloader_pdf; import reportlab; print('All parser packages imported successfully')"
       - name: Prepare Phase 1 report directory
         run: mkdir -p artifacts/phase1
       - name: Generate synthetic PDF fixture
