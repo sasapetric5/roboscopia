@@ -4,10 +4,11 @@ import { resolve } from "node:path";
 import { execFile as execFileCallback } from "node:child_process";
 import { promisify } from "node:util";
 import { pathToFileURL } from "node:url";
-import { extractEvidenceCandidates } from "./technical-evidence-extraction-engine.mjs";
+import { extractEvidenceCandidates, htmlToEvidenceText } from "./technical-evidence-extraction-engine.mjs";
 
 const execFile = promisify(execFileCallback);
 const MAX_PDF_BYTES = 25 * 1024 * 1024;
+const MAX_HTML_BYTES = 12 * 1024 * 1024;
 const sha256 = (buffer) => createHash("sha256").update(buffer).digest("hex");
 
 function parseArgs(argv) {
@@ -60,22 +61,38 @@ async function main() {
       typeof rights?.basis !== "string" || !rights.basis.trim()) {
     throw new Error("Acquisition blocked: canonical Source Registry must contain verified manufacturer authority and explicit, reviewed processing permission. CLI flags cannot grant rights.");
   }
-  if (source.documentType !== "pdf") throw new Error("This source is HTML, not a PDF. Use the official page locator workflow; do not save a webpage as a PDF and label it a manufacturer PDF.");
+  if (!["pdf", "html"].includes(source.documentType)) throw new Error("Unsupported registered document type.");
 
   const filePath = resolve(args.file);
   const info = await stat(filePath);
-  if (!info.isFile() || info.size < 8 || info.size > MAX_PDF_BYTES) throw new Error("Local PDF must be a regular file between 8 bytes and 25 MB.");
+  if (!info.isFile()) throw new Error("Evidence input must be a local regular file.");
   const bytes = await readFile(filePath);
-  if (bytes.subarray(0, 5).toString("ascii") !== "%PDF-") throw new Error("Local file does not have a valid PDF signature.");
-
-  const { stdout } = await execFile("pdftotext", ["-layout", "-enc", "UTF-8", filePath, "-"], {
-    timeout: 30000, maxBuffer: 12 * 1024 * 1024, windowsHide: true, encoding: "utf8"
-  });
-  if (!stdout.trim()) throw new Error("No selectable PDF text found. Scanned-page OCR requires a separate explicit approval and workflow.");
+  let extractedText;
+  let contentType;
+  let mimeSignature;
+  if (source.documentType === "pdf") {
+    if (info.size < 8 || info.size > MAX_PDF_BYTES) throw new Error("Local PDF must be between 8 bytes and 25 MB.");
+    if (bytes.subarray(0, 5).toString("ascii") !== "%PDF-") throw new Error("Local file does not have a valid PDF signature.");
+    const { stdout } = await execFile("pdftotext", ["-layout", "-enc", "UTF-8", filePath, "-"], {
+      timeout: 30000, maxBuffer: 12 * 1024 * 1024, windowsHide: true, encoding: "utf8"
+    });
+    if (!stdout.trim()) throw new Error("No selectable PDF text found. Scanned-page OCR requires a separate explicit approval and workflow.");
+    extractedText = stdout;
+    contentType = "application/pdf";
+    mimeSignature = "%PDF-";
+  } else {
+    if (info.size < 1 || info.size > MAX_HTML_BYTES) throw new Error("Local HTML must be between 1 byte and 12 MB.");
+    const html = bytes.toString("utf8");
+    if (!/<(?:!doctype\s+html|html\b|head\b|body\b|table\b)/i.test(html)) throw new Error("Local file does not contain a recognizable HTML document or table.");
+    extractedText = htmlToEvidenceText(html);
+    contentType = "text/html";
+    mimeSignature = "text/html";
+  }
 
   const digest = sha256(bytes);
   const report = extractEvidenceCandidates({
-    text: stdout,
+    text: extractedText,
+    documentContentType: contentType,
     documentSha256: digest,
     documentName: filePath.split(/[\\/]/).pop(),
     sourceUrl: canonicalSource.url,
@@ -103,7 +120,8 @@ async function main() {
       fileName: filePath.split(/[\\/]/).pop(),
       byteSize: bytes.length,
       sha256: digest,
-      mimeSignature: "%PDF-",
+      mimeSignature,
+      contentType,
       pageCount: report.counts.pages
     },
     rightsReview: {
