@@ -1,0 +1,5 @@
+{
+  "schemaVersion": "1.0.0",
+  "description": "Rights-cleared, locally processed parser benchmark fixtures. Empty by default until approved PDFs and independently checked gold evidence are supplied.",
+  "fixtures": []
+}

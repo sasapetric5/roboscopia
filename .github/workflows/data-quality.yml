@@ -16,7 +16,7 @@ jobs:
   validate:
     name: Audit and test data quality tools
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -26,8 +26,19 @@ jobs:
         with:
           node-version: 22
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
       - name: Run automated tests
         run: node --test tests/*.test.mjs
+
+      - name: Compile local parser adapters
+        run: python -m py_compile adapters/docling_adapter.py adapters/opendataloader_adapter.py
+
+      - name: Validate empty parser benchmark safely
+        run: node scripts/parser-benchmark.mjs data/parser-benchmark-corpus.json "$RUNNER_TEMP/parser-benchmark-report.json"
 
       - name: Run data quality audit
         run: node scripts/data-quality-audit.mjs --json
