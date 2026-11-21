@@ -196,9 +196,18 @@ async function main() {
   const args = process.argv.slice(2);
   const json = args.includes("--json");
   const paths = [];
-  for (let i = 0; i < args.length; i++) if (args[i] === "--evidence") { if (!args[i + 1]) throw new Error("--evidence requires a JSON file path."); paths.push(args[++i]); }
+  let sourceReportPath = "data/source-verification-report.json";
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === "--evidence") {
+      if (!args[i + 1]) throw new Error("--evidence requires a JSON file path.");
+      paths.push(args[++i]);
+    } else if (args[i] === "--source-report") {
+      if (!args[i + 1]) throw new Error("--source-report requires a JSON file path.");
+      sourceReportPath = args[++i];
+    }
+  }
   const db = JSON.parse(await readFile(resolve("data/robots.json"), "utf8"));
-  const sourceReport = JSON.parse(await readFile(resolve("data/source-verification-report.json"), "utf8"));
+  const sourceReport = JSON.parse(await readFile(resolve(sourceReportPath), "utf8"));
   const extractionReports = [];
   for (const path of paths) extractionReports.push(JSON.parse(await readFile(resolve(path), "utf8")));
   const decisionPath = resolve("data/evidence-matching-decisions.json");
