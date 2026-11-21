@@ -3,13 +3,13 @@
 
 **Discover. Compare. Understand. Verify.**
 
-**Current snapshot — 20 November 2026**
+**Current snapshot — 21 November 2026**
 
 - **What works in the repository:** a bilingual Serbian/English robotics catalog with 7 robot profiles, model dossiers, search, filters, sorting and comparison of up to 3 models.
 - **Data foundation:** 39 specification claims across 7 models, source provenance, read-only data audit, human review queues and source-verification reporting.
 - **Evidence tools:** local technical-evidence extraction, claim-to-evidence matching, a 7-source manufacturer registry and a permission-gated PDF processing CLI.
 - **What is tested:** GitHub Actions is configured to run every `tests/*.test.mjs` file with Node.js 22, then run the audit and reporting CLIs. The 10 review-queue tests are included in that test command; local manual execution is not claimed.
-- **CI evidence:** workflow run [44807571168](https://github.com/sasapetric5/roboscopia/actions/runs/44807571168) was checked and its test, audit and review-queue steps completed successfully. This run predates the latest README/evidence-tool commits; CI for the current HEAD has not yet been confirmed.
+- **Phase 1 acceptance gate:** [Phase 1 Exit Criteria](docs/PHASE_1_EXIT_CRITERIA.md) defines the mandatory evidence, rights, human-review, integrity and CI requirements. Phase 1 remains open; a green CI run alone does not establish factual verification.
 - **Public availability:** Cloudflare Pages automatic deployment is disabled. The repository contains the website implementation, but no live public deployment is claimed. Production deployment remains subject to the owner's explicit approval.
 
 ROBOSCOPIA is being developed as a global robotics and CNC knowledge and intelligence platform. The current implementation is an initial, working repository foundation—not a finished marketplace or a fully verified technical encyclopedia.
