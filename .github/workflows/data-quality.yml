@@ -104,7 +104,8 @@ jobs:
               "evidenceCandidates":counts.get("candidates",0),
               "claimsWithoutEvidence":counts.get("noMatchingEvidence",0),
               "eligibleClaims":verification.get("counts",{}).get("eligible"),
-              "quarantinedClaims":verification.get("counts",{}).get("quarantined"),\n              "warningBreakdown":{code:sum(1 for issue in audit.get("issues",[]) if issue.get("severity")=="warning" and issue.get("code")==code) for code in sorted({issue.get("code","UNKNOWN") for issue in audit.get("issues",[]) if issue.get("severity")=="warning"})},
+              "quarantinedClaims":verification.get("counts",{}).get("quarantined"),
+              "warningBreakdown":{code:sum(1 for issue in audit.get("issues",[]) if issue.get("severity")=="warning" and issue.get("code")==code) for code in sorted({issue.get("code","UNKNOWN") for issue in audit.get("issues",[]) if issue.get("severity")=="warning"})},
               "openReviewByPriority":{priority:sum(1 for item in queue.get("items",[]) if item.get("status")=="open" and item.get("priority")==priority) for priority in sorted({item.get("priority","unknown") for item in queue.get("items",[]) if item.get("status")=="open"})}
             },
             "reports":[
