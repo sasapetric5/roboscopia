@@ -106,6 +106,7 @@ export function buildEvidenceMatchingReport(db, sourceReport, extractionReports 
       const evidenceHost = sourceHost(candidate.sourceUrl);
       const sameSourceHost = Boolean(claimHost && evidenceHost && claimHost === evidenceHost);
       const sameSourceId = Boolean(claim.sourceId && candidate.sourceId && claim.sourceId === candidate.sourceId);
+      const declaredRelatedSourceMatch = Boolean(claim.sourceId && Array.isArray(candidate.relatedSourceIds) && candidate.relatedSourceIds.includes(claim.sourceId));
       const sourceIdentityMissing = !claim.sourceId || !candidate.sourceId;
       const valueResult = compareValue(claim, candidate, field);
       let status = "candidate_review";
@@ -114,7 +115,7 @@ export function buildEvidenceMatchingReport(db, sourceReport, extractionReports 
       else if (candidate.modelMentionStatus === "not_found") status = "model_identity_unverified";
       else if (candidate.configurationMentionStatus === "not_found") status = "configuration_identity_unverified";
       else if (sourceIdentityMissing) status = "source_identity_unverified";
-      else if (!sameSourceId) status = "source_mismatch";
+      else if (!sameSourceId && !declaredRelatedSourceMatch) status = "source_mismatch";
       else if (modelUnspecified) status = "model_identity_unverified";
       else if (valueResult === "unit_mismatch") status = "unit_mismatch";
       else if (valueResult === "mismatch") status = "value_mismatch";
@@ -136,7 +137,9 @@ export function buildEvidenceMatchingReport(db, sourceReport, extractionReports 
           configurationId: candidate.configurationId ?? null,
           sourceUrl: candidate.sourceUrl ?? null,
           sourceId: candidate.sourceId ?? null,
+          relatedSourceIds: candidate.relatedSourceIds ?? [],
           sameSourceId,
+          declaredRelatedSourceMatch,
           sameSourceHost,
           documentName: candidate.documentName ?? null,
           documentSha256: candidate.documentSha256 ?? null,
@@ -150,7 +153,7 @@ export function buildEvidenceMatchingReport(db, sourceReport, extractionReports 
           extractionStatus: candidate.reviewStatus ?? "extracted_unverified",
         },
         valueComparison: valueResult,
-        identity: { sameModel, modelUnspecified, sameConfiguration: sameConfig, configurationUnspecified: configUnspecified, sameSourceId, sourceIdentityMissing, sameSourceHost },
+        identity: { sameModel, modelUnspecified, sameConfiguration: sameConfig, configurationUnspecified: configUnspecified, sameSourceId, declaredRelatedSourceMatch, sourceIdentityMissing, sameSourceHost },
         reviewRequired: true,
         catalogMutationAllowed: false,
       };
