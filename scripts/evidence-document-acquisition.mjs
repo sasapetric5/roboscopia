@@ -78,7 +78,7 @@ async function main() {
     text: stdout,
     documentSha256: digest,
     documentName: filePath.split(/[\\/]/).pop(),
-    sourceUrl: source.downloadUrl ?? source.sourcePageUrl,
+    sourceUrl: canonicalSource.url,
     modelId: source.modelIds.length === 1 ? source.modelIds[0] : null,
     modelName: args["model-name"] ?? null,
     configurationId: args["configuration-id"] ?? null,
