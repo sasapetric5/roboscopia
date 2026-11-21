@@ -43,6 +43,17 @@ test("registered source records link all 39 claims to real catalog model IDs", a
   for (const source of registry.sources) {
     const canonical = sourceById.get(source.canonicalSourceId);
     assert.ok(canonical, "canonical source ID must resolve: " + source.id);
+    const relatedIds = new Set([source.canonicalSourceId, ...(source.relatedSourceIds ?? [])]);
+    for (const claim of source.catalogClaims) {
+      assert.ok(relatedIds.has(claim.catalogSourceId), "claim source must be declared on its evidence record: " + source.id + " / " + claim.specification);
+      const claimSource = sourceById.get(claim.catalogSourceId);
+      assert.ok(claimSource, "claim source ID must resolve: " + claim.catalogSourceId);
+      assert.ok(
+        [source.sourcePageUrl, source.downloadUrl, ...(source.relatedSourceUrls ?? [])].filter(Boolean).includes(claimSource.url) ||
+        relatedIds.has(claim.catalogSourceId),
+        "claim source relationship must be explicit: " + source.id + " / " + claim.specification
+      );
+    }
     assert.ok(
       [source.sourcePageUrl, source.downloadUrl].filter(Boolean).includes(canonical.url),
       "source page or download URL must exactly match canonical registry URL: " + source.id
