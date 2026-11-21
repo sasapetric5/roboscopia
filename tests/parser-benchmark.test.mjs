@@ -10,11 +10,11 @@ test("scores exact normalized evidence snippets", () => {
   ]);
   assert.equal(result.expectedCount, 3);
   assert.equal(result.matchedCount, 2);
-  assert.equal(result.recall, 2 / 3);
+  assert.equal(result.evidenceRecall, 2 / 3);
 });
 test("does not report a score when gold evidence is absent", () => {
   const result = scoreOutput("some text", []);
-  assert.equal(result.recall, null);
+  assert.equal(result.evidenceRecall, null);
   assert.equal(result.matchedCount, 0);
 });
 test("does not confuse decimal values embedded in larger values", () => {
