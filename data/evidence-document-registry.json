@@ -85,7 +85,10 @@
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
       },
-      "canonicalSourceId": "src-0002"
+      "canonicalSourceId": "src-0002",
+      "relatedSourceIds": [
+        "src-0001"
+      ]
     },
     {
       "id": "unitree-go2-product-page",
@@ -294,7 +297,10 @@
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
       },
-      "canonicalSourceId": "src-0006"
+      "canonicalSourceId": "src-0006",
+      "relatedSourceIds": [
+        "src-0013"
+      ]
     },
     {
       "id": "ur20-user-manual-sw5-26",
@@ -437,7 +443,11 @@
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
       },
-      "canonicalSourceId": "src-0010"
+      "canonicalSourceId": "src-0010",
+      "relatedSourceIds": [
+        "src-0014",
+        "src-0015"
+      ]
     },
     {
       "id": "kuka-kr6-r700-sixx-c-v4-1",
