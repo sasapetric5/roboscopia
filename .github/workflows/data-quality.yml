@@ -36,10 +36,13 @@ jobs:
         run: node scripts/data-quality-review-queue.mjs --json
 
       - name: Generate source verification report
-        run: node scripts/source-verification-engine.mjs --json > data/source-verification-report.json
+        run: node scripts/source-verification-engine.mjs --json > "$RUNNER_TEMP/source-verification-report.json"
 
       - name: Generate evidence matching review report
         run: node scripts/evidence-matching-review-engine.mjs --json
+
+      - name: Run automated evidence verification gate
+        run: node scripts/run-automated-verification.mjs --json > "$RUNNER_TEMP/automated-verification-report.json"
 
       - name: Validate evidence extraction CLI
         run: node scripts/technical-evidence-extraction-engine.mjs --help
