@@ -35,10 +35,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y poppler-utils
           pdftotext -v
-      - name: Install Python parser runtimes (pip cache enabled)
+      - name: Install CPU-only PyTorch runtime
+        run: |
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.15.0 torchvision==0.29.2
+          python -c "import torch; assert not torch.cuda.is_available(); print('CPU-only PyTorch:', torch.__version__)"
+      - name: Install focused Python parser runtimes (pip cache enabled)
         run: |
           python -m pip install -r requirements-parser.txt
-          python -c "import docling; import opendataloader_pdf; import reportlab; print('All parser packages imported successfully')"
+          python -c "import docling; import opendataloader_pdf; import reportlab; import torch; print('All parser packages imported successfully; torch:', torch.__version__)"
       - name: Prepare Phase 1 report directory
         run: mkdir -p artifacts/phase1
       - name: Generate synthetic PDF fixture
