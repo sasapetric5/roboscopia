@@ -31,6 +31,7 @@ test("extracts common robot specifications with exact page and line evidence", (
   assert.equal(report.candidates[0].evidenceLocator.page, 1);
   assert.equal(report.candidates[0].evidenceQuote, "Mass with battery: 33.8 kg");
   assert.equal(report.context.modelMentionStatus, "mention_found");
+  assert.equal(report.document.sourceId, null);
 });
 
 test("preserves page boundaries and document hash in candidate IDs", () => {
@@ -195,4 +196,18 @@ test("decodes numeric HTML entities and rejects empty or oversized HTML", () => 
   assert.equal(htmlToEvidenceText("<p>Torque: 360 N&#183;m &plusmn; 2</p>"), "Torque: 360 N·m ± 2");
   assert.throws(() => htmlToEvidenceText("  "), /empty/);
   assert.throws(() => htmlToEvidenceText("x".repeat(12 * 1024 * 1024 + 1)), /size limit/);
+});
+
+
+test("preserves registered source identity on the document and every extracted candidate", () => {
+  const report = extractEvidenceCandidates({
+    text: "Spot specifications\\nMaximum payload: 14 kg",
+    sourceUrl: "https://bostondynamics.com/products/spot/",
+    sourceId: "src-0001",
+    modelId: "spot",
+    modelName: "Spot",
+  });
+  assert.equal(report.document.sourceId, "src-0001");
+  assert.ok(report.candidates.length > 0);
+  assert.ok(report.candidates.every((item) => item.sourceId === "src-0001"));
 });
