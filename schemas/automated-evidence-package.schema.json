@@ -14,13 +14,13 @@
       "required":["sourceId","url","authority","rights"],
       "properties":{
         "sourceId":{"type":"string","minLength":1},
-        "url":{"type":"string","format":"uri"},
+        "url":{"type":"string","format":"uri","pattern":"^https://"},
         "authority":{"enum":["manufacturer_primary","independent_primary"]},
-        "rights":{"type":"object","required":["processingPermitted"],"properties":{"processingPermitted":{"const":true}}}
+        "rights":{"type":"object","additionalProperties":false,"required":["processingPermitted"],"properties":{"processingPermitted":{"const":true}}}
       }
     },
     "document": {
-      "type":"object","required":["sha256","revision","capturedAt"],
+      "type":"object","additionalProperties":false,"required":["sha256","revision","capturedAt"],
       "properties":{
         "sha256":{"type":"string","pattern":"^[a-fA-F0-9]{64}$"},
         "revision":{"type":"string","minLength":1},
@@ -28,13 +28,19 @@
       }
     },
     "extraction": {
-      "type":"object","required":["value","unit","quote","locator","parser"],
+      "type":"object","additionalProperties":false,"required":["value","unit","quote","locator","parser"],
       "properties":{
         "value":{"type":["number","string"]},
         "unit":{"type":"string"},
         "quote":{"type":"string","minLength":1},
-        "locator":{"type":"object"},
-        "parser":{"type":"object","required":["name","version"],"properties":{"name":{"enum":["opendataloader-pdf","docling","paddleocr","poppler","manual-html"]},"version":{"type":"string","minLength":1}}}
+        "locator":{
+          "type":"object",
+          "oneOf":[
+            {"required":["type","page"],"properties":{"type":{"const":"pdf"},"page":{"type":"integer","minimum":1},"bbox":{"type":"array","minItems":4,"maxItems":4,"items":{"type":"number"}}}},
+            {"required":["type","selector"],"properties":{"type":{"const":"html"},"selector":{"type":"string","minLength":1}}}
+          ]
+        },
+        "parser":{"type":"object","additionalProperties":false,"required":["name","version"],"properties":{"name":{"enum":["opendataloader-pdf","docling","paddleocr","poppler","manual-html"]},"version":{"type":"string","minLength":1}}}
       }
     }
   }

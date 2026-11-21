@@ -13,27 +13,43 @@ The current upstream OpenDataLoader benchmark reports (scores are project-publis
 | Docling | 0.882 | 0.898 | 0.887 | 0.824 | 0.762 |
 | OpenDataLoader default | 0.831 | 0.902 | 0.489 | 0.739 | 0.015 |
 
-Sources: official OpenDataLoader benchmark and its comparison notes. The hybrid mode's table advantage is material, but it has a much higher runtime cost than the default local parser. The project says the hybrid path uses a local backend; this still needs a dependency, model and resource audit before adoption.
+These are upstream-reported scores, not a ROBOSCOPIA benchmark. Hybrid mode's table score is promising, but local-only operation, models, licensing, dependencies and resource limits still require verification.
 
 ## ROBOSCOPIA decision
 
-1. OpenDataLoader default is the first parser to trial for digitally generated PDFs because it preserves structured elements and page bounding boxes.
-2. OpenDataLoader hybrid is a conditional second pass for table-heavy pages only after local-only operation, model licensing, dependency and memory requirements are verified.
-3. Docling remains the independent fallback/benchmark parser for complex documents and tables.
-4. PaddleOCR is not enabled yet; scanned-document OCR requires a separate model-weight/license and CPU/GPU resource assessment.
-5. Ajv is not installed yet. The repository has no package manifest or lockfile, so adding a runtime dependency without a reproducible dependency-management baseline would be unsafe. A versioned JSON Schema contract is added; dependency adoption is deferred until package management is established and CI can pin it.
-6. Splink is deferred to a later isolated batch evaluation. No probabilistic entity matching is allowed to auto-merge records.
+1. OpenDataLoader default is the first parser candidate for digitally generated PDFs.
+2. OpenDataLoader hybrid is a conditional second pass for table-heavy pages after its local runtime and resource requirements are audited.
+3. Docling remains an independent fallback/benchmark candidate.
+4. PaddleOCR is not enabled; model-weight licensing and resource requirements remain open.
+5. Ajv is not installed. The repository still needs a reproducible dependency-management baseline before a new runtime dependency is introduced.
+6. Splink is deferred to a later isolated evaluation. Probabilistic matching must never auto-merge catalog records.
 
-## What was actually tested
+## Canonical Source Registry enforcement
 
-- The automated verification gate has deterministic Node.js tests in CI.
-- Tests cover manufacturer-primary acceptance, two independent primary sources, insufficient corroboration, value/unit conflicts, exact model/configuration, rights, hashes, source URLs, locators, duplicate source identities, approximate values, malformed claims and non-mutation.
-- Numeric quote matching uses complete numeric tokens and accepts decimal comma or decimal point; it rejects a value that appears only as a substring of a larger number.
-- Evidence packages are indexed by claim ID once and each package is validated once. The source-verification report groups claims by source ID once, avoiding repeated full-array scans.
-- Real PDF parser quality has NOT yet been benchmarked on a ROBOSCOPIA sample corpus. The public leaderboard is not a substitute for that test. The current repository does not contain a representative, rights-cleared PDF fixture corpus, and this change does not download or redistribute manufacturer documents.
+The automated evidence gate now requires the canonical `db.sources` array as an explicit input. An evidence package cannot grant itself source authority or processing rights.
 
-## Safety boundary
+For every evidence package, the gate requires:
+- exactly one matching source ID in the canonical registry;
+- exact canonical HTTPS URL match (credentials and non-standard ports rejected);
+- registry authority tier of `manufacturer_primary` or `independent_primary`, matching the package;
+- registry `reviewStatus: "verified"` and a valid source review timestamp;
+- explicit registry processing permission, named reviewer, review timestamp and documented basis;
+- package-level processing permission assertion;
+- exact model/configuration, value and unit match;
+- SHA-256, document revision/capture date, exact quote, page/selector locator and allowlisted parser/version.
 
-The gate creates decisions only; it never changes \`data/robots.json\`. Existing records without sufficient, rights-cleared evidence remain quarantined. A single exact manufacturer primary source may qualify; otherwise two matching independent primary sources on distinct hosts are required. Human review is reserved for quarantined exceptions, calibration samples and periodic audits—not every ordinary record.
+Duplicate registry IDs, missing or unreviewed sources, URL/authority mismatches, incomplete rights records and ambiguous evidence are quarantined. The acceptance rule remains one qualifying manufacturer-primary source OR two qualifying independent-primary sources on distinct hosts. No evidence decision mutates the catalog.
 
-The gate is a deterministic evidence-eligibility check, not proof of factual correctness. It does not yet fetch pages, extract automatically from live sources or semantically verify that a source genuinely belongs to the stated manufacturer/model.
+The current 15 source records are all unreviewed and lack the required rights-review metadata. Therefore, existing evidence cannot qualify for automatic ingestion until a real source review is completed. This is an intentional fail-closed result, not a CI failure.
+
+## What is tested versus what is not
+
+CI runs deterministic Node.js tests for source-registry binding, source ID duplication, URL and authority spoofing, review status, rights metadata, evidence identity, exact values/units/quotes, hashes, locators, parser allowlisting, insufficient corroboration, malformed input and read-only behavior.
+
+Parser adapters are currently syntax-compiled in CI; their third-party runtimes are not installed or executed. The parser benchmark corpus is empty. No claim is made that PDF extraction quality or live source acquisition has been validated on a ROBOSCOPIA corpus.
+
+## Safety boundary and remaining work
+
+The gate emits an eligibility report only. It does not change `data/robots.json`, fetch live pages, prove manufacturer ownership, or establish legal permission by itself. Rights review must be based on actual permission or a documented legal basis—not an inferred assumption from a public URL.
+
+Production readiness still requires a representative rights-cleared gold corpus, reproducible pinned parser runtimes, structured page/table/locator outputs, resource isolation, robust source acquisition controls (including SSRF/DNS rebinding protection, redirect validation, persistent rate limits and robots policy), and independent end-to-end validation. These items remain in Phase 1; Phase 2 must not begin until they are complete and tested.

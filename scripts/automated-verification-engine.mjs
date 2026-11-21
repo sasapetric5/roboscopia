@@ -16,11 +16,14 @@ function uncertain(value) {
   if (typeof value !== "string") return false;
   return /[±≈~]|\b(about|approximately|approx\.?|up to|at least|typically|typical)\b/i.test(value) || /\d\s*(-|–|—|to)\s*\d/.test(value);
 }
-function safeUrl(value) {
+function canonicalHttpsUrl(value) {
   try {
     const url = new URL(value);
-    return url.protocol === "https:" && !!url.hostname && !url.username && !url.password;
-  } catch { return false; }
+    if (url.protocol !== "https:" || !url.hostname || url.username || url.password) return null;
+    if (url.port && url.port !== "443") return null;
+    url.hash = "";
+    return url.href;
+  } catch { return null; }
 }
 function host(value) {
   try { return new URL(value).hostname.toLowerCase().replace(/^www\./, ""); } catch { return null; }
@@ -30,7 +33,7 @@ function quoteContainsNumber(quote, value) {
   const tokens = quote.match(/(?<![\d.,])[-+]?(?:\d+(?:[.,]\d+)?|[.,]\d+)(?![\d.,])/g) ?? [];
   return tokens.some(token => Number(token.replace(",", ".")) === value);
 }
-function validateEvidence(item, index, claim) {
+function validateEvidence(item, index, claim, sourceById) {
   const out = [];
   const path = "evidence[" + index + "]";
   if (!item || typeof item !== "object" || Array.isArray(item)) {
@@ -40,10 +43,48 @@ function validateEvidence(item, index, claim) {
   if (item.claimId !== claim.claimId) issue(out, "CLAIM_ID_MISMATCH", path + ".claimId", "Evidence is attached to a different claim.");
   if (item.modelId !== claim.modelId) issue(out, "MODEL_IDENTITY_MISMATCH", path + ".modelId", "Exact catalog model identity is not confirmed.");
   if ((item.configurationId ?? null) !== (claim.configurationId ?? null)) issue(out, "CONFIGURATION_MISMATCH", path + ".configurationId", "Evidence configuration differs from the catalog claim.");
-  if (!safeUrl(item.source?.url)) issue(out, "INVALID_SOURCE_URL", path + ".source.url", "A public HTTPS URL without embedded credentials is required.");
-  if (typeof item.source?.sourceId !== "string" || !item.source.sourceId.trim()) issue(out, "MISSING_SOURCE_ID", path + ".source.sourceId", "A stable source registry ID is required.");
+
+  const registrySource = typeof item.source?.sourceId === "string" ? sourceById.get(item.source.sourceId) : null;
+  const packageUrl = canonicalHttpsUrl(item.source?.url);
+  if (!packageUrl) issue(out, "INVALID_SOURCE_URL", path + ".source.url", "A public HTTPS URL without credentials and non-standard ports is required.");
+  if (typeof item.source?.sourceId !== "string" || !item.source.sourceId.trim()) {
+    issue(out, "MISSING_SOURCE_ID", path + ".source.sourceId", "A stable source registry ID is required.");
+  } else if (!registrySource) {
+    issue(out, "SOURCE_NOT_REGISTERED", path + ".source.sourceId", "Evidence source ID does not exist in the canonical Source Registry.");
+  } else {
+    const registeredUrl = canonicalHttpsUrl(registrySource.url);
+    if (!registeredUrl || registeredUrl !== packageUrl) {
+      issue(out, "SOURCE_URL_REGISTRY_MISMATCH", path + ".source.url", "Evidence URL does not exactly match the canonical registered source URL.");
+    }
+    if (!AUTHORITIES.has(registrySource.authorityTier)) {
+      issue(out, "REGISTRY_SOURCE_AUTHORITY_UNAPPROVED", path + ".source.sourceId", "The canonical registry has not classified this source as manufacturer_primary or independent_primary.");
+    }
+    if (item.source.authority !== registrySource.authorityTier) {
+      issue(out, "SOURCE_AUTHORITY_MISMATCH", path + ".source.authority", "Evidence authority must match the canonical registry classification.");
+    }
+    if (registrySource.reviewStatus !== "verified") {
+      issue(out, "SOURCE_NOT_REVIEWED", path + ".source.sourceId", "Source Registry reviewStatus must be verified.");
+    }
+    const rights = registrySource.rights;
+    if (rights?.processingPermitted !== true) {
+      issue(out, "REGISTRY_RIGHTS_NOT_CLEARED", path + ".source.sourceId", "The canonical Source Registry must explicitly permit document processing.");
+    }
+    if (typeof rights?.reviewedBy !== "string" || !rights.reviewedBy.trim()) {
+      issue(out, "REGISTRY_RIGHTS_REVIEWER_MISSING", path + ".source.sourceId", "A named rights reviewer is required in the Source Registry.");
+    }
+    if (!rights?.reviewedAt || !Number.isFinite(Date.parse(rights.reviewedAt))) {
+      issue(out, "REGISTRY_RIGHTS_REVIEW_DATE_INVALID", path + ".source.sourceId", "A valid rights review timestamp is required in the Source Registry.");
+    }
+    if (typeof rights?.basis !== "string" || !rights.basis.trim()) {
+      issue(out, "REGISTRY_RIGHTS_BASIS_MISSING", path + ".source.sourceId", "A documented legal or contractual processing-permission basis is required.");
+    }
+    if (typeof registrySource.lastReviewedAt !== "string" || !Number.isFinite(Date.parse(registrySource.lastReviewedAt))) {
+      issue(out, "SOURCE_REVIEW_DATE_INVALID", path + ".source.sourceId", "A valid Source Registry review timestamp is required.");
+    }
+  }
   if (!AUTHORITIES.has(item.source?.authority)) issue(out, "UNAPPROVED_SOURCE_AUTHORITY", path + ".source.authority", "Classify the source as manufacturer_primary or independent_primary.");
-  if (item.source?.rights?.processingPermitted !== true) issue(out, "RIGHTS_NOT_CLEARED", path + ".source.rights", "Explicit processing permission is required.");
+  if (item.source?.rights?.processingPermitted !== true) issue(out, "RIGHTS_NOT_CLEARED", path + ".source.rights", "Evidence package must retain the processing-permission assertion from its source record.");
+
   if (!SHA256.test(item.document?.sha256 ?? "")) issue(out, "INVALID_DOCUMENT_HASH", path + ".document.sha256", "A valid SHA-256 fingerprint is required.");
   if (typeof item.document?.revision !== "string" || !item.document.revision.trim()) issue(out, "MISSING_DOCUMENT_REVISION", path + ".document.revision", "Document or captured-page revision is required.");
   if (!item.document?.capturedAt || !Number.isFinite(Date.parse(item.document.capturedAt))) issue(out, "INVALID_CAPTURE_DATE", path + ".document.capturedAt", "A valid capture timestamp is required.");
@@ -72,10 +113,19 @@ function isValidClaim(claim) {
     (claim.configurationId === null || claim.configurationId === undefined || typeof claim.configurationId === "string");
 }
 
-/** Read-only pre-ingestion gate. Evidence is indexed once; each package is validated once. */
-export function buildAutomatedVerificationReport({ claims, evidence, now = new Date().toISOString() }) {
+/** Read-only pre-ingestion gate. Requires canonical Source Registry records; never mutates catalog data. */
+export function buildAutomatedVerificationReport({ claims, evidence, sourceRegistry, now = new Date().toISOString() }) {
   if (!Array.isArray(claims)) throw new TypeError("claims must be an array");
   if (!Array.isArray(evidence)) throw new TypeError("evidence must be an array");
+  if (!Array.isArray(sourceRegistry)) throw new TypeError("sourceRegistry must be an array");
+
+  const sourceById = new Map();
+  const duplicateSourceIds = new Set();
+  for (const source of sourceRegistry) {
+    if (!source || typeof source !== "object" || Array.isArray(source) || typeof source.id !== "string" || !source.id.trim()) continue;
+    if (sourceById.has(source.id)) duplicateSourceIds.add(source.id);
+    else sourceById.set(source.id, source);
+  }
 
   const evidenceByClaim = new Map();
   for (let index = 0; index < evidence.length; index++) {
@@ -94,7 +144,11 @@ export function buildAutomatedVerificationReport({ claims, evidence, now = new D
     const related = validClaim ? (evidenceByClaim.get(claim.claimId) ?? []) : [];
     const valid = [];
     for (const entry of related) {
-      const evidenceIssues = validateEvidence(entry.item, entry.index, claim);
+      const sourceId = entry.item?.source?.sourceId;
+      if (typeof sourceId === "string" && duplicateSourceIds.has(sourceId)) {
+        issues.push({ severity: "error", code: "DUPLICATE_SOURCE_REGISTRY_ID", path: "evidence[" + entry.index + "].source.sourceId", message: "Source Registry contains duplicate IDs; evidence cannot be attributed unambiguously." });
+      }
+      const evidenceIssues = validateEvidence(entry.item, entry.index, claim, sourceById);
       issues.push(...evidenceIssues);
       if (evidenceIssues.length === 0) valid.push(entry.item);
     }
@@ -110,7 +164,7 @@ export function buildAutomatedVerificationReport({ claims, evidence, now = new D
       .map(item => host(item.source.url))
       .filter(Boolean));
     if (manufacturerPrimaryCount < 1 && independentHosts.size < 2) {
-      issue(issues, "INSUFFICIENT_INDEPENDENT_EVIDENCE", "claims[" + claimIndex + "]", "Require one exact, rights-cleared manufacturer primary source OR two matching independent primary sources on distinct hosts.");
+      issue(issues, "INSUFFICIENT_INDEPENDENT_EVIDENCE", "claims[" + claimIndex + "]", "Require one exact, rights-cleared manufacturer primary source OR two matching independent primary sources on distinct registered hosts.");
     }
 
     const status = issues.length ? "quarantined" : "eligible_for_automatic_ingestion";
@@ -131,10 +185,15 @@ export function buildAutomatedVerificationReport({ claims, evidence, now = new D
   });
 
   return {
-    engineVersion: "1.1.0",
+    engineVersion: "1.2.0",
     generatedAt: now,
     policy: {
-      automaticGate: true,
+      canonicalSourceRegistryRequired: true,
+      exactRegisteredSourceUrlRequired: true,
+      sourceReviewStatusRequired: "verified",
+      registeredAuthorityRequired: true,
+      registeredProcessingPermissionRequired: true,
+      rightsReviewerAndBasisRequired: true,
       minimumIndependentSources: 2,
       requiredEvidenceRule: "one_manufacturer_primary_or_two_independent_primary_sources",
       exactModelAndConfigurationMatch: true,

@@ -14,8 +14,13 @@ async function main() {
   if (evidenceFile.schemaVersion !== "1.0.0" || !Array.isArray(evidenceFile.packages)) {
     throw new Error("Evidence package file must use schemaVersion 1.0.0 and contain a packages array.");
   }
+  if (!Array.isArray(db.sources)) throw new Error("Canonical data file must contain the Source Registry array.");
   const sourceReport = buildSourceVerificationReport(db);
-  const report = buildAutomatedVerificationReport({ claims: sourceReport.claims, evidence: evidenceFile.packages });
+  const report = buildAutomatedVerificationReport({
+    claims: sourceReport.claims,
+    evidence: evidenceFile.packages,
+    sourceRegistry: db.sources
+  });
   if (json) process.stdout.write(JSON.stringify(report, null, 2) + "\n");
   else {
     process.stdout.write("Automated verification: " + report.counts.claims + " claims; " + report.counts.eligible + " eligible; " + report.counts.quarantined + " quarantined; " + report.counts.errors + " errors.\n");
