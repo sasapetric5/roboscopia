@@ -202,14 +202,14 @@ export function htmlToEvidenceText(html) {
   if (typeof html !== "string" || !html.trim()) throw new Error("HTML input is empty.");
   if (Buffer.byteLength(html, "utf8") > MAX_HTML_BYTES) throw new Error("HTML input exceeds the 12 MB size limit.");
   let value = html
-    .replace(/<!--[\\s\\S]*?-->/g, " ")
-    .replace(/<(script|style|noscript|template|svg|iframe|canvas)\\b[^>]*>[\\s\\S]*?<\\/\\1\\s*>/gi, " ")
-    .replace(/<\\/(td|th)\\s*>/gi, " | ")
-    .replace(/<\\/(tr)\\s*>/gi, "\\n")
-    .replace(/<(br|hr)\\b[^>]*>/gi, "\\n")
-    .replace(/<\\/(p|div|section|article|header|footer|h[1-6]|li|table|ul|ol|dl|dt|dd)\\s*>/gi, "\\n")
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    .replace(/<(script|style|noscript|template|svg|iframe|canvas)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, " ")
+    .replace(/<\/(td|th)\s*>/gi, " | ")
+    .replace(/<\/tr\s*>/gi, "\n")
+    .replace(/<(br|hr)\b[^>]*>/gi, "\n")
+    .replace(/<\/(p|div|section|article|header|footer|h[1-6]|li|table|ul|ol|dl|dt|dd)\s*>/gi, "\n")
     .replace(/<[^>]*>/g, " ");
-  value = value.replace(/&(#x[0-9a-f]+|#\\d+|[a-z][a-z0-9]+);/gi, (entity, key) => {
+  value = value.replace(/&(#x[0-9a-f]+|#\d+|[a-z][a-z0-9]+);/gi, (entity, key) => {
     if (key[0] === "#") {
       const hex = key[1]?.toLowerCase() === "x";
       const number = Number.parseInt(key.slice(hex ? 2 : 1), hex ? 16 : 10);
@@ -219,9 +219,9 @@ export function htmlToEvidenceText(html) {
     return HTML_ENTITIES[key.toLowerCase()] ?? entity;
   });
   return value
-    .replace(/[\\t\\f\\v ]+/g, " ")
-    .replace(/ *\\n */g, "\\n")
-    .replace(/\\n{3,}/g, "\\n\\n")
+    .replace(/[\t\f\v ]+/g, " ")
+    .replace(/ *\n */g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
 
@@ -283,6 +283,8 @@ async function main() {
       "Usage:",
       '  node scripts/technical-evidence-extraction-engine.mjs --pdf "<local.pdf>" [--model-id spot] [--model-name Spot] [--configuration-id production] [--source-url https://manufacturer.example/manual.pdf] [--revision "Rev B"] [--document-date 2026-01-01] [--output evidence.json]',
       '  node scripts/technical-evidence-extraction-engine.mjs --text "<local-extracted.txt>" [same metadata options]',
+      '  node scripts/technical-evidence-extraction-engine.mjs --html "<local-authorized-page.html>" [same metadata options]',
+      "HTML input is local only; no URLs are fetched and no access controls are bypassed.",
       "PDF extraction requires the local pdftotext executable (Poppler). No URLs are downloaded.",
       "",
     ].join("\n"));
@@ -293,11 +295,24 @@ async function main() {
   let text;
   let documentName;
   let documentSha256;
+  let documentContentType = "text/plain";
   if (args.pdf) {
     const file = await readLocalPdf(args.pdf);
     text = await extractPdfText(file.actualPath);
     documentName = file.name;
     documentSha256 = sha256(await readFile(file.actualPath));
+    documentContentType = "application/pdf";
+  } else if (args.html) {
+    const path = resolve(args.html);
+    const details = await stat(path);
+    if (!details.isFile() || details.size < 1 || details.size > MAX_HTML_BYTES) throw new Error("HTML input must be a non-empty regular file under 12 MB.");
+    const bytes = await readFile(path);
+    const html = bytes.toString("utf8");
+    if (!/<(?:!doctype\s+html|html\b|head\b|body\b|table\b)/i.test(html)) throw new Error("HTML input does not contain a recognizable HTML document or table.");
+    text = htmlToEvidenceText(html);
+    documentName = path.split(/[\\/]/).pop();
+    documentSha256 = sha256(bytes);
+    documentContentType = "text/html";
   } else {
     const path = resolve(args.text);
     const details = await stat(path);
@@ -311,6 +326,7 @@ async function main() {
     text,
     documentSha256,
     documentName,
+    documentContentType,
     sourceUrl: args["source-url"] ?? null,
     modelId: args["model-id"] ?? null,
     modelName: args["model-name"] ?? null,
