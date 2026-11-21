@@ -204,6 +204,7 @@ export function htmlToEvidenceText(html) {
   let value = html
     .replace(/<!--[\s\S]*?-->/g, " ")
     .replace(/<(script|style|noscript|template|svg|iframe|canvas)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, " ")
+    .replace(/<tr\b[^>]*>/gi, "\n")
     .replace(/<\/(td|th)\s*>/gi, " | ")
     .replace(/<\/tr\s*>/gi, "\n")
     .replace(/<(br|hr)\b[^>]*>/gi, "\n")
