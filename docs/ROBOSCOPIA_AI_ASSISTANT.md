@@ -282,3 +282,102 @@ Advanced compatibility, complete profile composition and Marketplace actions may
 **Document status:** Architecture and product requirements proposal.  
 **Implementation status:** Not implemented by this document.  
 **Catalogue/evidence status:** Phase 1 remains subject to its separate acceptance criteria.
+
+## 13. Reliability, recovery and optional OpenAI API integration
+
+This section defines required behavior for a future implementation. It does not enable an API provider, create credentials, or claim that the controls are already deployed.
+
+### 13.1 No dependency on a single API key
+
+- OpenAI may be configured as one optional model provider through the server-side provider gateway.
+- ROBOSCOPIA must not depend on an OpenAI key, or any other single provider, for deterministic tasks such as file hashing, PDF text extraction, OCR orchestration, schema validation, unit conversion, evidence matching, audit generation and checkpoint storage.
+- A ChatGPT subscription or ChatGPT login must not be represented as including API credits. API access and billing are separate and must be configured by the site owner.
+- No OpenAI credential is supplied by the ChatGPT assistant. The owner must create and control any API project/key used by the website.
+- The key must be stored only in the hosting platform's server-side secret store. It must never appear in frontend bundles, browser requests, public repository files, client-visible errors or logs.
+- Provider activation is an explicit owner-controlled setting. The default state is disabled until the owner approves the provider and its budget.
+
+### 13.2 Task execution as recoverable jobs
+
+Every substantial research or document-processing task should have a durable job record with:
+- a unique job ID and idempotency key;
+- task type, requested scope and initiating user/authorization context;
+- explicit workflow version and input references;
+- status (queued, running, waiting for input, retrying, completed, failed, or cancelled);
+- current step, completed steps and durable checkpoint references;
+- bounded attempt count, next retry time and absolute deadline;
+- provider/model identifiers where AI was used, plus token/cost metadata when available;
+- structured errors and a concise user-facing outcome;
+- timestamps and an append-only audit trail.
+
+A browser refresh, worker restart, provider timeout or temporary network failure must not silently erase completed work. Resume from the last validated checkpoint, not from an assumed state.
+
+### 13.3 Failure handling and fallback order
+
+For each step, classify failures before retrying:
+- transient: timeout, rate limit, temporary provider/network error;
+- permanent: invalid input, unsupported file, authorization denial or malformed request;
+- policy/rights: missing permission or prohibited operation;
+- quality: low extraction confidence, ambiguous model identity, unsupported claim or conflicting evidence.
+
+Use bounded exponential backoff with jitter only for retryable failures. Respect provider Retry-After instructions. Apply per-step deadlines and a maximum retry count. Do not retry permanent or policy failures automatically.
+
+Fallback must preserve the task's safety and evidence requirements:
+1. use deterministic/local processing where it can complete the same step;
+2. use an explicitly enabled alternate provider only if the task's data policy permits it;
+3. save the checkpoint and pause for user/reviewer input when no safe fallback exists;
+4. return a clear partial result and exact failed step rather than claiming full success.
+
+A fallback provider must never be activated merely because another provider failed if it would introduce unapproved cost, data transfer or a different privacy boundary.
+
+### 13.4 Idempotency, concurrency and recovery
+
+- Assign idempotency keys to external side effects and persist their outcomes before acknowledging completion.
+- Use leases with expiry and fencing/version tokens for concurrent workers; stale workers must not overwrite newer checkpoints.
+- Make checkpoint writes conditional on the expected workflow/job version.
+- Deduplicate queue deliveries and safely replay completed steps.
+- Separate read-only research from actions that mutate catalogue data, publish content, contact sellers or create commercial commitments.
+- Require explicit authorization and confirmation before any consequential external action.
+- Preserve partial outputs as drafts; never promote them to verified catalogue data automatically.
+
+### 13.5 Cost, quota and privacy controls
+
+Before any billable provider call, enforce:
+- provider disabled by default until owner approval;
+- a configured monthly and per-task spending ceiling;
+- request/token limits and a maximum number of model calls per workflow;
+- user/app rate limits and abuse controls;
+- model allowlists and an explicit free-only mode where supported;
+- usage accounting and alerts before a configured threshold;
+- a hard stop when a budget or quota is exhausted.
+
+Do not assume a model label containing "free" guarantees zero cost; verify provider pricing and routing configuration. Do not send private seller/customer data or restricted documents to an external provider unless the applicable data-processing and privacy basis has been approved.
+
+### 13.6 Honest completion contract
+
+A task is completed only when all required steps and acceptance checks have passed. Otherwise report partial, waiting for input, failed or cancelled, with:
+- what was actually completed;
+- what remains incomplete;
+- the last successful checkpoint;
+- the failed or blocked step and reason;
+- whether a human decision, permission or provider configuration is needed.
+
+A successful API response is not proof that a research claim is correct. Model output must still pass retrieval, source-applicability, evidence, rights and human-review gates. A green test suite proves only the tested software behavior, not factual accuracy or external-source availability.
+
+### 13.7 Acceptance tests for the reliability layer
+
+Before production use, test at minimum:
+- provider key absent, invalid, revoked and rotated;
+- provider disabled and budget exhausted;
+- timeout, rate limit, server error and malformed provider response;
+- primary provider failure with no approved fallback;
+- approved fallback with explicit privacy and budget checks;
+- worker restart after each durable checkpoint;
+- duplicate queue delivery and replay of a completed side effect;
+- concurrent workers where an expired lease holder attempts a stale write;
+- cancellation and deadline expiry;
+- partial extraction followed by successful resume;
+- permanent, rights-related and authorization failures are not retried;
+- no secret leakage into logs, errors, browser payloads or artifacts;
+- accurate distinction between complete, partial, blocked and failed outcomes.
+
+**Release condition:** the reliability layer is not production-ready until these tests pass against the actual durable storage, queue and provider adapters—not only mocks. Provider credentials and paid usage remain separately gated by explicit owner approval.
