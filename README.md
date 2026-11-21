@@ -6,7 +6,7 @@
 - **Data status:** 39 specification claims are source-linked but remain `source_linked_unverified`; linked sources have not been checked claim by claim.
 - **What is planned:** verified technical records, rights-cleared media galleries, expanded intelligence and a marketplace.
 - **Public demo:** [roboscopia.com](https://roboscopia.com) · [Cloudflare Pages preview](https://roboscopia-dpw.pages.dev/index.html).
-- **Latest CI:** [ROBOSCOPIA Data Quality — run #196](https://github.com/sasapetric5/roboscopia/actions/runs/44947691979) — success on commit `4aa338071f00968fe4519ae292fdb0896e21567a`; see the workflow for current status.
+- **CI status:** use the live badge above and [the `main` workflow runs](https://github.com/sasapetric5/roboscopia/actions/workflows/data-quality.yml?query=branch%3Amain); the previously observed successful run predates the Phase 0 edits.
 
 [Engineering rules](docs/ENGINEERING_RULES.md) · [Demo deployment checklist](docs/DEMO_DEPLOY_CHECKLIST.md) · [Verification log](docs/VERIFICATION_LOG.md)
 
@@ -145,9 +145,6 @@ Kvalitetna i proverljiva baza podataka predstavlja temelj platforme. Marketplace
 - A read-only Data Quality Audit is implemented at `scripts/data-quality-audit.mjs`; it flags broken references, missing provenance, potential duplicate identities, conflicting values, stale verified claims, source-review gaps and media-rights gaps.
 - Audit behavior and commands are documented in [docs/DATA_QUALITY_AUDIT.md](docs/DATA_QUALITY_AUDIT.md). Seven focused audit tests are included in the same automated Node.js test suite. Their latest pass status must be read from the corresponding workflow run, not inferred from the presence of the tests.
 
-
-- Data Quality Review Queue u `scripts/data-quality-review-queue.mjs` pretvara nalaze audita u stabilne zadatke za ljudsku proveru. Odluke recenzenata čuvaju se odvojeno u `data/review-decisions.json`; red za proveru nikada sam ne menja kanonski katalog robota.
-- Uputstvo i ograničenja: [docs/DATA_QUALITY_REVIEW_QUEUE.md](docs/DATA_QUALITY_REVIEW_QUEUE.md). Deset ciljanih testova uključeno je u GitHub Actions komandu `node --test tests/*.test.mjs`; lokalno ručno izvršavanje ne tvrdimo.
 
 - [x] GitHub Actions workflow `.github/workflows/data-quality.yml` is configured to run the complete `tests/*.test.mjs` Node.js suite, the read-only data audit, review-queue generation, source verification and evidence reports on pushes to `main`. Previous run reference: [workflow run 44807571168](https://github.com/sasapetric5/roboscopia/actions/runs/44807571168). This run was checked: its automated-test, audit and review-queue steps completed with `success`. It predates the latest commits, so it does not certify the current HEAD.
 
