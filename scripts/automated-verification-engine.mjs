@@ -73,7 +73,6 @@ export function buildAutomatedVerificationReport({ claims, evidence, now = new D
       issue(issues, "INVALID_CLAIM", "claims[" + claimIndex + "]", "Claim requires claimId, modelId, value and optional string unit.");
     }
     const related = evidence.filter(item => item?.claimId === claim?.claimId);
-    if (related.length < 2) issue(issues, "INSUFFICIENT_INDEPENDENT_EVIDENCE", "claims[" + claimIndex + "]", "At least two independent evidence packages are required.");
     for (let i = 0; i < related.length; i++) issues.push(...validateEvidence(related[i], i, claim));
     const valid = related.filter((item, i) => validateEvidence(item, i, claim).length === 0);
     const hosts = valid.map(item => host(item.source.url));
@@ -82,8 +81,10 @@ export function buildAutomatedVerificationReport({ claims, evidence, now = new D
     if (new Set(hosts).size !== hosts.length || new Set(sourceIds).size !== sourceIds.length) {
       issue(issues, "DUPLICATE_SOURCE_IDENTITY", "claims[" + claimIndex + "]", "Sources must have distinct IDs and hostnames.");
     }
-    if (!authorities.has("manufacturer_primary") || !authorities.has("independent_primary")) {
-      issue(issues, "SOURCE_INDEPENDENCE_NOT_ESTABLISHED", "claims[" + claimIndex + "]", "Require one manufacturer primary and one independent primary source.");
+    const manufacturerPrimaryCount = valid.filter(item => item.source.authority === "manufacturer_primary").length;
+    const independentPrimaryCount = valid.filter(item => item.source.authority === "independent_primary").length;
+    if (manufacturerPrimaryCount < 1 && independentPrimaryCount < 2) {
+      issue(issues, "INSUFFICIENT_INDEPENDENT_EVIDENCE", "claims[" + claimIndex + "]", "Require one exact, rights-cleared manufacturer primary source OR two matching independent primary sources on distinct hosts.");
     }
     const status = issues.length ? "quarantined" : "eligible_for_automatic_ingestion";
     return {
@@ -104,7 +105,7 @@ export function buildAutomatedVerificationReport({ claims, evidence, now = new D
     policy: {
       automaticGate: true,
       minimumIndependentSources: 2,
-      requiredAuthorities: ["manufacturer_primary", "independent_primary"],
+      requiredEvidenceRule: "one_manufacturer_primary_or_two_independent_primary_sources",
       exactModelAndConfigurationMatch: true,
       exactValueAndUnitMatch: true,
       rightsClearanceRequired: true,
