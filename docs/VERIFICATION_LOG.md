@@ -36,6 +36,30 @@
 - Keyboard, screen-reader and accessibility checks: pending.
 - These checks are not marked passed merely because responsive CSS or semantic markup exists.
 
-### Phase 0 implementation note
+### Phase 0 implementation progress
 
-Record each subsequent Phase 0 commit and its matching Actions run here. Do not mark the phase complete until the CI run for the final HEAD is green and the outstanding browser/device checks have actual results.
+Changes applied directly to main:
+
+- README summary, live CI badge, project-status wording and deployment-claim correction.
+- Homepage English/Serbian copy aligned with the currently available 7-profile Knowledge Base.
+- Knowledge Base no longer says source-verified or Manufacturer source checked.
+- Manufacturer and source counters are calculated from data/robots.json. The current source registry contains 17 entries (not the earlier planning document's 15).
+- Added a CI guard that fails if either prohibited verification phrase appears in an HTML file.
+- Added docs/ENGINEERING_RULES.md, docs/DEMO_DEPLOY_CHECKLIST.md and this verification log.
+
+Phase 0 commits (all on main):
+
+- 462e5c932c98776a4bbdfabfe27b985e0f89ea68 — homepage claims
+- 292811fcf346443f73678b9c6afcc8e8612fc011 — knowledge-base verification language
+- 01c9e23deb69839388983cfaebf315198340fdac — README restructuring
+- 10feb2a9ecc70ef67c5a4fb84dc3c9b295ff70d2 — engineering rules
+- 2fffd57f29879ba839cf089666c22a4c4cbbc0c1 — demo checklist
+- 7382d482a32013d58b42d5460509503ea72e4c84 — verification log
+- d952ea9642b04bddec2e92a7a4799ae962319620 — catalog-derived counters
+- 1bee4890c06f2936227709b7e419d667e9dc7aef — CI public-claim guard
+- a59c8b2b05e4ff6ad85fd10b62dc18d132aae517 — homepage fallback copy
+- 9e77863d6801337feef5b6d224f1a4a6f2f9e60e — README CI badge and deployment status correction
+
+The first new workflow attempts were cancelled by the workflow's cancel-in-progress concurrency policy while the rapid sequential commits were landing. The pre-Phase-0 successful run above does not certify these changes. A fresh, non-cancelled run against the final HEAD is still required.
+
+Do not mark the phase complete until the CI run for the final HEAD is green and the outstanding browser/device checks have actual results.
