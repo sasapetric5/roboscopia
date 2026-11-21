@@ -25,9 +25,12 @@ const PRIORITY_BY_CODE = {
   MEDIA_NOT_CLEARED: "medium",
 };
 
-function stableId(issue) {
+function stableId(issue, db) {
+  const record = findRecord(db, issue);
+  const source = findSource(db, issue);
+  const stablePath = String(issue.path ?? "").replace(/\[\d+\]/g, "[*]");
   return createHash("sha256")
-    .update([issue.code, issue.path, issue.message].join("|"))
+    .update([issue.code, record?.id ?? "", source?.id ?? "", stablePath, issue.message].join("|"))
     .digest("hex")
     .slice(0, 20);
 }
@@ -76,7 +79,7 @@ function findSource(db, issue) {
  * Decisions are kept separately from canonical model data.
  */
 export function buildReviewQueue(db, report = auditDatabase(db), decisions = []) {
-  const knownItemIds = new Set(report.issues.map(stableId));
+  const knownItemIds = new Set(report.issues.map((issue) => stableId(issue, db)));
   const decisionMap = new Map();
   for (const decision of decisions) {
     if (!decision || typeof decision.itemId !== "string") continue;
@@ -85,7 +88,7 @@ export function buildReviewQueue(db, report = auditDatabase(db), decisions = [])
   }
 
   const items = report.issues.map((issue) => {
-    const id = stableId(issue);
+    const id = stableId(issue, db);
     const decision = decisionMap.get(id);
     const record = findRecord(db, issue);
     const source = findSource(db, issue);

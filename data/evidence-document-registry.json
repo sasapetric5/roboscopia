@@ -84,7 +84,8 @@
         "processingPermission": false,
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
-      }
+      },
+      "canonicalSourceId": "src-0002"
     },
     {
       "id": "unitree-go2-product-page",
@@ -150,7 +151,8 @@
         "processingPermission": false,
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
-      }
+      },
+      "canonicalSourceId": "src-0003"
     },
     {
       "id": "unitree-h1-product-page",
@@ -216,7 +218,8 @@
         "processingPermission": false,
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
-      }
+      },
+      "canonicalSourceId": "src-0005"
     },
     {
       "id": "ur5e-user-manual-sw5-26",
@@ -290,7 +293,8 @@
         "processingPermission": false,
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
-      }
+      },
+      "canonicalSourceId": "src-0006"
     },
     {
       "id": "ur20-user-manual-sw5-26",
@@ -364,7 +368,8 @@
         "processingPermission": false,
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
-      }
+      },
+      "canonicalSourceId": "src-0008"
     },
     {
       "id": "abb-gofa-crb15000-datasheet",
@@ -431,7 +436,8 @@
         "processingPermission": false,
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
-      }
+      },
+      "canonicalSourceId": "src-0010"
     },
     {
       "id": "kuka-kr6-r700-sixx-c-v4-1",
@@ -506,7 +512,8 @@
         "processingPermission": false,
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
-      }
+      },
+      "canonicalSourceId": "src-0012"
     }
   ]
 }

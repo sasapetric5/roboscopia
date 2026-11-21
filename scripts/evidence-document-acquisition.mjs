@@ -43,8 +43,23 @@ async function main() {
   if (!["permitted", "not_permitted", "unknown"].includes(args.redistribution)) throw new Error("--redistribution must be permitted, not_permitted or unknown.");
 
   const registry = JSON.parse(await readFile(resolve("data/evidence-document-registry.json"), "utf8"));
+  const canonicalDb = JSON.parse(await readFile(resolve("data/robots.json"), "utf8"));
+  if (!Array.isArray(canonicalDb.sources)) throw new Error("Canonical Source Registry is missing.");
   const source = registry.sources.find((item) => item.id === args["source-id"]);
   if (!source) throw new Error("Source ID not found in evidence document registry.");
+  if (typeof source.canonicalSourceId !== "string" || !source.canonicalSourceId.trim()) throw new Error("Evidence document lacks an explicit canonicalSourceId mapping.");
+  const canonicalMatches = canonicalDb.sources.filter((item) => item.id === source.canonicalSourceId);
+  if (canonicalMatches.length !== 1) throw new Error("canonicalSourceId must resolve to exactly one Source Registry entry.");
+  const canonicalSource = canonicalMatches[0];
+  const registeredUrls = new Set([canonicalSource.url, canonicalSource.canonicalUrl].filter(Boolean));
+  if (![source.sourcePageUrl, source.downloadUrl].filter(Boolean).some((url) => registeredUrls.has(url))) throw new Error("Evidence document URL does not match its explicitly mapped canonical Source Registry entry.");
+  const rights = canonicalSource.rights;
+  if (canonicalSource.reviewStatus !== "verified" || canonicalSource.authorityTier !== "manufacturer_primary" ||
+      rights?.processingPermitted !== true || typeof rights?.reviewedBy !== "string" || !rights.reviewedBy.trim() ||
+      !rights?.reviewedAt || !Number.isFinite(Date.parse(rights.reviewedAt)) ||
+      typeof rights?.basis !== "string" || !rights.basis.trim()) {
+    throw new Error("Acquisition blocked: canonical Source Registry must contain verified manufacturer authority and explicit, reviewed processing permission. CLI flags cannot grant rights.");
+  }
   if (source.documentType !== "pdf") throw new Error("This source is HTML, not a PDF. Use the official page locator workflow; do not save a webpage as a PDF and label it a manufacturer PDF.");
 
   const filePath = resolve(args.file);
@@ -75,7 +90,8 @@ async function main() {
     schemaVersion: "1.0.0",
     acquisitionStatus: "locally_processed_after_reviewer_permission",
     source: {
-      sourceId: source.id,
+      sourceId: canonicalSource.id,
+      evidenceDocumentId: source.id,
       manufacturer: source.manufacturer,
       title: source.title,
       sourcePageUrl: source.sourcePageUrl,
@@ -92,10 +108,10 @@ async function main() {
     },
     rightsReview: {
       processingPermitted: true,
-      reviewer: args["rights-reviewer"],
-      note: args["rights-note"],
-      redistribution: args.redistribution,
-      reviewedAt: new Date().toISOString()
+      reviewer: rights.reviewedBy,
+      note: rights.basis,
+      redistribution: rights.redistributionPermitted ?? "unknown",
+      reviewedAt: rights.reviewedAt
     },
     extraction: report,
     verification: {

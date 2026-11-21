@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://roboscopia.com/schemas/source-registry.schema.json",
+  "title": "ROBOSCOPIA canonical source registry entry",
+  "type": "object",
+  "required": [
+    "id",
+    "url",
+    "sourceType",
+    "authorityTier",
+    "reviewStatus",
+    "firstRecordedAt"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "canonicalUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "sourceType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authorityTier": {
+      "enum": [
+        "manufacturer_primary",
+        "independent_primary",
+        "third_party_secondary",
+        "third_party",
+        "unknown"
+      ]
+    },
+    "reviewStatus": {
+      "enum": [
+        "not_reviewed",
+        "in_review",
+        "verified",
+        "rejected",
+        "outdated"
+      ]
+    },
+    "firstRecordedAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "lastReviewedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "processingPermitted",
+        "redistributionPermitted"
+      ],
+      "properties": {
+        "processingPermitted": {
+          "type": "boolean"
+        },
+        "redistributionPermitted": {
+          "enum": [
+            "permitted",
+            "not_permitted",
+            "unknown"
+          ]
+        },
+        "reviewedBy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "basis": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "reviewStatus": {
+            "const": "verified"
+          }
+        },
+        "required": [
+          "reviewStatus"
+        ]
+      },
+      "then": {
+        "required": [
+          "lastReviewedAt",
+          "rights"
+        ],
+        "properties": {
+          "authorityTier": {
+            "enum": [
+              "manufacturer_primary",
+              "independent_primary"
+            ]
+          },
+          "rights": {
+            "required": [
+              "reviewedBy",
+              "reviewedAt",
+              "basis"
+            ],
+            "properties": {
+              "processingPermitted": {
+                "const": true
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

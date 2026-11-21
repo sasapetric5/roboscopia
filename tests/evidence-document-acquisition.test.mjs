@@ -38,3 +38,20 @@ test("registered source records link all 39 claims to real catalog model IDs", a
   }
   assert.equal(linked, 39);
 });
+
+
+test("CLI flags cannot override missing canonical source rights approval", () => {
+  const result = spawnSync(process.execPath, [
+    "scripts/evidence-document-acquisition.mjs",
+    "--source-id", "ur20-user-manual-sw5-26",
+    "--file", "does-not-exist.pdf",
+    "--processing-permitted", "yes",
+    "--rights-reviewer", "self-asserted-reviewer",
+    "--rights-note", "self-asserted permission",
+    "--redistribution", "unknown",
+    "--output", "unused-report.json"
+  ], { encoding: "utf8" });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /canonical Source Registry|exact URL/i);
+  assert.doesNotMatch(result.stderr, /ENOENT|does-not-exist/);
+});

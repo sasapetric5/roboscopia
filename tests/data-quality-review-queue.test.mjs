@@ -146,3 +146,26 @@ test("review queue ignores decisions that fail validation", () => {
 
   assert.equal(nextQueue.items.find((entry) => entry.id === item.id).status, "open");
 });
+
+
+test("review item identity survives record reordering", () => {
+  const changed = clone(db);
+  changed.records[0].manufacturerId = "missing-manufacturer";
+  const first = buildReviewQueue(changed);
+  const target = first.items.find((item) => item.code === "BROKEN_REFERENCE");
+  const reordered = clone(changed);
+  reordered.records.reverse();
+  const second = buildReviewQueue(reordered);
+  assert.ok(second.items.some((item) => item.id === target.id));
+});
+
+test("latest append-only decision wins without deleting earlier history", () => {
+  const queue = buildReviewQueue(db);
+  const itemId = queue.items[0].id;
+  const history = [
+    { itemId, status: "in_review", decidedBy: "reviewer-a" },
+    { itemId, status: "resolved", note: "Verified against primary source", decidedBy: "reviewer-b" },
+  ];
+  const rebuilt = buildReviewQueue(db, auditDatabase(db), history);
+  assert.equal(rebuilt.items.find((item) => item.id === itemId).status, "resolved");
+});
