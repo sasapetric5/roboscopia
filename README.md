@@ -10,7 +10,7 @@
 - **Evidence tools:** local technical-evidence extraction, claim-to-evidence matching, a 7-source manufacturer registry and a permission-gated PDF processing CLI.
 - **What is tested:** GitHub Actions is configured to run every `tests/*.test.mjs` file with Node.js 22, then run the audit and reporting CLIs. The 10 review-queue tests are included in that test command; local manual execution is not claimed.
 - **Phase 1 acceptance gate:** [Phase 1 Exit Criteria](docs/PHASE_1_EXIT_CRITERIA.md) defines the mandatory evidence, rights, human-review, integrity and CI requirements. Phase 1 remains open; a green CI run alone does not establish factual verification.
-- **Public availability:** Cloudflare Pages automatic deployment is disabled. The repository contains the website implementation, but no live public deployment is claimed. Production deployment remains subject to the owner's explicit approval.
+- **Public availability:** Cloudflare Pages automatic deployments are enabled for `main`; the owner has confirmed the `roboscopia.com` and `roboscopia-dpw.pages.dev` domains and Production deployments in the Cloudflare dashboard. This confirms frontend Pages deployment only; it does not mean the agent modules, evidence workflows or a separate API backend are connected to production.
 
 ROBOSCOPIA is being developed as a global robotics and CNC knowledge and intelligence platform. The current implementation is an initial, working repository foundation—not a finished marketplace or a fully verified technical encyclopedia.
 
