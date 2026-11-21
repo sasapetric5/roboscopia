@@ -81,6 +81,10 @@ jobs:
         run: node --test tests/*.test.mjs
       - name: Compile parser adapters
         run: python -m py_compile adapters/docling_adapter.py adapters/opendataloader_adapter.py scripts/create-parser-benchmark-fixtures.py
+      - name: Run evidence registry integrity audit
+        run: |
+          node scripts/evidence-registry-integrity-audit.mjs
+          node scripts/evidence-registry-integrity-audit.mjs --json > artifacts/evidence-registry-integrity-report.json
       - name: Generate Phase 1 audit reports
         run: |
           node scripts/data-quality-audit.mjs --json > artifacts/phase1/data-quality-audit.json
