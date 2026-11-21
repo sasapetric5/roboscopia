@@ -1,0 +1,3 @@
+reportlab
+opendataloader-pdf==2.5.23
+docling==2.151.1
