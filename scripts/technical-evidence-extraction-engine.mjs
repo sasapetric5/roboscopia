@@ -7,6 +7,7 @@ import { pathToFileURL } from "node:url";
 
 const execFile = promisify(execFileCallback);
 const MAX_PDF_BYTES = 25 * 1024 * 1024;
+const MAX_HTML_BYTES = 12 * 1024 * 1024;
 const MAX_TEXT_BYTES = 12 * 1024 * 1024;
 const MAX_EXTRACTED_CHARS = 10 * 1024 * 1024;
 const PDF_TIMEOUT_MS = 30_000;
@@ -83,6 +84,7 @@ function containsExactModelName(documentText, modelName) {
 }
 export function extractEvidenceCandidates({
   text,
+  documentContentType = "text/plain",
   documentSha256,
   documentName,
   sourceUrl = null,
@@ -156,6 +158,7 @@ export function extractEvidenceCandidates({
     extractionVersion: "1.0.0",
     document: {
       name: documentName ?? null,
+      contentType: documentContentType,
       sha256: documentSha256 ?? sha256(text),
       sourceUrl: source.value,
       sourceUrlIssue: source.issue,
@@ -185,6 +188,41 @@ export function extractEvidenceCandidates({
     },
     candidates,
   };
+}
+
+
+const HTML_ENTITIES = {
+  amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ",
+  ndash: "–", mdash: "—", plusmn: "±", times: "×", deg: "°",
+  micro: "µ", middot: "·", bull: "•", rsquo: "’", lsquo: "‘",
+  rdquo: "”", ldquo: "“", trade: "™", copy: "©", reg: "®",
+};
+
+export function htmlToEvidenceText(html) {
+  if (typeof html !== "string" || !html.trim()) throw new Error("HTML input is empty.");
+  if (Buffer.byteLength(html, "utf8") > MAX_HTML_BYTES) throw new Error("HTML input exceeds the 12 MB size limit.");
+  let value = html
+    .replace(/<!--[\\s\\S]*?-->/g, " ")
+    .replace(/<(script|style|noscript|template|svg|iframe|canvas)\\b[^>]*>[\\s\\S]*?<\\/\\1\\s*>/gi, " ")
+    .replace(/<\\/(td|th)\\s*>/gi, " | ")
+    .replace(/<\\/(tr)\\s*>/gi, "\\n")
+    .replace(/<(br|hr)\\b[^>]*>/gi, "\\n")
+    .replace(/<\\/(p|div|section|article|header|footer|h[1-6]|li|table|ul|ol|dl|dt|dd)\\s*>/gi, "\\n")
+    .replace(/<[^>]*>/g, " ");
+  value = value.replace(/&(#x[0-9a-f]+|#\\d+|[a-z][a-z0-9]+);/gi, (entity, key) => {
+    if (key[0] === "#") {
+      const hex = key[1]?.toLowerCase() === "x";
+      const number = Number.parseInt(key.slice(hex ? 2 : 1), hex ? 16 : 10);
+      if (!Number.isFinite(number) || number < 0 || number > 0x10ffff || (number >= 0xd800 && number <= 0xdfff)) return " ";
+      return String.fromCodePoint(number);
+    }
+    return HTML_ENTITIES[key.toLowerCase()] ?? entity;
+  });
+  return value
+    .replace(/[\\t\\f\\v ]+/g, " ")
+    .replace(/ *\\n */g, "\\n")
+    .replace(/\\n{3,}/g, "\\n\\n")
+    .trim();
 }
 
 async function readLocalPdf(pdfPath) {
@@ -250,7 +288,8 @@ async function main() {
     ].join("\n"));
     return;
   }
-  if (Boolean(args.pdf) === Boolean(args.text)) throw new Error("Provide exactly one of --pdf or --text.");
+  const inputCount = [args.pdf, args.text, args.html].filter(Boolean).length;
+  if (inputCount !== 1) throw new Error("Provide exactly one of --pdf, --text or --html.");
   let text;
   let documentName;
   let documentSha256;
