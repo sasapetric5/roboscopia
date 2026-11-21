@@ -1,16 +1,14 @@
 # ROBOSCOPIA
 ### Global Robotics & CNC Intelligence Platform
 
-**Discover. Compare. Understand. Verify.**
+- **What it is:** an independent, bilingual knowledge and intelligence platform for robotics and CNC technology.
+- **What works today:** a 7-model catalog, provenance-aware data model, read-only audit, human review queue, source-verification, evidence-extraction and matching engines.
+- **Data status:** 39 specification claims are source-linked but remain `source_linked_unverified`; linked sources have not been checked claim by claim.
+- **What is planned:** verified technical records, rights-cleared media galleries, expanded intelligence and a marketplace.
+- **Public demo:** [roboscopia.com](https://roboscopia.com) · [Cloudflare Pages preview](https://roboscopia-dpw.pages.dev/index.html).
+- **Latest CI:** [ROBOSCOPIA Data Quality — run #196](https://github.com/sasapetric5/roboscopia/actions/runs/44947691979) — success on commit `4aa338071f00968fe4519ae292fdb0896e21567a`; see the workflow for current status.
 
-**Current snapshot — 21 November 2026**
-
-- **What works in the repository:** a bilingual Serbian/English robotics catalog with 7 robot profiles, model dossiers, search, filters, sorting and comparison of up to 3 models.
-- **Data foundation:** 39 specification claims across 7 models, source provenance, read-only data audit, human review queues and source-verification reporting.
-- **Evidence tools:** local technical-evidence extraction, claim-to-evidence matching, a 7-source manufacturer registry and a permission-gated PDF processing CLI.
-- **What is tested:** GitHub Actions is configured to run every `tests/*.test.mjs` file with Node.js 22, then run the audit and reporting CLIs. The 10 review-queue tests are included in that test command; local manual execution is not claimed.
-- **Phase 1 acceptance gate:** [Phase 1 Exit Criteria](docs/PHASE_1_EXIT_CRITERIA.md) defines the mandatory evidence, rights, human-review, integrity and CI requirements. Phase 1 remains open; a green CI run alone does not establish factual verification.
-- **Public availability:** Cloudflare Pages automatic deployments are enabled for `main`; the owner has confirmed the `roboscopia.com` and `roboscopia-dpw.pages.dev` domains and Production deployments in the Cloudflare dashboard. This confirms frontend Pages deployment only; it does not mean the agent modules, evidence workflows or a separate API backend are connected to production.
+[Engineering rules](docs/ENGINEERING_RULES.md) · [Demo deployment checklist](docs/DEMO_DEPLOY_CHECKLIST.md) · [Verification log](docs/VERIFICATION_LOG.md)
 
 ROBOSCOPIA is being developed as a global robotics and CNC knowledge and intelligence platform. The current implementation is an initial, working repository foundation—not a finished marketplace or a fully verified technical encyclopedia.
 
@@ -74,32 +72,7 @@ Planned source-status labels:
 
 AI-generated or extracted information must not be presented as verified fact without supporting evidence. Missing information must remain missing rather than being invented.
 
-## Development methodology — mandatory six-stage process
-
-Every substantial integration or functional component must follow all six stages:
-
-1. **Discover** — identify at least 10 relevant existing projects or candidate components where the scope warrants it.
-2. **Evaluate** — inspect actual code and verify functionality, maintenance activity, license, dependencies, security and compatibility.
-3. **Reuse** — prefer suitable, verified existing components over unnecessary development from scratch.
-4. **Adapt** — integrate and adapt selected components to ROBOSCOPIA's architecture and requirements.
-5. **Verify** — test the integrated result, including relevant failure and security cases.
-6. **Deliver** — document and complete one functional unit before moving to the next.
-
-A README description alone is not sufficient evidence that a project is suitable. No component is accepted until its code, license and practical behavior have been reviewed.
-
-## Engineering and operating rules
-
-- Use **one primary branch: `main`**. Do not create additional development branches unless explicitly approved.
-- Keep ROBOSCOPIA operationally independent from CEOAI during the initial development and validation period.
-- Any future CEOAI integration must use a deliberately designed and secured API boundary.
-- Prefer free and open-source infrastructure where it meets the requirements.
-- Do not activate paid services, paid APIs, subscriptions or billable infrastructure without explicit approval.
-- Do not deploy to production, change DNS or alter domain configuration without explicit approval.
-- Reliability, security and data integrity take priority over speed and feature count.
-- Review third-party licenses and dependency risks before reuse.
-- Never commit API keys, passwords, tokens, private credentials or other secrets.
-- Do not publish copyrighted photographs, videos, manuals or documents without an appropriate license or permission.
-- Keep commercial relationships transparent. Affiliate or sponsored relationships must not influence technical facts or objective comparison results.
+See [docs/ENGINEERING_RULES.md](docs/ENGINEERING_RULES.md) for the mandatory six-stage process and engineering/operating rules.
 
 ## International experience
 
