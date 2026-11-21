@@ -88,3 +88,22 @@ These are completion blockers, not evidence that the existing catalogue values a
 - No Phase 2 implementation or production deployment is authorized by this checklist.
 
 **Final decision:** Phase 1 remains open until all exit conditions are met and the final report is reviewed.
+
+
+## 6. Approved policy clarification — manufacturer-first and scalable review (21 November 2026)
+
+This section supersedes any earlier wording in this checklist that requires independent verification or a separate manual review of every manufacturer-stated value. It does not weaken source traceability, factual attribution, rights controls or data integrity.
+
+- Official manufacturer documentation is the primary source for the manufacturer's own specifications.
+- A value may be published with the attribution **“According to official manufacturer documentation”** when it is linked to the exact official source, document/page, applicable model/configuration and available revision/date and locator.
+- Independent laboratory verification is not a prerequisite for every manufacturer-stated specification. Do not describe manufacturer-published values as independently tested.
+- Review sources in manufacturer/document batches. One reviewed document may support many extracted values; do not repeat the same source-level review for every claim.
+- Automated extraction may populate a candidate queue at scale, but must preserve exact source provenance, original units, footnotes, model/variant association and extraction status. It must not silently approve ambiguous or conflicting values.
+- Human review is targeted to unresolved source identity, uncertain OCR/table association, model or configuration ambiguity, conflicting document versions, safety-critical interpretation, suspicious values and sampled quality-control checks.
+- If official manufacturer documents conflict, preserve each value with its document revision/date and flag the discrepancy. Do not silently select or merge values.
+- The 39 initial claims need a traceable source-backed disposition; they do not all require independent laboratory testing. A clear manufacturer-attributed value can be publishable without independent corroboration once its official source and exact applicability are established.
+- Rights are separate from source authority: permission to inspect/process a document does not automatically permit public redistribution of that document, its images, CAD files or video.
+- Phase 1 remains open until the scalable manufacturer-document pipeline is demonstrated on a representative set of real, lawfully processable documents, with provenance, extraction quality, rights status and exception handling recorded.
+- Planning and documenting Phase 2 requirements is allowed while Phase 1 is open. Phase 2 feature implementation and production release remain subject to the agreed Phase 1 readiness decision and explicit owner approval.
+
+The complete product direction and detailed requirements are maintained in [PRODUCT_REQUIREMENTS_PHASE_2.md](PRODUCT_REQUIREMENTS_PHASE_2.md).
