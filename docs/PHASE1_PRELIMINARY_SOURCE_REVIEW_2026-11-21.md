@@ -139,3 +139,69 @@ Public access to a webpage or PDF is not a grant of processing or redistribution
 7. Re-run the audit and readiness workflow. Do not change the readiness gate merely to obtain a green status.
 
 **Status:** This memo is a preliminary research aid. Phase 1 remains `BLOCKED_NO_EVIDENCE`.
+
+
+## 5. Registry-wide review of the 15 registered sources
+
+This section maps the current source registry IDs to the publicly accessible official material inspected during the follow-up review. “Inspected” here means that visible page/PDF content was reviewed in the browser research session. It does **not** mean that the original file was acquired into the project's evidence intake, fingerprinted, rights-cleared or formally approved by a named catalogue reviewer.
+
+| Registry ID | Registered source | Research result | Remaining action |
+|---|---|---|---|
+| src-0001 | Boston Dynamics Spot product page | Inspected. Current product page lists 14 kg payload mounting maximum, 33.8 kg mass with battery, 1.6 m/s, 564 Wh, 90 min average runtime and IP54. | Acquire/record approved source evidence and precise locators; compare against src-0002. |
+| src-0002 | Boston Dynamics Spot support specifications | Inspected. Lists 20.43 kg “Max recommended mass/weight”, while src-0001 and the Spot SDK state 14 kg maximum payload. | Open discrepancy: manufacturer clarification or a traceable version/context explanation required. Do not publish 20.43 kg as the current payload limit. |
+| src-0003 | Unitree Go2 official product page | Inspected. Four variant columns (AIR, PRO, X, EDU) show different payload, speed, climb angle and battery endurance. | Formal capture must preserve column-to-variant mapping and qualifiers. |
+| src-0004 | Unitree Go2 mobile product page | Registered URL not independently inspected in this review. It appears to be an alternate presentation of the same product page, but equivalence has not been proven. | Compare the exact page content and determine whether this is a duplicate source record or contains unique facts. |
+| src-0005 | Unitree H1 / H1-2 official page | Inspected. H1 and H1-2 are separate model variants with distinct mass, height, degrees of freedom and joint specifications. | Preserve model-specific column/section locators; do not merge H1-2 claims into H1. |
+| src-0006 | UR5e SW5_26 online technical specification | Inspected. Confirms 5 kg payload, 850 mm reach, six axes, ±0.03 mm repeatability, IP54 and 20.7 kg robot-arm weight. | Formal capture with software/manual revision and section locator. |
+| src-0007 | UR5e e-Series datasheet, updated December 2024 | Inspected. Confirms 5 kg payload, 850 mm reach, six axes and ±0.03 mm repeatability; states 20.6 kg “weight including cable”. | Keep the 20.6 kg including-cable field distinct from 20.7 kg robot-arm weight until the definitions/revisions are reconciled. |
+| src-0008 | UR20-1750 product page | Inspected. Product page lists 20 kg standard payload, 25 kg extended payload, 1750 mm reach, 64 kg weight and ±0.01 mm repeatability. | Obtain the linked model-specific datasheet and verify ±0.01 mm against the applicable manual/revision. |
+| src-0009 | UR20 SW10_9 online technical specification | Inspected. Generic UR20 manual states ±0.1 mm repeatability, 20 kg standard payload and 25 kg with manual boundary conditions. | Keep the ±0.1 mm manual claim distinct from the UR20-1750 page claim until exact model/revision applicability is resolved. |
+| src-0010 | ABB GoFa family page | Inspected. ABB lists GoFa 5, GoFa 10 and GoFa 12 as separate variants; their reaches and payloads differ. | Use variant-specific facts, not family-level “up to” values for GoFa 5. |
+| src-0011 | ABB GoFa datasheet, file name includes “200526” | Inspected. Its table separates GoFa 5/12/10; GoFa 5 is 5 kg with 950 mm wrist and 1050 mm flange reach, six axes and 0.02 mm pose repeatability. The higher 12–14 kg values apply to other family variants. | Establish the document's exact publication/revision date and retain page/table locators. |
+| src-0012 | KUKA KR 6 R700 sixx C Technical Data V4.1 | Inspected. Dated 23 September 2022. Lists 706.7 mm reach, 6 kg maximum payload, ±0.03 mm repeatability, six axes and approx. 50 kg. It explicitly describes 3 kg rated payload and conditional maximum 6 kg. | Preserve rated and maximum payload as separate claims and capture the KUKA load-case warning. |
+| src-0013 | UR5e SW5_24 earlier technical specification | Inspected. Confirms 20.7 kg arm weight, 5 kg payload, 850 mm reach and ±0.03 mm repeatability in the earlier manual revision. | Treat as historical/revision-specific support, not as a substitute for the newer SW5_26 source. |
+| src-0014 | Additional ABB GoFa datasheet | Inspected. Copyright © 2023; lists GoFa 5/12/10 variants and 0.02 mm pose repeatability. | Establish exact relation to src-0011 (edition, revision and whether one supersedes the other). |
+| src-0015 | ABB Collaborative Robotics Portfolio 2023 PDF | The exact registered URL was not accessible in this review. An alternate ABB-hosted 2023 portfolio PDF was located, but it has a different file path and has not been proven byte-identical. | Keep the registered source unreviewed until the exact file is acquired/compared; do not silently replace its URL. |
+
+## 6. Confirmed variant and definition controls from the follow-up review
+
+### 6.1 Unitree Go2 — preserve four columns
+
+The official Go2 table explicitly separates AIR, PRO, X and EDU:
+
+| Parameter | AIR | PRO | X | EDU |
+|---|---:|---:|---:|---:|
+| Payload (approx.) | 7 kg | 8 kg | 8 kg | 8 kg |
+| Maximum payload shown | ~10 kg | ~10 kg | ~12 kg | ~12 kg |
+| Speed range shown | 0–2.5 m/s | 0–3.5 m/s | 0–3.7 m/s | 0–3.7 m/s |
+| Laboratory maximum speed | — | — | ~5 m/s | ~5 m/s |
+| Battery life | 1–2 h | 1–2 h | 1–2 h | 2–4 h |
+| Weight with battery | about 15 kg | about 15 kg | about 15 kg | about 15 kg |
+
+These values are manufacturer-stated and configuration-dependent. The table does not justify assigning the maximum laboratory speed or maximum payload to every Go2 configuration. The official page also warns that configurations are diverse and asks users to contact Unitree for details.
+
+### 6.2 ABB GoFa — distinguish family maximum from GoFa 5
+
+The inspected ABB datasheets and product page separate GoFa 5, GoFa 10 and GoFa 12. For GoFa 5, the relevant table values are 5 kg payload, 950 mm wrist reach, 1050 mm flange reach, six axes and 0.02 mm pose repeatability. The family-level maximum reach/payload and the GoFa 10/12 figures must not be assigned to GoFa 5.
+
+### 6.3 UR20 — preserve the unresolved precision claim
+
+The UR20-1750 product page displays ±0.01 mm repeatability, while the SW10_9 UR20 manual states ±0.1 mm per ISO 9283. These are both official sources but are not yet reconciled by a model-specific datasheet and revision chain. The catalogue claim remains quarantined until the exact technical definition and applicability are documented.
+
+### 6.4 Spot — preserve the conflicting manufacturer statements
+
+The current Spot product page and Spot 5.2 SDK both state a 14 kg maximum payload. The Support specification page separately lists 20.43 kg as “Max recommended mass/weight”. Since both are manufacturer-hosted, source authority alone does not resolve the difference. Record both verbatim with their respective page contexts and seek clarification; do not average, choose the larger figure or silently discard the discrepancy.
+
+## 7. Updated priority order
+
+1. **Spot discrepancy:** request or locate manufacturer clarification for 14 kg versus 20.43 kg, including hardware/software applicability.
+2. **UR20 repeatability:** obtain the current UR20-1750 datasheet linked by Universal Robots and reconcile ±0.01 mm with the UR20 manual's ±0.1 mm.
+3. **ABB source lineage:** determine the exact revision/date and supersession relationship of src-0011 and src-0014; recover and compare the exact src-0015 file.
+4. **Unitree Go2/H1:** acquire the exact manufacturer documents and preserve variant/section mappings.
+5. **UR5e/KUKA:** acquire the PDFs or approved HTML evidence and preserve the cable-weight and rated-versus-maximum-payload definitions.
+
+## 8. Evidence and rights boundary remains unchanged
+
+No source in this review has been marked formally reviewed in the canonical source registry. No PDF was placed in the repository or redistributed. No processing permission was inferred from public availability. No source-verification decision was recorded, and no canonical catalogue value was changed.
+
+**Phase 1 remains `BLOCKED_NO_EVIDENCE`.**
