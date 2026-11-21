@@ -65,3 +65,22 @@ test("CNC research rejects unresolved or mismatched evidence identity before inv
   assert.equal(result.code,"EVIDENCE_IDENTITY_INVALID");
   assert.equal(calls,0);
 });
+
+
+test("supervisor requires explicit human-review gate and rejects unsafe policy flags",async()=>{
+  const noReview=createRoboscopiaSupervisor({agents:{technicalProfile:{run:async()=>({ok:true,reviewRequired:false,policy:{catalogMutation:false,automaticApproval:false,publication:false}})}}});
+  assert.equal((await noReview.run({task:"technical_profile",input:{}})).code,"AGENT_POLICY_VIOLATION");
+  const unsafe=createRoboscopiaSupervisor({agents:{researchEvidence:{run:async()=>({ok:true,reviewRequired:true,policy:{catalogMutation:false,automaticApproval:false,publication:false,externalNetwork:true}})}}});
+  assert.equal((await unsafe.run({task:"research_evidence",input:{}})).code,"AGENT_POLICY_VIOLATION");
+});
+test("supervisor routes document processing through its dedicated registered agent",async()=>{
+  let called=0;
+  const supervisor=createRoboscopiaSupervisor({agents:{documentProcessing:{run:async input=>{called++;return {ok:true,reviewRequired:true,policy:{externalNetwork:false,filesystemAccess:false,parserExecution:false,rightsDecision:false,factualVerification:false,catalogMutation:false,publication:false},input};}}}});
+  const r=await supervisor.run({task:"document_processing",input:{documentId:"doc-1"}});
+  assert.equal(r.ok,true);assert.equal(r.reviewRequired,true);assert.equal(called,1);
+});
+test("supervisor rejects malformed agent results and non-object inputs",async()=>{
+  const supervisor=createRoboscopiaSupervisor({agents:{comparison:{run:async()=>null}}});
+  assert.equal((await supervisor.run({task:"comparison",input:{modelIds:["a","b"]}})).code,"INVALID_AGENT_RESULT");
+  assert.equal((await supervisor.run({task:"comparison",input:null})).code,"INVALID_TASK");
+});
