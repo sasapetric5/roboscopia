@@ -53,6 +53,8 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Run full test suite including end-to-end lifecycle
+        env:
+          ROBOSCOPIA_BENCHMARK_PDF: ${{ runner.temp }}/parser-fixtures/roboscopia-synthetic-spec.pdf
         run: node --test tests/*.test.mjs
       - name: Compile parser adapters
         run: python -m py_compile adapters/docling_adapter.py adapters/opendataloader_adapter.py scripts/create-parser-benchmark-fixtures.py
