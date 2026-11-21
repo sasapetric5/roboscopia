@@ -33,6 +33,11 @@ test("quarantines conflicting values and units", () => {
   assert.ok(report.decisions[0].issues.some(item => item.code === "VALUE_CONFLICT"));
   assert.ok(report.decisions[0].issues.some(item => item.code === "UNIT_CONFLICT"));
 });
+test("quarantines an extracted value that is absent from its evidence quote", () => {
+  const bad = evidence({ extraction: { ...evidence().extraction, value: 1.6, quote: "Maximum speed: 1.8 m/s" } });
+  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [bad, independent()] });
+  assert.ok(report.decisions[0].issues.some(item => item.code === "QUOTE_VALUE_MISMATCH"));
+});
 test("quarantines model and configuration mismatches", () => {
   const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [evidence({ modelId: "go2" }), independent({ configurationId: "edu" })] });
   assert.ok(report.decisions[0].issues.some(item => item.code === "MODEL_IDENTITY_MISMATCH"));
