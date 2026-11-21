@@ -10,6 +10,7 @@ test("evidence source registry contains seven manufacturer-primary source record
   assert.equal(new Set(registry.sources.map((item) => item.id)).size, 7);
   for (const source of registry.sources) {
     assert.ok(source.sourcePageUrl.startsWith("https://"));
+    assert.ok(["pdf", "html"].includes(source.documentType));
     assert.ok(source.modelIds.length > 0);
     assert.equal(source.rightsStatus, "review_required");
     assert.equal(source.acquisition.status, "not_acquired");
@@ -60,6 +61,22 @@ test("CLI flags cannot override missing canonical source rights approval", () =>
     "--rights-note", "self-asserted permission",
     "--redistribution", "unknown",
     "--output", "unused-report.json"
+  ], { encoding: "utf8" });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /canonical Source Registry|exact URL/i);
+  assert.doesNotMatch(result.stderr, /ENOENT|does-not-exist/);
+});
+
+test("HTML evidence acquisition remains behind the canonical rights gate", () => {
+  const result = spawnSync(process.execPath, [
+    "scripts/evidence-document-acquisition.mjs",
+    "--source-id", "unitree-go2-product-page",
+    "--file", "does-not-exist.html",
+    "--processing-permitted", "yes",
+    "--rights-reviewer", "self-asserted-reviewer",
+    "--rights-note", "self-asserted permission",
+    "--redistribution", "unknown",
+    "--output", "unused-html-report.json"
   ], { encoding: "utf8" });
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /canonical Source Registry|exact URL/i);
