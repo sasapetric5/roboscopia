@@ -68,7 +68,7 @@ jobs:
       - name: Generate source verification report
         run: node scripts/source-verification-engine.mjs --json > "$RUNNER_TEMP/source-verification-report.json"
       - name: Generate evidence matching report
-        run: node scripts/evidence-matching-review-engine.mjs --json
+        run: node scripts/evidence-matching-review-engine.mjs --json --source-report "$RUNNER_TEMP/source-verification-report.json"
       - name: Run automated evidence gate
         run: node scripts/run-automated-verification.mjs --json > "$RUNNER_TEMP/automated-verification-report.json"
       - name: Validate extraction CLI
