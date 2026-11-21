@@ -43,6 +43,19 @@ jobs:
         run: |
           python -m pip install -r requirements-parser.txt
           python -c "import docling; import opendataloader_pdf; import reportlab; import torch; print('All parser packages imported successfully; torch:', torch.__version__)"
+      - name: Align TorchVision with CPU-only PyTorch runtime
+        run: |
+          python -m pip install --force-reinstall --no-deps --index-url https://download.pytorch.org/whl/cpu torchvision
+          python - <<'PY'
+          import torch
+          import torchvision
+          from torchvision.ops import nms
+          assert torch.version.cuda is None and not torch.cuda.is_available()
+          boxes=torch.tensor([[0.,0.,1.,1.],[0.,0.,1.,1.]])
+          scores=torch.tensor([0.9,0.8])
+          assert nms(boxes,scores,0.5).tolist()==[0]
+          print("CPU Torch/TorchVision operators verified:",torch.__version__,torchvision.__version__)
+          PY
       - name: Prepare Phase 1 report directory
         run: mkdir -p artifacts/phase1
       - name: Generate synthetic PDF fixture
