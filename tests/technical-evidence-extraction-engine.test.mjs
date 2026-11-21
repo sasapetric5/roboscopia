@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   extractEvidenceCandidates,
+  htmlToEvidenceText,
 } from "../scripts/technical-evidence-extraction-engine.mjs";
 
 const sha = "a".repeat(64);
@@ -163,4 +164,35 @@ test("does not confuse H1 with the distinct H1-2 model", () => {
     modelName: "H1",
   });
   assert.equal(exactH1.context.modelMentionStatus, "mention_found");
+});
+
+test("converts locally supplied HTML tables into stable line-oriented evidence text", () => {
+  const html = `<!doctype html><html><head><title>Spot specs</title><style>.x{}</style><script>ignore()</script></head><body>
+    <h2>Spot Specifications</h2>
+    <table><tr><th>Maximum payload</th><td>14 kg</td></tr><tr><th>Maximum speed</th><td>1.6 m/s</td></tr></table>
+    <p>Ingress protection: IP54 &amp; tested.</p>
+  </body></html>`;
+  const text = htmlToEvidenceText(html);
+  assert.match(text, /Spot Specifications/);
+  assert.match(text, /Maximum payload \| 14 kg/);
+  assert.match(text, /Maximum speed \| 1.6 m\/s/);
+  assert.match(text, /Ingress protection: IP54 & tested\./);
+  assert.doesNotMatch(text, /ignore\(\)|\.x\{\}/);
+  const report = extractEvidenceCandidates({
+    text,
+    documentContentType: "text/html",
+    documentName: "spot.html",
+    sourceUrl: "https://bostondynamics.com/products/spot/",
+  });
+  assert.equal(report.document.contentType, "text/html");
+  assert.equal(report.candidates.find((item) => item.field === "payload").extractedValue, 14);
+  assert.equal(report.candidates.find((item) => item.field === "speed").extractedValue, 1.6);
+  assert.equal(report.policy.sourcePageFetched, false);
+  assert.equal(report.policy.automaticApproval, false);
+});
+
+test("decodes numeric HTML entities and rejects empty or oversized HTML", () => {
+  assert.equal(htmlToEvidenceText("<p>Torque: 360 N&#183;m &plusmn; 2</p>"), "Torque: 360 N·m ± 2");
+  assert.throws(() => htmlToEvidenceText("  "), /empty/);
+  assert.throws(() => htmlToEvidenceText("x".repeat(12 * 1024 * 1024 + 1)), /size limit/);
 });
