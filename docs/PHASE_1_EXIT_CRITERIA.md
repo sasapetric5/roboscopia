@@ -107,3 +107,7 @@ This section supersedes any earlier wording in this checklist that requires inde
 - Planning and documenting Phase 2 requirements is allowed while Phase 1 is open. Phase 2 feature implementation and production release remain subject to the agreed Phase 1 readiness decision and explicit owner approval.
 
 The complete product direction and detailed requirements are maintained in [PRODUCT_REQUIREMENTS_PHASE_2.md](PRODUCT_REQUIREMENTS_PHASE_2.md).
+
+## 5. Governing source standard
+
+The source-authority, claim-specific evidence, accreditation, certification, research, rights and selective-acquisition rules for Phase 1 are defined in [Technical Data Source Standard](TECHNICAL_DATA_SOURCE_STANDARD.md). This standard governs source classification and public attribution. It does not waive any of the Phase 1 exit conditions above.
