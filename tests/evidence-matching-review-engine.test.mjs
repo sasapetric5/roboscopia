@@ -113,3 +113,10 @@ test("does not treat evidence with missing source identity as an exact match", (
   const report = buildEvidenceMatchingReport(db, sourceReport, [{ candidates: [candidate({ sourceId: null })] }]);
   assert.equal(report.matches[0].status, "source_identity_unverified");
 });
+
+
+test("accepts only explicitly declared related source IDs as source lineage", () => {
+  const report = buildEvidenceMatchingReport(db, sourceReport, [{ candidates: [candidate({ sourceId: "src-support", relatedSourceIds: ["src-1"] })] }]);
+  assert.equal(report.matches[0].status, "value_match_unverified");
+  assert.equal(report.matches[0].identity.declaredRelatedSourceMatch, true);
+});
