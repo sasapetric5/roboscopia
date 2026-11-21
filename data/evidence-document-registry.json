@@ -375,7 +375,10 @@
         "redistributionPermission": "unknown",
         "factualVerification": "not_performed"
       },
-      "canonicalSourceId": "src-0008"
+      "canonicalSourceId": "src-0008",
+      "relatedSourceIds": [
+        "src-0009"
+      ]
     },
     {
       "id": "abb-gofa-crb15000-datasheet",
