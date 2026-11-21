@@ -37,6 +37,16 @@ test("registered source records link all 39 claims to real catalog model IDs", a
     linked += source.catalogClaims.length;
   }
   assert.equal(linked, 39);
+
+  const sourceById = new Map(db.sources.map((source) => [source.id, source]));
+  for (const source of registry.sources) {
+    const canonical = sourceById.get(source.canonicalSourceId);
+    assert.ok(canonical, "canonical source ID must resolve: " + source.id);
+    assert.ok(
+      [source.sourcePageUrl, source.downloadUrl].filter(Boolean).includes(canonical.url),
+      "source page or download URL must exactly match canonical registry URL: " + source.id
+    );
+  }
 });
 
 
