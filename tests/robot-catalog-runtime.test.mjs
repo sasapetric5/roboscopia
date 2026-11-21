@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { createRobotCatalogRuntime } from "../adapters/robot-catalog-runtime.mjs";
 
 const database = {
@@ -62,4 +63,15 @@ test("robot catalog runtime makes source inventory explicit without treating lin
   assert.deepEqual(status.sourceIds, ["src-a"]);
   assert.equal(status.sourceClaimsAreNotEvidence, true);
   assert.equal(runtime.policy.catalogMutation, false);
+});
+
+test("public knowledge base initializes the shared comparison runtime after catalog load", async () => {
+  const html = await readFile(new URL("../knowledge-base.html", import.meta.url), "utf8");
+  const catalogValidation = html.indexOf('!Array.isArray(payload.records)');
+  const runtimeInitialization = html.indexOf('comparisonRuntime=createRobotCatalogComparisonRuntime({database:payload})');
+  const recordFiltering = html.indexOf('records=payload.records.filter');
+  assert.ok(catalogValidation >= 0, "catalog schema must be checked");
+  assert.ok(runtimeInitialization > catalogValidation, "runtime must initialize after schema validation");
+  assert.ok(recordFiltering > runtimeInitialization, "runtime must initialize before the page renders records");
+  assert.match(html, /comparisonRuntime\.compareModels\(chosen\.map\(r=>r\.id\)\)/);
 });
