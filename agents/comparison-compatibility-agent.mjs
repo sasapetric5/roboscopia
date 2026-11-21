@@ -57,8 +57,14 @@ export function createComparisonCompatibilityAgent({getModel,getClaims}={}) {
       comparisons.push({leftModel:{id:a.id,name:a.name},rightModel:{id:b.id,name:b.name},
         specifications:keys.map(k=>{
           const x=a.claims.get(k),y=b.claims.get(k);
-          return !x||!y ? {specification:k,status:"not_available_for_one_model",left:x?.value??null,right:y?.value??null,interpretation:"not_ranked"}
-            : {specification:k,...compare(x,y)};
+          if (!x || !y) {
+            const evidenceStatus = x
+              ? (reviewed(x) ? "left_human_reviewed" : "neither_human_reviewed")
+              : (reviewed(y) ? "right_human_reviewed" : "neither_human_reviewed");
+            return {specification:k,status:"not_available_for_one_model",evidenceStatus,
+              left:x?.value??null,right:y?.value??null,interpretation:"not_ranked"};
+          }
+          return {specification:k,...compare(x,y)};
         })});
     }
     return {ok:true,agentId:"comparison_compatibility",models:models.map(({id,name})=>({id,name})),comparisons,
