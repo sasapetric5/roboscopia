@@ -13,7 +13,7 @@ const source={id:"fixture-source",url:"https://manufacturer.example/spot/specifi
 const claim={claimId:"spot-speed",modelId:"spot",model:"Spot",specification:"Maximum speed",value:1.6,unit:"m/s",configurationId:null,sourceId:source.id,sourceUrl:source.url};
 const text="ROBOSCOPIA SYNTHETIC TECHNICAL SPECIFICATION\nModel identity: Spot\nPerformance\nMaximum speed: 1.6 m/s";
 const hash="a".repeat(64);
-function extract(input=text,documentHash=hash,documentName="synthetic.txt"){return extractEvidenceCandidates({text:input,documentSha256:documentHash,documentName,sourceUrl:source.url,modelId:"spot",modelName:"Spot",documentRevision:"BENCH-001",documentDate:"2026-11-21"});}
+function extract(input=text,documentHash=hash,documentName="synthetic.txt"){return extractEvidenceCandidates({text:input,documentSha256:documentHash,documentName,sourceUrl:source.url,sourceId:source.id,modelId:"spot",modelName:"Spot",documentRevision:"BENCH-001",documentDate:"2026-11-21"});}
 function pack(c){return {claimId:claim.claimId,modelId:"spot",configurationId:null,source:{sourceId:source.id,url:source.url,authority:"manufacturer_primary",rights:{processingPermitted:true}},document:{sha256:hash,revision:"BENCH-001",capturedAt:date},extraction:{value:c.extractedValue,unit:c.unit,quote:c.evidenceQuote,locator:{type:"pdf",page:c.evidenceLocator.page},parser:{name:"poppler",version:"test-1"}}};}
 test("end-to-end extraction, matching, human review and rights-aware evidence gate",()=>{
  const x=extract(),c=x.candidates[0];assert.equal(x.counts.candidates,1);assert.equal(c.field,"speed");assert.equal(c.extractedValue,1.6);
