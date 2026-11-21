@@ -283,3 +283,60 @@ The current official UR5e and UR20 PDFs, ABB GoFa datasheets and KUKA V4.1 PDF h
 The Unitree Download Center was inspected, but no versioned Go2/H1 PDF was acquired. Boston Dynamics public product and SDK pages were inspected, but no separately acquired Spot source package was created. No processing or redistribution permission has been inferred.
 
 **Current outcome:** several technical discrepancies are better resolved, but all 39 canonical claims remain formally unapproved until the actual evidence packages, hashes, exact locators, rights basis and human review decisions are recorded. Phase 1 remains `BLOCKED_NO_EVIDENCE`.
+
+
+## 11. Follow-up: current UR20 manual and evidence-lineage hardening
+
+### 11.1 Current official UR20 manual checked
+
+A current Universal Robots UR20 PolyScope 5 manual was inspected online:
+- [UR20 User Manual — current online PDF](https://www.universal-robots.com/manuals/EN/PDF/SW5_26/user-manual-UR20-PDF_online/718-818-00_UR20_User_Manual_en_Global.pdf)
+- Section 3.1, “Technical Specifications UR20”, printed page 17 / PDF text lines 415–478.
+- It identifies 20 kg standard payload and 25 kg only with manual boundary conditions; 1750 mm reach; six rotating joints; approximately 5 m/s maximum TCP speed; ±0.1 mm pose repeatability per ISO 9283; robot arm mass 64 kg.
+- The current UR20 product page also displays ±0.1 mm, 64 kg, 1750 mm and 20–25 kg.
+- Universal Robots' current FAQ says UR20 has been renamed UR20-1750 in connection with the Generation 7 platform release in 2026. Preserve the naming/platform context; do not infer that every historical manual or controller/software configuration is interchangeable.
+- The manual copyright notice says the information is proprietary and must not be reproduced in whole or in part without prior written approval. This is a clear reason to keep processing/reuse permission as a separate review gate. Public browser access is not itself a permission grant.
+
+**Current research conclusion:** the official current manual and product page both support ±0.1 mm for UR20. The older ±0.01 mm product-page statement remains a conflicting source statement and must not be silently used. The current manual's 64 kg is the robot-arm weight, and the manual has a distinct revision/copyright context. Do not update the canonical catalogue until a human reviewer records the precise applicable model/generation decision.
+
+### 11.2 Evidence matching now carries source lineage
+
+The evidence-processing code has been hardened on `main`:
+- extracted documents and candidates now retain the exact registered `sourceId`;
+- candidates also retain only explicitly declared `relatedSourceIds`;
+- the deterministic matching engine rejects a candidate whose source identity is missing;
+- a candidate from a different source is marked `source_mismatch`, even if model, field, numeric value and unit happen to match;
+- a candidate may be considered source-lineage-compatible only when the claim's source ID is the exact source ID or is explicitly listed in the evidence record's declared related-source IDs;
+- no source mismatch is automatically approved, and catalogue mutation remains disabled.
+
+This distinction matters because some evidence records deliberately map to multiple related registered source records (for example, a product page and a related manual/specification page). The relationship must be explicit in the registry; same manufacturer or same domain alone is not enough.
+
+Relevant implementation:
+- `scripts/technical-evidence-extraction-engine.mjs`
+- `scripts/evidence-document-acquisition.mjs`
+- `scripts/evidence-matching-review-engine.mjs`
+
+Relevant tests:
+- `tests/technical-evidence-extraction-engine.test.mjs`
+- `tests/evidence-matching-review-engine.test.mjs`
+
+Commits in this source-lineage change series:
+- `c460a0296dfde3d205280b0f105ef9ff821e9d49`
+- `3e9ed372b7bf89070220f03b8438720ae4bbd893`
+- `f6307f8370f2985e08dc4f1d1b9d54880a8362e5`
+- `4b053ddd17d2519e8c4080ddb0de5db4827584b7`
+- `57d7ea110ac8a4b9c8dffe0a907157a2e565b336`
+- `54e9aab63dce733b21c9c718f74afac270c373bb`
+- `9770d3925d4b58700fe497965ef22de4a30c9254`
+
+**CI status at the time of this update:** workflow run #158 for commit `9770d3925d4b58700fe497965ef22de4a30c9254` was still in progress. No green result is claimed here. Recheck the actual workflow conclusion before treating the code change as verified.
+
+## 12. Remaining evidence intake blockers
+
+1. No source document bytes have been placed in the controlled local evidence intake by this work session.
+2. No SHA-256 digest, local byte size or local page count is claimed for the current UR20 manual or any other manufacturer PDF.
+3. The rights reviewer must explicitly assess the source's processing terms and document-specific restrictions before local processing.
+4. The new source-identity matcher must pass the full CI test suite before it is relied on for evidence decisions.
+5. No catalogue values or source review decisions were modified.
+
+**Phase 1 remains `BLOCKED_NO_EVIDENCE`.**
