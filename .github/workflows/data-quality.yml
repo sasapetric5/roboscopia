@@ -75,6 +75,12 @@ jobs:
               assert result["expectedTableRows"] > 0, "Benchmark fixture must contain table-row ground truth"
               assert result["tableRowRecall"] == 1.0, f"{name} table recall: {result}"
           PY
+      - name: Guard public verification claims
+        run: |
+          if grep -RniE 'source-verified|Manufacturer source checked' --include='*.html' .; then
+            echo "Unsupported verification claim found in public HTML."
+            exit 1
+          fi
       - name: Run full test suite including end-to-end lifecycle
         env:
           ROBOSCOPIA_BENCHMARK_PDF: ${{ runner.temp }}/parser-fixtures/roboscopia-synthetic-spec.pdf
