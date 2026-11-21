@@ -16,10 +16,10 @@ export function scoreOutput(output,expected,rows=[],expectedRows=[]){
 }
 export function extractPopplerTableRows(text){
  const rows=[];
- for(const rawLine of String(text??"").split(/\\r?\\n/)){
+ for(const rawLine of String(text??"").split(/\r?\n/)){
   const line=rawLine.trim();
-  if(!line||/^[-_=\\s]+$/.test(line))continue;
-  const cells=line.split(/\\s{2,}/).map(value=>value.trim()).filter(Boolean);
+  if(!line||/^[-_=\s]+$/.test(line))continue;
+  const cells=line.split(/\s{2,}/).map(value=>value.trim()).filter(Boolean);
   if(cells.length>=2)rows.push(cells);
  }
  return rows;
