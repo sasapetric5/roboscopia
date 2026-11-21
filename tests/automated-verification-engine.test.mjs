@@ -16,16 +16,21 @@ const independent = (overrides = {}) => evidence({
   ...overrides
 });
 
-test("accepts a fully evidenced claim only with independent primary sources", () => {
-  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [evidence(), independent()] });
+test("accepts one exact, rights-cleared manufacturer primary source", () => {
+  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [evidence()] });
   assert.equal(report.decisions[0].status, "eligible_for_automatic_ingestion");
   assert.equal(report.counts.eligible, 1);
   assert.equal(report.decisions[0].catalogMutationAllowed, false);
 });
-test("quarantines a claim with only one source", () => {
-  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [evidence()] });
+test("quarantines a single non-manufacturer source without corroboration", () => {
+  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [independent()] });
   assert.equal(report.decisions[0].status, "quarantined");
   assert.ok(report.decisions[0].issues.some(item => item.code === "INSUFFICIENT_INDEPENDENT_EVIDENCE"));
+});
+test("accepts two matching independent primary sources", () => {
+  const second = independent({ source: { sourceId: "independent-2", url: "https://second-independent.example/specs", authority: "independent_primary", rights: { processingPermitted: true } } });
+  const report = buildAutomatedVerificationReport({ claims: [claim], evidence: [independent(), second] });
+  assert.equal(report.decisions[0].status, "eligible_for_automatic_ingestion");
 });
 test("quarantines conflicting values and units", () => {
   const second = { ...independent(), extraction: { ...independent().extraction, value: 2, unit: "km/h" } };
