@@ -530,6 +530,41 @@
         "factualVerification": "not_performed"
       },
       "canonicalSourceId": "src-0012"
+    },
+    {
+      "id": "spot-sdk-payload-configuration",
+      "manufacturer": "Boston Dynamics",
+      "modelIds": [
+        "spot"
+      ],
+      "documentType": "html",
+      "title": "Spot SDK — Payload Configuration Requirements",
+      "revision": "Live Boston Dynamics developer documentation; revision/date not exposed in source review",
+      "documentDate": null,
+      "sourcePageUrl": "https://dev.bostondynamics.com/docs/payload/payload_configuration_requirements",
+      "downloadUrl": null,
+      "officialHost": "bostondynamics.com",
+      "deliveryHost": "dev.bostondynamics.com",
+      "expectedLocator": "Configuration Requirements → Payload weight",
+      "claims": [
+        "14 kg total combined payload capacity; payload center-of-mass and distribution conditions"
+      ],
+      "rightsStatus": "review_required",
+      "notes": "Candidate source record only. It is not yet rights-reviewed, captured, or approved for processing. It is kept separate from the current-production Spot support specifications because it is a distinct official technical page and may have different model-generation applicability. No catalog claim is reassigned to this source.",
+      "catalogClaims": [],
+      "acquisition": {
+        "status": "not_acquired",
+        "localFileName": null,
+        "sha256": null,
+        "byteSize": null,
+        "pageCount": null,
+        "rightsReview": "pending",
+        "processingPermission": false,
+        "redistributionPermission": "unknown",
+        "factualVerification": "not_performed"
+      },
+      "canonicalSourceId": "src-0018",
+      "relatedSourceIds": []
     }
   ]
 }
