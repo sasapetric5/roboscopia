@@ -34,8 +34,8 @@
         "battery capacity",
         "typical runtime"
       ],
-      "rightsStatus": "review_required",
-      "notes": "Use current production hardware specifications. The support page states older Spot models may differ. Do not treat the earlier 5.1 CloudFront URL as acquired or verified. The current Product Safety page lists Spot 5.2 Instructions for Use.",
+      "rightsStatus": "restricted_automated_access_pending_written_permission",
+      "notes": "Use current production hardware specifications. The support page states older Spot models may differ. Do not treat the earlier 5.1 CloudFront URL as acquired or verified. The current Product Safety page lists Spot 5.2 Instructions for Use. Boston Dynamics Terms of Use reviewed 2026-11-22: automated page scraping/robot/spider access is prohibited; local processing, storage, quotation, public display and redistribution are not approved by this registry. Obtain written permission or verify that the specific material is expressly made available for download under the Terms before processing. Acquisition remains blocked.",
       "catalogClaims": [
         {
           "specification": "Mass with battery",
@@ -549,8 +549,8 @@
       "claims": [
         "14 kg total combined payload capacity; payload center-of-mass and distribution conditions"
       ],
-      "rightsStatus": "review_required",
-      "notes": "Candidate source record only. It is not yet rights-reviewed, captured, or approved for processing. It is kept separate from the current-production Spot support specifications because it is a distinct official technical page and may have different model-generation applicability. No catalog claim is reassigned to this source.",
+      "rightsStatus": "restricted_automated_access_pending_written_permission",
+      "notes": "Candidate source record only. It is not yet rights-reviewed, captured, or approved for processing. It is kept separate from the current-production Spot support specifications because it is a distinct official technical page and may have different model-generation applicability. No catalog claim is reassigned to this source. Boston Dynamics Terms of Use reviewed 2026-11-22: automated page scraping/robot/spider access is prohibited; local processing, storage, quotation, public display and redistribution are not approved by this registry. Obtain written permission or verify that the specific material is expressly made available for download under the Terms before processing. Acquisition remains blocked.",
       "catalogClaims": [],
       "acquisition": {
         "status": "not_acquired",
