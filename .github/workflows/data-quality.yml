@@ -91,6 +91,7 @@ jobs:
         run: |
           node scripts/evidence-registry-integrity-audit.mjs
           node scripts/evidence-registry-integrity-audit.mjs --json > artifacts/evidence-registry-integrity-report.json
+          node scripts/documentation-pilot-audit.mjs --json > artifacts/phase1/documentation-pilot-audit.json
       - name: Generate Phase 1 audit reports
         run: |
           node scripts/data-quality-audit.mjs --json > artifacts/phase1/data-quality-audit.json
