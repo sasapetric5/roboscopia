@@ -27,7 +27,7 @@ Phase 1 may be closed only when every applicable condition below is satisfied:
 |---|---:|---|
 | Catalogue | 7 models | Exact model/variant identity and coherent provenance |
 | Technical claims | 39 | 39 explicit human-reviewed dispositions |
-| Source Registry | 15 URLs | Review every source actually used; document unused/duplicate/historical sources |
+| Source Registry | 17 entries | Review every source actually used; document unused/duplicate/historical sources |
 | Evidence document registry | 7 records | Validate all mappings and process applicable documents/pages |
 | Rights review | Pending for registered documents | Explicit processing basis; separate redistribution decision |
 | Extraction | Engine and tests implemented | Real-document evidence with precise locators |
@@ -65,6 +65,10 @@ The seven evidence-document records cover the initial claim groups across Boston
 - Run the complete test suite, parser benchmark, data audit, source verification, evidence matching and automated verification.
 - Confirm that no automated path can approve evidence or mutate catalogue data.
 - Publish the final Phase 1 report and obtain explicit approval before beginning Phase 2.
+
+## 3.1 Spot source-review pilot
+
+The initial Boston Dynamics Spot source comparison is recorded in [Phase 1 Spot Source Review](PHASE_1_SPOT_SOURCE_REVIEW.md). It is a partial source-content review only: rights, reproducible HTML capture and human claim decisions remain open. No catalogue values or canonical review statuses were changed.
 
 ## 4. Current blockers
 
