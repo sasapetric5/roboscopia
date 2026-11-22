@@ -118,6 +118,22 @@ test("HTML evidence acquisition remains behind the canonical rights gate", () =>
 });
 
 
+test("capture method cannot be claimed without a capture timestamp", () => {
+  const result = spawnSync(process.execPath, [
+    "scripts/evidence-document-acquisition.mjs",
+    "--source-id", "unitree-go2-product-page",
+    "--file", "does-not-exist.html",
+    "--processing-permitted", "yes",
+    "--rights-reviewer", "self-asserted-reviewer",
+    "--rights-note", "self-asserted permission",
+    "--redistribution", "unknown",
+    "--capture-method", "other_authorized_copy",
+    "--output", "unused-capture-report.json"
+  ], { encoding: "utf8" });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /requires --capture-timestamp/i);
+});
+
 test("authorized local HTML evidence is processed with provenance and without catalog mutation", async () => {
   const workspace = await mkdtemp(join(tmpdir(), "roboscopia-html-evidence-"));
   try {
@@ -164,6 +180,9 @@ test("authorized local HTML evidence is processed with provenance and without ca
     const report = JSON.parse(await readFile(outputPath, "utf8"));
     assert.equal(report.localDocument.contentType, "text/html");
     assert.equal(report.localDocument.sha256.length, 64);
+    assert.equal(report.localDocument.sourceCaptureTimestamp, "2026-11-22T05:00:00.000Z");
+    assert.equal(report.localDocument.sourceCaptureMethod, "other_authorized_copy");
+    assert.ok(Number.isFinite(Date.parse(report.localDocument.processedAt)));
     assert.equal(report.source.sourceId, "src-0003");
     assert.equal(report.rightsReview.processingPermitted, true);
     assert.equal(report.rightsReview.redistribution, "unknown");
