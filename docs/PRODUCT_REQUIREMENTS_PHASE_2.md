@@ -176,6 +176,32 @@ Keep these domains separately permissioned and auditable:
 
 Use stable IDs, explicit ownership/authorization checks, append-only or tamper-evident transaction events, idempotent state transitions, rate limits and audit logging. Do not create a live database, paid service or production integration as part of this requirements document.
 
+### 9.1 Marketplace as the fourth logical data/storage domain
+
+Marketplace is a separate fourth logical domain in the platform's planned storage architecture. It owns its commercial and user-generated records and must not be merged into the canonical encyclopedia database.
+
+It must maintain its own data records for:
+- buyer and seller user identities, account status, roles and permissions;
+- seller profiles and, where applicable, business profile and verification evidence;
+- new and used listings, condition, seller descriptions, prices/currencies, negotiability, location and availability;
+- listing photographs and other listing media, with source/rights metadata;
+- buyer enquiries, private conversations, agreements, orders/transaction records, completion confirmations and disputes;
+- transaction-bound reviews, ratings, moderation reports and audit events.
+
+The logical storage map is planned as:
+1. Oracle domain — robot encyclopedia data and associated robot media.
+2. Cloudflare R2 domain — CNC machine media.
+3. Cloudflare R2 domain — robot/CNC parts and accessories media.
+4. Marketplace domain — its own database for buyers, sellers, listings and commercial records, plus a separately managed Marketplace media area for listing photographs and attachments.
+
+The Marketplace database and media area are a logical separation, not a commitment to a specific provider, account, bucket, database product or number of physical accounts. Provider selection and exact account/bucket topology remain subject to free-tier, cost, security, backup, data-residency and compatibility evaluation. Do not assume that multiple accounts multiply free quotas.
+
+Marketplace listings may reference canonical encyclopedia IDs, but the listing, seller, price, condition, availability and transaction records remain Marketplace-owned data. A listing reference must not copy or mutate the canonical model record. A single encyclopedia profile may be referenced by many listings.
+
+A central storage-routing layer should resolve the logical domain to configured storage adapters and keep provider/account/bucket/object identifiers in server-side configuration or protected metadata. Credentials must never be exposed to browsers. Store stable object IDs, SHA-256 checksums, media type, ownership, source/rights status, creation time and lifecycle status. Design metadata backup, object backup/replication, integrity checks, provider health checks and a documented recovery/migration path; category separation alone is not a backup.
+
+No account creation, bucket/database provisioning, public endpoint activation, paid usage, code deployment or DNS change is authorized by this plan. Those actions require separate explicit approval.
+
 ## 10. Delivery sequence
 
 ### Phase 1 foundation
