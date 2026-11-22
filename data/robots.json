@@ -1,7 +1,7 @@
 {
   "schemaVersion": "2.1.0",
   "updated": "2026-11-22",
-  "mediaPolicy": "No third-party product imagery is embedded until reuse rights or explicit permission are documented. Official manufacturer links are provided for reference, not as a grant of image rights.",
+  "mediaPolicy": "No third-party product imagery or video is embedded or displayed as approved until rights evidence is recorded and reviewed. Manufacturer links alone do not grant reuse rights.",
   "records": [
     {
       "id": "spot",
@@ -151,7 +151,8 @@
       "manufacturerId": "boston-dynamics",
       "familyId": "boston-dynamics-spot",
       "generationId": null,
-      "configurations": []
+      "configurations": [],
+      "videos": []
     },
     {
       "id": "go2",
@@ -311,7 +312,8 @@
           "specificationsVerified": false
         }
       ],
-      "configurationNote": "Configuration names are recorded for identity and future research only. No configuration-specific specifications are asserted."
+      "configurationNote": "Configuration names are recorded for identity and future research only. No configuration-specific specifications are asserted.",
+      "videos": []
     },
     {
       "id": "h1",
@@ -440,7 +442,8 @@
       "manufacturerId": "unitree-robotics",
       "familyId": "unitree-robotics-h1",
       "generationId": null,
-      "configurations": []
+      "configurations": [],
+      "videos": []
     },
     {
       "id": "ur5e",
@@ -585,7 +588,8 @@
       "manufacturerId": "universal-robots",
       "familyId": "universal-robots-e-series",
       "generationId": "e-series",
-      "configurations": []
+      "configurations": [],
+      "videos": []
     },
     {
       "id": "ur20",
@@ -731,7 +735,8 @@
       "manufacturerId": "universal-robots",
       "familyId": "universal-robots-ur-series",
       "generationId": null,
-      "configurations": []
+      "configurations": [],
+      "videos": []
     },
     {
       "id": "gofa5",
@@ -862,7 +867,8 @@
       "manufacturerId": "abb-robotics",
       "familyId": "abb-robotics-gofa-crb-15000",
       "generationId": null,
-      "configurations": []
+      "configurations": [],
+      "videos": []
     },
     {
       "id": "kr6",
@@ -1006,7 +1012,8 @@
       "manufacturerId": "kuka",
       "familyId": "kuka-kr-agilus",
       "generationId": null,
-      "configurations": []
+      "configurations": [],
+      "videos": []
     }
   ],
   "entityModel": {
