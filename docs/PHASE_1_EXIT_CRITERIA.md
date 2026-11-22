@@ -2,7 +2,7 @@
 
 **Status:** IN PROGRESS — NOT APPROVED FOR PHASE 2  
 **Scope:** Establish a reliable, traceable, rights-aware technical data and evidence pipeline for the initial Roboscopia catalogue.  
-**Current baseline:** 7 catalogue models, 39 technical claims, 17 registered source entries, and 7 evidence-document records.
+**Current baseline:** 7 catalogue models, 39 technical claims, 18 registered source entries, and 8 evidence-document records.
 
 This document is the operational acceptance checklist for Phase 1. A green CI run proves that automated checks passed; it does not prove that manufacturer documents were reviewed or that catalogue claims are factually verified.
 
@@ -13,7 +13,7 @@ Phase 1 may be closed only when every applicable condition below is satisfied:
 - [ ] **Source identity and authority:** Every source URL resolves to the correct manufacturer-controlled source or an explicitly documented official delivery host. Manufacturer-controlled material is classified as `manufacturer_primary`; domain classification alone is not treated as page review or claim verification.
 - [ ] **Source review:** Each source used for a claim has a recorded human review, exact page/document title, model and variant applicability, revision/date where available, review timestamp, reviewer and review note.
 - [ ] **Document provenance:** Every processed document/page capture has a stable evidence-document ID, canonical source mapping, capture/acquisition timestamp, SHA-256, content type, and document revision or an explicit live-page capture identifier.
-- [ ] **Rights gate:** Processing permission has an explicit, recorded basis and reviewer in the canonical Source Registry. Redistribution, public display, quotation, image/video reuse and document hosting are tracked separately. Unknown rights never imply permission.
+- [ ] **Rights gate:** Processing permission has an explicit, recorded basis and reviewer in the canonical Source Registry. Redistribution, public display, quotation, image/video reuse and document hosting are tracked separately. Unknown rights never imply permission. Boston Dynamics' published Terms prohibit automated scraping/robot/spider access; Spot acquisition remains blocked pending written permission or confirmation of a qualifying manufacturer-provided downloadable document.
 - [ ] **Evidence extraction:** Each claim intended for verification has an exact excerpt, value, original unit, model/variant/configuration identity, document hash and precise locator (PDF page/section or stable HTML locator). Automated extraction remains a candidate, not an approval.
 - [ ] **Claim review:** All 39 initial claims have a human-reviewed outcome: supported, partially supported, contradicted or not applicable. Conflicts, ranges, variant ambiguity and unit differences are explicitly resolved or remain quarantined.
 - [ ] **Catalog integrity:** No unreviewed candidate or automated result mutates `data/robots.json`. Only an explicit, validated human-approved change can update catalogue facts. Original values and provenance remain auditable.
