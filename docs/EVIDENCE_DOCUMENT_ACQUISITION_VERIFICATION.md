@@ -74,7 +74,9 @@ A match from the extractor is a candidate only. Human review remains mandatory.
 
 ## HTML sources
 
-For Unitree Go2 and H1, use the manufacturer page directly. Capture the exact visible table/section, page URL, access date and a reviewer-prepared evidence excerpt. Preserve variant columns and distinguish H1 from H1-2. Do not use an unofficial reseller PDF as a substitute for missing primary evidence.
+The acquisition script supports local HTML inputs as well as PDFs. For HTML, it accepts a reviewer-supplied local capture only; it does not fetch URLs, automate a browser session, bypass access controls, or decide whether capture is lawful. The canonical Source Registry must already have a human-reviewed `verified` source record with explicit `rights.processingPermitted: true`, reviewer, timestamp and basis. CLI flags cannot grant rights. The script hashes the exact HTML bytes, extracts candidate text and records content type and source provenance. It does not approve candidates or mutate catalogue data.
+
+For Unitree Go2 and H1, the reviewer must lawfully create/obtain a local page capture, record capture date/time, canonical URL and relevant page revision if available, and preserve the exact visible table/section. Preserve variant columns and distinguish H1 from H1-2. Do not use an unofficial reseller PDF as a substitute for missing primary evidence. A reproducible capture method and its metadata remain a separate outstanding workflow; local HTML processing alone does not complete that gate.
 
 ## Completion criteria
 
@@ -88,4 +90,4 @@ The phase is complete only when all 39 claims have:
 
 ## Current limitations
 
-The model-source registry has been created, but no source PDF has yet been lawfully acquired and locally processed in this run. Direct file downloads from the execution environment were unavailable. Therefore no PDF SHA-256 values or extracted document candidates are claimed here. The next input needed is the official PDFs uploaded by the user or obtained manually by a reviewer. This is not a deployment task.
+The model-source registry has been created, but no source PDF or HTML capture has yet been lawfully acquired and processed for the live catalogue. The local acquisition script supports both PDF and HTML inputs behind the canonical rights gate; an automated positive-path test now exercises HTML extraction using a synthetic, rights-approved test fixture. That test does not assert real-world permission and does not provide evidence for any catalogue claim. No live source SHA-256 values or extracted evidence candidates are claimed here. This is not a deployment task.
