@@ -33,6 +33,7 @@ async function main() {
       "This tool never downloads source URLs. A reviewer must lawfully obtain the file and confirm processing permission.",
       'Usage: node scripts/evidence-document-acquisition.mjs --source-id <registry-id> --file "<local.pdf>" --processing-permitted yes --rights-reviewer "<name>" --rights-note "<basis>" --redistribution permitted|not_permitted|unknown --output "<report.json>"',
       "Optional: --model-name <exact-model-name> --configuration-id <configuration> --document-date YYYY-MM-DD",
+      "Optional provenance: --capture-timestamp <ISO-8601> --capture-method manufacturer_provided_download|written_permission_export|other_authorized_copy",
       ""
     ].join("\n"));
     return;
@@ -42,6 +43,10 @@ async function main() {
   for (const key of required) if (!args[key]) throw new Error("Required argument missing: --" + key);
   if (args["processing-permitted"] !== "yes") throw new Error("Processing is blocked until a reviewer explicitly confirms lawful processing permission.");
   if (!["permitted", "not_permitted", "unknown"].includes(args.redistribution)) throw new Error("--redistribution must be permitted, not_permitted or unknown.");
+  if (args["capture-timestamp"] && !Number.isFinite(Date.parse(args["capture-timestamp"]))) throw new Error("--capture-timestamp must be a valid ISO-8601 date/time.");
+  const captureMethods = ["manufacturer_provided_download", "written_permission_export", "other_authorized_copy"];
+  if (args["capture-method"] && !captureMethods.includes(args["capture-method"])) throw new Error("--capture-method must identify an authorized source copy method.");
+  if (args["capture-method"] && !args["capture-timestamp"]) throw new Error("--capture-method requires --capture-timestamp.");
 
   const registry = JSON.parse(await readFile(resolve("data/evidence-document-registry.json"), "utf8"));
   const canonicalDb = JSON.parse(await readFile(resolve("data/robots.json"), "utf8"));
@@ -122,6 +127,9 @@ async function main() {
       fileName: filePath.split(/[\\/]/).pop(),
       byteSize: bytes.length,
       sha256: digest,
+      sourceCaptureTimestamp: args["capture-timestamp"] ?? null,
+      sourceCaptureMethod: args["capture-method"] ?? null,
+      processedAt: new Date().toISOString(),
       mimeSignature,
       contentType,
       pageCount: report.counts.pages
