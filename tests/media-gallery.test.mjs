@@ -68,8 +68,8 @@ test("videos have a separate collection and require reviewed rights evidence", a
 
 test("approved media requires a reference and review timestamp", async () => {
   const html = await read("../robot-profile.html");
-  assert.match(html, /rightsEvidence\.reference&&photo\.rightsEvidence\.reviewedAt/);
-  assert.match(html, /rightsEvidence\.reference&&video\.rightsEvidence\.reviewedAt/);
+  assert.match(html, /rightsEvidence\.reference&&photo\.rightsEvidence\.reviewedAt&&photo\.rightsEvidence\.reviewer&&photo\.rightsEvidence\.basis/);
+  assert.match(html, /rightsEvidence\.reference&&video\.rightsEvidence\.reviewedAt&&video\.rightsEvidence\.reviewer&&video\.rightsEvidence\.basis/);
 });
 
 
