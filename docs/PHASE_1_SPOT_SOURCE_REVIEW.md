@@ -34,7 +34,7 @@ Both sources are on Boston Dynamics-controlled domains and are primary manufactu
 - Section: **Payload weight**
 - The documentation states 14 kg total combined payload capacity, requires all payloads to be included in that total, and describes the effect of payload center of mass and distribution.
 - A separate official SDK robot-specifications page reports Spot Gamma length 1100 mm (43.3 in): https://dev.bostondynamics.com/docs/concepts/about_spot
-- This is official manufacturer technical documentation. It is an additional corroborating source candidate; it has not yet been added to the canonical Source Registry, captured as an evidence artifact, or rights-reviewed.
+- This is official manufacturer technical documentation. It is now registered as candidate `src-0018` in the canonical Source Registry and as the separate evidence record `spot-sdk-payload-configuration`. It remains `not_reviewed`, has no rights approval, has not been captured as an evidence artifact, and is not linked to any catalogue claim. Its applicability to the exact production Spot generation remains to be confirmed.
 
 ## 2. Current catalogue claims — source-level comparison
 
@@ -115,7 +115,7 @@ The current `data/evidence-document-registry.json` Spot record has:
 
 This relationship is not self-explanatory. The catalog claims cite S1, while the evidence-document record's canonical source is S2. Before evidence acquisition or claim review, explicitly document which source supports each claim and whether the evidence document is intended to capture S1, S2, or both. Do not silently reassign the canonical source ID.
 
-The Spot evidence record also has `acquisition.status: not_acquired`, `processingPermission: false`, `rightsReview: pending`, `redistributionPermission: unknown`, and `factualVerification: not_performed`. These statuses must remain unchanged until a reviewer confirms an applicable lawful processing basis and performs a reproducible capture.
+The original Spot support evidence record still has `acquisition.status: not_acquired`, `processingPermission: false`, `rightsReview: pending`, `redistributionPermission: unknown`, and `factualVerification: not_performed`. The newly registered SDK candidate has the same blocked acquisition/rights state. Neither record may be processed until a reviewer confirms an applicable lawful processing basis. The SDK candidate is not yet mapped to any canonical catalogue claim.
 
 ## 6. Rights and acquisition boundary
 
