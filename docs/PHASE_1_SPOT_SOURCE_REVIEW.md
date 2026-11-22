@@ -27,6 +27,15 @@
 
 Both sources are on Boston Dynamics-controlled domains and are primary manufacturer sources. This establishes source class, not permission to download, process, quote or republish their content.
 
+
+### S3 — Official Boston Dynamics Spot SDK documentation
+
+- Candidate source URL: https://dev.bostondynamics.com/docs/payload/payload_configuration_requirements
+- Section: **Payload weight**
+- The documentation states 14 kg total combined payload capacity, requires all payloads to be included in that total, and describes the effect of payload center of mass and distribution.
+- A separate official SDK robot-specifications page reports Spot Gamma length 1100 mm (43.3 in): https://dev.bostondynamics.com/docs/concepts/about_spot
+- This is official manufacturer technical documentation. It is an additional corroborating source candidate; it has not yet been added to the canonical Source Registry, captured as an evidence artifact, or rights-reviewed.
+
 ## 2. Current catalogue claims — source-level comparison
 
 The Spot record in `data/robots.json` currently contains six claims, all linked to `src-0001` and marked `source_linked_unverified`.
@@ -54,9 +63,9 @@ S2, the support article, states:
 - Payloads → Max recommended mass/weight: **20.43 kg**;
 - accompanying note says Spot performs best with payload mass centered directly on top of its body and that performance/stability may degrade as more mass is added; tall, off-center or cantilevered payloads may affect performance even below that mass.
 
-Both are official manufacturer statements. The current sources do not establish whether “Max Weight” and “Max recommended mass/weight” refer to different engineering limits, different payload mounting conditions, different product revisions or a changed specification.
+Both are official manufacturer statements, but the 20.43 kg row is not labelled “payload capacity” or “payload mounting max weight”. A third official Boston Dynamics technical source, the Spot SDK **Configuration Requirements → Payload weight**, states that Spot supports **14 kg total combined payload capacity**, including all payloads, and explains the importance of payload distribution and center of mass: https://dev.bostondynamics.com/docs/payload/payload_configuration_requirements. This is consistent with S1's 14 kg payload-capacity statement.
 
-**Decision:** Do not overwrite 14 kg with 20.43 kg, and do not merge them into one generic “maximum payload” field. Keep the current catalogue's 14 kg claim pending exact manufacturer clarification of the metric. If both values are eventually retained, model them as distinct manufacturer-declared fields with their original labels, source IDs and notes. No independent test is implied.
+The 20.43 kg support-table row remains an unresolved manufacturer terminology discrepancy. It must not be relabelled as the robot's payload capacity without clarification. Preserve the exact 20.43 kg source label and context as a separate unresolved source statement; do not overwrite the 14 kg catalogue payload claim. The official SDK source strengthens the manufacturer-declared 14 kg payload-capacity evidence, but this review still does not constitute independent testing or final human approval.
 
 ### 3.2 Speed: 1.6 m/s versus 5.8 kph — equivalent within rounding
 
@@ -72,7 +81,7 @@ S2 states approximately 90 minutes base and approximately 60 minutes when poweri
 
 ### 3.4 Dimensions: inconsistent metric/imperial pair on S1
 
-S1 currently renders Length as **110 mm (43.3 in)**. Those units are inconsistent: 43.3 inches is approximately 1100 mm. S2 states length **1100 mm**. Do not copy the 110 mm metric value. Treat S1's metric entry as an apparent page/transcription defect and use no dimension claim until the source capture and exact table are human-reviewed. The likely intended value is 1100 mm, but this report does not approve a correction to the catalogue.
+S1 currently renders Length as **110 mm (43.3 in)**. Those units are inconsistent: 43.3 inches is approximately 1100 mm. S2 states length **1100 mm**, and the official Spot SDK specification also reports **1100 mm (43.3 in)**. This makes the 110 mm value on S1 an apparent manufacturer-page transcription/rendering defect. Do not copy the 110 mm metric value. The 1100 mm figure has consistent support from two official manufacturer sources, but any catalogue correction still requires a human-reviewed decision and precise source locator.
 
 ### 3.5 Recharge time: method and condition matter
 
@@ -123,7 +132,7 @@ A live webpage's visible content is not a substitute for a permission-reviewed, 
 ## 7. Pilot result
 
 The pilot has demonstrated that source-level batch review surfaces issues that would be missed by checking only whether a number appears on a manufacturer page:
-- two official payload labels with different values;
+- two official payload-related labels with different values, with the Spot SDK explicitly corroborating 14 kg total combined payload capacity;
 - an important runtime qualifier;
 - a rounded speed equivalence;
 - an apparent metric/imperial page defect;
