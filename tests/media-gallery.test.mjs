@@ -71,3 +71,14 @@ test("approved media requires a reference and review timestamp", async () => {
   assert.match(html, /rightsEvidence\.reference&&photo\.rightsEvidence\.reviewedAt/);
   assert.match(html, /rightsEvidence\.reference&&video\.rightsEvidence\.reviewedAt/);
 });
+
+
+test("video demonstrations render in a separate section from the PhotoSwipe gallery", async () => {
+  const html = await read("../robot-profile.html");
+  assert.match(html, /const media=photoMedia;const videoSection=/);
+  assert.match(html, /Video demonstrations/);
+  assert.match(html, /Videos are reviewed separately from photographs/);
+  assert.match(html, /class="gallery video-gallery"/);
+  assert.match(html, /\+videoSection\+/);
+  assert.doesNotMatch(html, /const media=photoMedia\+videoMedia/);
+});
