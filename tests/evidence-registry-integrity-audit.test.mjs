@@ -12,7 +12,7 @@ const clone = value => structuredClone(value);
 test("canonical evidence registry has no structural or cross-reference errors", () => {
   const report = auditEvidenceRegistry(registry, db);
   assert.equal(report.counts.error, 0, JSON.stringify(report.issues.filter(x => x.severity === "error"), null, 2));
-  assert.equal(report.documentCount, 7);
+  assert.equal(report.documentCount, 8);
   assert.equal(report.catalogClaimCount, 39);
   assert.equal(report.status, "review_required");
   assert.equal(report.readOnly, true);
