@@ -6,10 +6,10 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
-test("evidence source registry contains seven manufacturer-primary source records", async () => {
+test("evidence source registry contains eight manufacturer-primary source records including the Spot SDK candidate", async () => {
   const registry = JSON.parse(await readFile(new URL("../data/evidence-document-registry.json", import.meta.url), "utf8"));
   assert.equal(registry.schemaVersion, "1.0.0");
-  assert.equal(registry.sources.length, 7);
+  assert.equal(registry.sources.length, 8);
   assert.equal(new Set(registry.sources.map((item) => item.id)).size, 7);
   for (const source of registry.sources) {
     assert.ok(source.sourcePageUrl.startsWith("https://"));
@@ -20,6 +20,26 @@ test("evidence source registry contains seven manufacturer-primary source record
     assert.equal(source.acquisition.rightsReview, "pending");
     assert.equal(source.acquisition.sha256, null);
   }
+});
+
+test("Spot SDK candidate is registered without granting rights or changing existing claim mappings", async () => {
+  const registry = JSON.parse(await readFile(new URL("../data/evidence-document-registry.json", import.meta.url), "utf8"));
+  const db = JSON.parse(await readFile(new URL("../data/robots.json", import.meta.url), "utf8"));
+  const candidate = registry.sources.find((item) => item.id === "spot-sdk-payload-configuration");
+  assert.ok(candidate);
+  assert.equal(candidate.canonicalSourceId, "src-0018");
+  assert.deepEqual(candidate.catalogClaims, []);
+  assert.equal(candidate.rightsStatus, "review_required");
+  assert.equal(candidate.acquisition.status, "not_acquired");
+  assert.equal(candidate.acquisition.processingPermission, false);
+  assert.equal(candidate.acquisition.redistributionPermission, "unknown");
+  const canonical = db.sources.find((item) => item.id === "src-0018");
+  assert.ok(canonical);
+  assert.equal(canonical.reviewStatus, "not_reviewed");
+  assert.equal(canonical.rights, undefined);
+  const spot = db.records.find((item) => item.id === "spot");
+  assert.equal(spot.specifications.length, 6);
+  assert.ok(spot.specifications.every((claim) => claim.sourceId === "src-0001"));
 });
 
 test("acquisition CLI documents manual rights gate and has no download mode", () => {
