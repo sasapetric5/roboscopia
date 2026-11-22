@@ -6,11 +6,11 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
-test("evidence source registry contains eight manufacturer-primary source records including the Spot SDK candidate", async () => {
+test("evidence source registry contains nine manufacturer-primary source records including the Spot SDK and Spot 5.2 candidates", async () => {
   const registry = JSON.parse(await readFile(new URL("../data/evidence-document-registry.json", import.meta.url), "utf8"));
   assert.equal(registry.schemaVersion, "1.0.0");
-  assert.equal(registry.sources.length, 8);
-  assert.equal(new Set(registry.sources.map((item) => item.id)).size, 8);
+  assert.equal(registry.sources.length, 9);
+  assert.equal(new Set(registry.sources.map((item) => item.id)).size, 9);
   for (const source of registry.sources) {
     assert.ok(source.sourcePageUrl.startsWith("https://"));
     assert.ok(["pdf", "html"].includes(source.documentType));
