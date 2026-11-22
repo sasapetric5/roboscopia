@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
@@ -149,6 +149,9 @@ test("authorized local HTML evidence is processed with provenance and without ca
     assert.equal(report.rightsReview.redistribution, "unknown");
     assert.equal(report.verification.factualVerification, "not_performed");
     assert.equal(report.verification.catalogMutation, false);
+    assert.equal(report.extraction.policy.sourcePageFetched, false);
+    assert.equal(report.extraction.policy.automaticApproval, false);
+    assert.equal(report.extraction.policy.catalogMutated, false);
     assert.ok(report.extraction.counts.candidates >= 2);
     assert.ok(report.extraction.candidates.every((candidate) => candidate.reviewStatus === "extracted_unverified"));
     assert.equal(JSON.stringify(JSON.parse(await readFile(join(workspace, "data", "robots.json"), "utf8"))), canonicalBefore);
