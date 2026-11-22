@@ -12,7 +12,7 @@ const clone = value => structuredClone(value);
 test("canonical evidence registry has no structural or cross-reference errors", () => {
   const report = auditEvidenceRegistry(registry, db);
   assert.equal(report.counts.error, 0, JSON.stringify(report.issues.filter(x => x.severity === "error"), null, 2));
-  assert.equal(report.documentCount, 8);
+  assert.equal(report.documentCount, 9);
   assert.equal(report.catalogClaimCount, 39);
   assert.equal(report.status, "review_required");
   assert.equal(report.readOnly, true);
@@ -81,4 +81,22 @@ test("audit never mutates registry or canonical catalog", () => {
   auditEvidenceRegistry(r, d);
   assert.equal(JSON.stringify(r), beforeR);
   assert.equal(JSON.stringify(d), beforeD);
+});
+
+
+test("Spot 5.2 IFU is tracked as an unacquired, rights-gated candidate", () => {
+  const source = registry.sources.find(x => x.id === "spot-ifu-5-2");
+  assert.ok(source, "Spot 5.2 candidate must be registered");
+  assert.equal(source.documentType, "pdf");
+  assert.equal(source.canonicalSourceId, "src-0019");
+  assert.equal(source.downloadUrl, null, "unknown direct PDF URL must not be invented");
+  assert.equal(source.acquisition.status, "not_acquired");
+  assert.equal(source.acquisition.processingPermission, false);
+  assert.equal(source.acquisition.rightsReview, "pending");
+  assert.equal(source.acquisition.sha256, null);
+  assert.deepEqual(source.catalogClaims, [], "candidate must not approve or alter catalog claims");
+  const sourceIndex = db.sources.find(x => x.id === "src-0019");
+  assert.equal(sourceIndex.url, source.sourcePageUrl);
+  assert.equal(sourceIndex.rights.processingPermitted, false);
+  assert.equal(sourceIndex.rights.automatedAccessPermitted, false);
 });
