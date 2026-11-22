@@ -36,7 +36,7 @@ test("gallery restricts media URLs to HTTPS and retains rights provenance", asyn
   assert.match(html, /const safeHttps=value=>/);
   assert.match(html, /u\.protocol==="https:"/);
   assert.match(html, /Image source:/);
-  assert.match(html, /photo\\.rightsStatus==="approved"/);
+  assert.match(html, /photo\.rightsStatus==="approved"/);
   const data = JSON.parse(await read("../data/robots.json"));
   for (const record of data.records) {
     for (const media of record.media || []) {
