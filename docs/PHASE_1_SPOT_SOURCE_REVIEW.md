@@ -3,7 +3,7 @@
 **Review date:** 2026-11-22  
 **Branch:** `main`  
 **Scope:** Publicly accessible official Boston Dynamics product and support specifications for Spot.  
-**Status:** SOURCE CONTENT REVIEWED; CLAIMS NOT HUMAN-APPROVED; RIGHTS NOT CLEARED; NO CATALOG MUTATION.
+**Status:** SOURCE CONTENT REVIEWED; CLAIMS NOT HUMAN-APPROVED; RIGHTS RESTRICTIONS IDENTIFIED; NO HTML CAPTURE; NO CATALOG MUTATION.
 
 ## 1. Sources inspected
 
@@ -142,3 +142,12 @@ The pilot has demonstrated that source-level batch review surfaces issues that w
 **Pilot status: PARTIAL — source content compared; acquisition, rights, reproducible HTML capture, and human claim decisions remain open.**
 
 The next implementation task should be a permission-gated, reproducible HTML evidence-capture workflow that stores a capture timestamp, canonical URL, content type, SHA-256, stable heading/table locators and rights-review metadata. It must never fetch or process pages automatically when permission is unknown, and it must never mutate catalogue values or approve claims.
+
+
+## 8. Published Terms of Use review (2026-11-22)
+
+Boston Dynamics' Terms of Use were reviewed at https://bostondynamics.com/terms/. They prohibit page-scraping, robots, spiders and other automated access/acquisition/copying/monitoring, and generally require express prior written consent for copying, public display, distribution or commercial reuse. A limited exception applies to product/service information purposely made available for download, subject to retention of proprietary notices, no modification and no additional representations/warranties. This does not authorize Roboscopia to scrape live HTML pages.
+
+The canonical registry now records `src-0001`, `src-0002` and candidate `src-0018` as rights-restricted for automated access pending written permission. Processing permission remains false and redistribution permission unknown. No source file was captured. The permission request and detailed policy decision are recorded in `docs/SPOT_RIGHTS_AND_CLAIM_REVIEW.md`.
+
+The local evidence processor remains a local-file processor, not a web crawler. It now supports optional source capture timestamp and authorized-copy method metadata and always records the processing timestamp. It still requires an explicit positive rights decision in the canonical Source Registry before reading a local source file. This software change does not itself grant rights.
