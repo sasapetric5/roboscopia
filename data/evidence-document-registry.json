@@ -565,6 +565,41 @@
       },
       "canonicalSourceId": "src-0018",
       "relatedSourceIds": []
+    },
+    {
+      "id": "spot-ifu-5-2",
+      "manufacturer": "Boston Dynamics",
+      "modelIds": [
+        "spot"
+      ],
+      "documentType": "pdf",
+      "title": "Spot Instructions for Use — Version 5.2 (English file not yet identified)",
+      "revision": "Product Safety index lists Version 5.2; exact PDF revision/date and hardware applicability pending inspection",
+      "documentDate": null,
+      "sourcePageUrl": "https://support.bostondynamics.com/s/spot/product-safety",
+      "downloadUrl": null,
+      "officialHost": "support.bostondynamics.com",
+      "deliveryHost": null,
+      "expectedLocator": "Title/revision page; applicable Spot hardware part numbers and software version; technical specifications and safety limitations",
+      "claims": [
+        "Spot 5.2 Instructions for Use is listed as a manufacturer-provided downloadable manual"
+      ],
+      "rightsStatus": "restricted_automated_access_pending_written_permission",
+      "notes": "Candidate record based on the official Product Safety index listing Spot 5.2 Instructions for Use. The exact English PDF target has not been identified or downloaded. The listing is not itself approval for processing, storage, quotation, public display or redistribution. No technical claim is linked to this candidate. Keep acquisition blocked until a human reviewer identifies the exact file and confirms the Terms' download exception applies to the intended processing, or obtains written permission. No automated page access.",
+      "catalogClaims": [],
+      "acquisition": {
+        "status": "not_acquired",
+        "localFileName": null,
+        "sha256": null,
+        "byteSize": null,
+        "pageCount": null,
+        "rightsReview": "pending",
+        "processingPermission": false,
+        "redistributionPermission": "unknown",
+        "factualVerification": "not_performed"
+      },
+      "canonicalSourceId": "src-0019",
+      "relatedSourceIds": []
     }
   ]
 }
