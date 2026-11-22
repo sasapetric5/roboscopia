@@ -97,7 +97,7 @@ These are proposed outcomes for a reviewer; they are not recorded claim approval
 |---|---|---|
 | Mass with battery 33.8 kg | `supported` by S1; manufacturer-declared | Exact product-page match; confirm model applicability/capture |
 | Maximum speed 1.6 m/s | `supported` by S1; manufacturer-declared | Exact product-page match; S2 gives equivalent rounded nominal body speed |
-| Maximum payload 14 kg | `partially_supported` / `conflicting` pending clarification | S1 says 14 kg Max Weight; S2 says 20.43 kg Max recommended mass |
+| Maximum payload 14 kg | `supported` by S1 and official SDK wording, subject to human approval | S1 says 14 kg payload capacity/Max Weight; SDK says 14 kg total combined payload capacity. S2 separately lists 20.43 kg as “Max recommended mass/weight”; preserve that exact label as an unresolved separate statement, not as payload capacity |
 | Battery capacity 564 Wh | `supported` by S1; manufacturer-declared | Exact product-page match |
 | Typical runtime 90 min | `partially_supported` until qualifier is explicit | S1 footnote and S2 distinguish base operation from powering payloads |
 | Ingress protection IP54 | `supported` by S1; manufacturer-declared | Exact product-page match |
