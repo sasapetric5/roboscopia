@@ -1181,10 +1181,22 @@
       "label": "Boston Dynamics Spot — official product page and specifications",
       "sourceType": "manufacturer_primary",
       "authorityTier": "manufacturer_primary",
-      "reviewStatus": "not_reviewed",
-      "lastReviewedAt": null,
+      "reviewStatus": "reviewed_restrictions_identified",
+      "lastReviewedAt": "2026-11-22",
       "firstRecordedAt": "2026-11-20",
-      "notes": "Official manufacturer-controlled domain identified from the registered HTTPS hostname (bostondynamics.com). Domain origin is classified as manufacturer-primary; page or PDF contents, currentness, exact claim applicability, and processing/reuse permissions remain pending human review. Existing claim verification and document-processing rights are not granted by domain classification."
+      "notes": "Official manufacturer-controlled domain identified from the registered HTTPS hostname (bostondynamics.com). Domain origin is classified as manufacturer-primary; page or PDF contents, currentness, exact claim applicability, and processing/reuse permissions remain pending human review. Existing claim verification and document-processing rights are not granted by domain classification. Published Boston Dynamics Terms of Use reviewed 2026-11-22: automated scraping/robot/spider access is prohibited; no processing or redistribution rights granted by this record. See docs/SPOT_RIGHTS_AND_CLAIM_REVIEW.md. Written permission or an expressly downloadable document with applicable terms is required before local processing.",
+      "rights": {
+        "status": "restricted_automated_access_pending_written_permission",
+        "processingPermitted": false,
+        "automatedAccessPermitted": false,
+        "redistributionPermitted": "unknown",
+        "publicDisplayPermitted": "unknown",
+        "basis": "Boston Dynamics Terms of Use prohibit page-scraping, robots, spiders and other automated access/acquisition/copying; copying, public display and distribution require express prior written consent except for information purposely made available for download subject to stated conditions.",
+        "legalTermsUrl": "https://bostondynamics.com/terms/",
+        "reviewedBy": "Roboscopia source-policy review",
+        "reviewedAt": "2026-11-22",
+        "nextAction": "Obtain written permission or an explicitly downloadable manufacturer document and confirm permitted processing, storage, quotation, display and redistribution scope before any acquisition."
+      }
     },
     {
       "id": "src-0002",
@@ -1193,10 +1205,22 @@
       "label": "Boston Dynamics Support — Spot specifications reference",
       "sourceType": "manufacturer_primary",
       "authorityTier": "manufacturer_primary",
-      "reviewStatus": "not_reviewed",
-      "lastReviewedAt": null,
+      "reviewStatus": "reviewed_restrictions_identified",
+      "lastReviewedAt": "2026-11-22",
       "firstRecordedAt": "2026-11-20",
-      "notes": "Official manufacturer-controlled domain identified from the registered HTTPS hostname (support.bostondynamics.com). Domain origin is classified as manufacturer-primary; page or PDF contents, currentness, exact claim applicability, and processing/reuse permissions remain pending human review. Existing claim verification and document-processing rights are not granted by domain classification."
+      "notes": "Official manufacturer-controlled domain identified from the registered HTTPS hostname (support.bostondynamics.com). Domain origin is classified as manufacturer-primary; page or PDF contents, currentness, exact claim applicability, and processing/reuse permissions remain pending human review. Existing claim verification and document-processing rights are not granted by domain classification. Published Boston Dynamics Terms of Use reviewed 2026-11-22: automated scraping/robot/spider access is prohibited; no processing or redistribution rights granted by this record. See docs/SPOT_RIGHTS_AND_CLAIM_REVIEW.md. Written permission or an expressly downloadable document with applicable terms is required before local processing.",
+      "rights": {
+        "status": "restricted_automated_access_pending_written_permission",
+        "processingPermitted": false,
+        "automatedAccessPermitted": false,
+        "redistributionPermitted": "unknown",
+        "publicDisplayPermitted": "unknown",
+        "basis": "Boston Dynamics Terms of Use prohibit page-scraping, robots, spiders and other automated access/acquisition/copying; copying, public display and distribution require express prior written consent except for information purposely made available for download subject to stated conditions.",
+        "legalTermsUrl": "https://bostondynamics.com/terms/",
+        "reviewedBy": "Roboscopia source-policy review",
+        "reviewedAt": "2026-11-22",
+        "nextAction": "Obtain written permission or an explicitly downloadable manufacturer document and confirm permitted processing, storage, quotation, display and redistribution scope before any acquisition."
+      }
     },
     {
       "id": "src-0003",
@@ -1385,10 +1409,22 @@
       "label": "Boston Dynamics Spot SDK — Payload Configuration Requirements",
       "sourceType": "manufacturer_primary",
       "authorityTier": "manufacturer_primary",
-      "reviewStatus": "not_reviewed",
-      "lastReviewedAt": null,
+      "reviewStatus": "reviewed_restrictions_identified",
+      "lastReviewedAt": "2026-11-22",
       "firstRecordedAt": "2026-11-22",
-      "notes": "Candidate official Boston Dynamics developer documentation identified during Spot source review. Section: Configuration Requirements → Payload weight. Source origin and technical relevance are identified provisionally; exact currentness, applicability to the catalogued Spot generation, page capture, processing permission and redistribution/display rights remain unreviewed. Must not support a published claim until reviewed."
+      "notes": "Candidate official Boston Dynamics developer documentation identified during Spot source review. Section: Configuration Requirements → Payload weight. Source origin and technical relevance are identified provisionally; exact currentness, applicability to the catalogued Spot generation, page capture, processing permission and redistribution/display rights remain unreviewed. Must not support a published claim until reviewed. Published Boston Dynamics Terms of Use reviewed 2026-11-22: automated scraping/robot/spider access is prohibited; no processing or redistribution rights granted by this record. See docs/SPOT_RIGHTS_AND_CLAIM_REVIEW.md. Written permission or an expressly downloadable document with applicable terms is required before local processing.",
+      "rights": {
+        "status": "restricted_automated_access_pending_written_permission",
+        "processingPermitted": false,
+        "automatedAccessPermitted": false,
+        "redistributionPermitted": "unknown",
+        "publicDisplayPermitted": "unknown",
+        "basis": "Boston Dynamics Terms of Use prohibit page-scraping, robots, spiders and other automated access/acquisition/copying; copying, public display and distribution require express prior written consent except for information purposely made available for download subject to stated conditions.",
+        "legalTermsUrl": "https://bostondynamics.com/terms/",
+        "reviewedBy": "Roboscopia source-policy review",
+        "reviewedAt": "2026-11-22",
+        "nextAction": "Obtain written permission or an explicitly downloadable manufacturer document and confirm permitted processing, storage, quotation, display and redistribution scope before any acquisition."
+      }
     }
   ],
   "dataQuality": {
