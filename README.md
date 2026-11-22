@@ -28,13 +28,26 @@ The platform is intended to support:
 
 ROBOSCOPIA's long-term strategy includes becoming a trusted product-discovery and commercial referral channel for robotics and CNC manufacturers, authorized distributors and buyers. Manufacturer-controlled documentation is the preferred primary source for product facts. Technical independence must remain separate from commercial relationships: sponsorships and referrals are disclosed and must not influence factual specifications or objective comparisons. Any reseller, distributor or regional representation status requires a valid written agreement; no such status is implied today. See [Manufacturer Partnerships & Product Distribution Strategy](docs/MANUFACTURER_PARTNERSHIPS.md) for the staged plan and safeguards.
 
-## Three connected pillars
+## Three connected pillars and four logical data domains
 
 1. **Knowledge Base** — structured profiles for manufacturers, robot and machine models, technical specifications, documentation and development history.
 2. **Robotics Intelligence** — search, comparison, technical analysis and transparent data-confidence indicators.
-3. **Marketplace** — a planned commercial layer for new and used robots, CNC machines, components, spare parts and accessories.
+3. **Marketplace** — a planned commercial layer for new and used robots, CNC machines, components, spare parts and accessories, with its own buyer, seller, listing and transaction data.
 
 The knowledge base and the quality of its data are the foundation. Marketplace functionality will be introduced progressively and must not compromise editorial independence or technical accuracy.
+
+### Marketplace data separation
+
+Marketplace is planned as the **fourth logical data/storage domain**, separate from the encyclopedia's canonical records. It will own buyer and seller accounts, seller profiles, new/used listings, prices, currencies, availability, listing media, messages, transaction records, disputes and transaction-bound reviews. Listings may reference canonical robot/CNC/parts profiles, but seller statements, condition, price and availability must never overwrite encyclopedia facts.
+
+The planned logical storage map is:
+1. Oracle — robot encyclopedia data and associated robot media.
+2. Cloudflare R2 — CNC machine media.
+3. Cloudflare R2 — robot/CNC parts and accessories media.
+4. Marketplace — its own database for users, sellers, listings and commercial records, plus a separately managed media area for listing photos and attachments.
+
+The fourth domain is a logical separation, not a decision to use a specific provider or a commitment to create additional accounts or buckets. Provider selection must follow cost, free-tier, security, backup, data-residency and compatibility review. No account, bucket, database, public endpoint, paid resource, deployment or DNS change is authorized by this plan. See [Phase 2 product requirements](docs/PRODUCT_REQUIREMENTS_PHASE_2.md) for the detailed requirements.
+
 
 ## Planned architecture
 
