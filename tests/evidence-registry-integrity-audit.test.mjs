@@ -12,7 +12,7 @@ const clone = value => structuredClone(value);
 test("canonical evidence registry has no structural or cross-reference errors", () => {
   const report = auditEvidenceRegistry(registry, db);
   assert.equal(report.counts.error, 0, JSON.stringify(report.issues.filter(x => x.severity === "error"), null, 2));
-  assert.equal(report.documentCount, 9);
+  assert.equal(report.documentCount, 10);
   assert.equal(report.catalogClaimCount, 39);
   assert.equal(report.status, "review_required");
   assert.equal(report.readOnly, true);
@@ -99,4 +99,14 @@ test("Spot 5.2 IFU is tracked as an unacquired, rights-gated candidate", () => {
   assert.equal(sourceIndex.url, source.sourcePageUrl);
   assert.equal(sourceIndex.rights.processingPermitted, false);
   assert.equal(sourceIndex.rights.automatedAccessPermitted, false);
+});
+
+test("audit permits a processed pilot-only source without a catalog model or claims", () => {
+  const pilot = registry.sources.find(x => x.id === "source-robotics-parol6-manual-release1-2026-a");
+  assert.ok(pilot);
+  assert.equal(pilot.pilotOnly, true);
+  assert.deepEqual(pilot.modelIds, []);
+  assert.deepEqual(pilot.catalogClaims, []);
+  const report = auditEvidenceRegistry(registry, db);
+  assert.equal(report.counts.error, 0, JSON.stringify(report.issues.filter(x => x.severity === "error"), null, 2));
 });

@@ -85,10 +85,15 @@ export function auditEvidenceRegistry(registry, db) {
     if (doc.downloadUrl && doc.deliveryHost && !hostMatches(doc.downloadUrl, doc.deliveryHost))
       issue(issues, "error", "DELIVERY_HOST_MISMATCH", base + ".deliveryHost", "Download URL host does not match the declared delivery host.");
 
-    if (!Array.isArray(doc.modelIds) || doc.modelIds.length === 0)
-      issue(issues, "error", "MISSING_MODEL_LINK", base + ".modelIds", "At least one catalog model ID is required.");
-    else for (const modelId of doc.modelIds)
+    const pilotOnlyWithoutCatalogClaims = doc.pilotOnly === true &&
+      Array.isArray(doc.modelIds) && doc.modelIds.length === 0 &&
+      Array.isArray(doc.catalogClaims) && doc.catalogClaims.length === 0;
+    if ((!Array.isArray(doc.modelIds) || doc.modelIds.length === 0) && !pilotOnlyWithoutCatalogClaims)
+      issue(issues, "error", "MISSING_MODEL_LINK", base + ".modelIds", "At least one catalog model ID is required unless this is an explicitly pilot-only document with no catalog claims.");
+    else for (const modelId of (doc.modelIds ?? []))
       if (!models.has(modelId)) issue(issues, "error", "UNKNOWN_MODEL", base + ".modelIds", "Unknown catalog model ID: " + modelId);
+    if (doc.pilotOnly === true && Array.isArray(doc.catalogClaims) && doc.catalogClaims.length > 0)
+      issue(issues, "error", "PILOT_ONLY_HAS_CATALOG_CLAIMS", base + ".catalogClaims", "Pilot-only documents cannot link catalog claims.");
 
     const canonicalId = doc.canonicalSourceId;
     const canonical = canonicalSources.get(canonicalId);

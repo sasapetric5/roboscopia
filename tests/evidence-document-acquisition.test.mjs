@@ -6,19 +6,27 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
-test("evidence source registry contains nine manufacturer-primary source records including the Spot SDK and Spot 5.2 candidates", async () => {
+test("evidence source registry contains ten manufacturer-primary records including one processed pilot document", async () => {
   const registry = JSON.parse(await readFile(new URL("../data/evidence-document-registry.json", import.meta.url), "utf8"));
   assert.equal(registry.schemaVersion, "1.0.0");
-  assert.equal(registry.sources.length, 9);
+  assert.equal(registry.sources.length, 10);
   assert.equal(new Set(registry.sources.map((item) => item.id)).size, 9);
   for (const source of registry.sources) {
     assert.ok(source.sourcePageUrl.startsWith("https://"));
     assert.ok(["pdf", "html"].includes(source.documentType));
-    assert.ok(source.modelIds.length > 0);
-    assert.ok(["review_required", "restricted_automated_access_pending_written_permission"].includes(source.rightsStatus));
-    assert.equal(source.acquisition.status, "not_acquired");
-    assert.equal(source.acquisition.rightsReview, "pending");
-    assert.equal(source.acquisition.sha256, null);
+    assert.ok(source.modelIds.length > 0 || source.pilotOnly === true);
+    if (source.pilotOnly === true) {
+      assert.equal(source.rightsStatus, "open_license_scoped_cc_by_sa_4_0");
+      assert.equal(source.acquisition.status, "processed");
+      assert.equal(source.acquisition.rightsReview, "approved");
+      assert.equal(source.acquisition.processingPermission, true);
+      assert.match(source.acquisition.sha256, /^[a-f0-9]{64}$/);
+    } else {
+      assert.ok(["review_required", "restricted_automated_access_pending_written_permission"].includes(source.rightsStatus));
+      assert.equal(source.acquisition.status, "not_acquired");
+      assert.equal(source.acquisition.rightsReview, "pending");
+      assert.equal(source.acquisition.sha256, null);
+    }
   }
 });
 
@@ -201,4 +209,26 @@ test("authorized local HTML evidence is processed with provenance and without ca
   } finally {
     await rm(workspace, { recursive: true, force: true });
   }
+});
+
+test("PAROL6 is registered as a processed, rights-scoped pilot without catalog mutation", async () => {
+  const registry = JSON.parse(await readFile(new URL("../data/evidence-document-registry.json", import.meta.url), "utf8"));
+  const db = JSON.parse(await readFile(new URL("../data/robots.json", import.meta.url), "utf8"));
+  const pilot = registry.sources.find(item => item.id === "source-robotics-parol6-manual-release1-2026-a");
+  assert.ok(pilot);
+  assert.equal(pilot.pilotOnly, true);
+  assert.deepEqual(pilot.modelIds, []);
+  assert.deepEqual(pilot.catalogClaims, []);
+  assert.equal(pilot.canonicalSourceId, "src-0020");
+  assert.equal(pilot.acquisition.status, "processed");
+  assert.equal(pilot.acquisition.sha256, "e51c29ef0bf06ba1fdaefcc10ffc4f1cfe68c58c0b9f3a9fb8fd3fdb8421e77f");
+  assert.equal(pilot.acquisition.byteSize, 13776175);
+  assert.equal(pilot.acquisition.pageCount, 402);
+  assert.equal(pilot.acquisition.processingPermission, true);
+  assert.equal(pilot.acquisition.factualVerification, "not_performed");
+  const canonical = db.sources.find(item => item.id === "src-0020");
+  assert.equal(canonical.reviewStatus, "verified");
+  assert.equal(canonical.rights.processingPermitted, true);
+  assert.match(canonical.rights.basis, /CC BY-SA 4\.0/);
+  assert.equal(db.records.some(item => item.id === "parol6"), false);
 });
