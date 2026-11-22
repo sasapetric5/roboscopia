@@ -10,7 +10,7 @@ test("evidence source registry contains ten manufacturer-primary records includi
   const registry = JSON.parse(await readFile(new URL("../data/evidence-document-registry.json", import.meta.url), "utf8"));
   assert.equal(registry.schemaVersion, "1.0.0");
   assert.equal(registry.sources.length, 10);
-  assert.equal(new Set(registry.sources.map((item) => item.id)).size, 9);
+  assert.equal(new Set(registry.sources.map((item) => item.id)).size, 10);
   for (const source of registry.sources) {
     assert.ok(source.sourcePageUrl.startsWith("https://"));
     assert.ok(["pdf", "html"].includes(source.documentType));
