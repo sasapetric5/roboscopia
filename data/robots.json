@@ -129,6 +129,10 @@
         {
           "label": "Boston Dynamics Spot specifications support reference",
           "url": "https://support.bostondynamics.com/s/article/spot-specifications"
+        },
+        {
+          "label": "Boston Dynamics Spot SDK — payload configuration requirements (candidate source)",
+          "url": "https://dev.bostondynamics.com/docs/payload/payload_configuration_requirements"
         }
       ],
       "media": [
@@ -1373,6 +1377,18 @@
       "lastReviewedAt": null,
       "firstRecordedAt": "2026-11-21",
       "notes": "Direct ABB-hosted GoFa CRB 15000 datasheet PDF corresponding to the evidence-document registry download URL. PDF contents, publication metadata, variant-specific claim applicability, relationship to src-0011 and src-0014, and processing/reuse permissions remain pending human review. The ABB product family page is separately registered as src-0010; the 2023 portfolio is historical context (src-0015)."
+    },
+    {
+      "id": "src-0018",
+      "url": "https://dev.bostondynamics.com/docs/payload/payload_configuration_requirements",
+      "domain": "dev.bostondynamics.com",
+      "label": "Boston Dynamics Spot SDK — Payload Configuration Requirements",
+      "sourceType": "manufacturer_primary",
+      "authorityTier": "manufacturer_primary",
+      "reviewStatus": "not_reviewed",
+      "lastReviewedAt": null,
+      "firstRecordedAt": "2026-11-22",
+      "notes": "Candidate official Boston Dynamics developer documentation identified during Spot source review. Section: Configuration Requirements → Payload weight. Source origin and technical relevance are identified provisionally; exact currentness, applicability to the catalogued Spot generation, page capture, processing permission and redistribution/display rights remain unreviewed. Must not support a published claim until reviewed."
     }
   ],
   "dataQuality": {
