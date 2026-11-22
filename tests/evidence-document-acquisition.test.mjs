@@ -10,7 +10,7 @@ test("evidence source registry contains eight manufacturer-primary source record
   const registry = JSON.parse(await readFile(new URL("../data/evidence-document-registry.json", import.meta.url), "utf8"));
   assert.equal(registry.schemaVersion, "1.0.0");
   assert.equal(registry.sources.length, 8);
-  assert.equal(new Set(registry.sources.map((item) => item.id)).size, 7);
+  assert.equal(new Set(registry.sources.map((item) => item.id)).size, 8);
   for (const source of registry.sources) {
     assert.ok(source.sourcePageUrl.startsWith("https://"));
     assert.ok(["pdf", "html"].includes(source.documentType));
@@ -175,6 +175,8 @@ test("authorized local HTML evidence is processed with provenance and without ca
       "--rights-note", "synthetic fixture only",
       "--redistribution", "unknown",
       "--model-name", "Go2",
+      "--capture-timestamp", "2026-11-22T05:00:00.000Z",
+      "--capture-method", "other_authorized_copy",
       "--output", outputPath
     ], { cwd: workspace, encoding: "utf8" });
 
