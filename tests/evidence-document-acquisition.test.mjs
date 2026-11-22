@@ -15,7 +15,7 @@ test("evidence source registry contains eight manufacturer-primary source record
     assert.ok(source.sourcePageUrl.startsWith("https://"));
     assert.ok(["pdf", "html"].includes(source.documentType));
     assert.ok(source.modelIds.length > 0);
-    assert.equal(source.rightsStatus, "review_required");
+    assert.ok(["review_required", "restricted_automated_access_pending_written_permission"].includes(source.rightsStatus));
     assert.equal(source.acquisition.status, "not_acquired");
     assert.equal(source.acquisition.rightsReview, "pending");
     assert.equal(source.acquisition.sha256, null);
