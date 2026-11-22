@@ -9,7 +9,7 @@ permissions:
   contents: read
 concurrency:
   group: roboscopia-data-quality-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   validate:
     name: Audit and test data quality tools
