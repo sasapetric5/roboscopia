@@ -1425,6 +1425,30 @@
         "reviewedAt": "2026-11-22",
         "nextAction": "Obtain written permission or an explicitly downloadable manufacturer document and confirm permitted processing, storage, quotation, display and redistribution scope before any acquisition."
       }
+    },
+    {
+      "id": "src-0019",
+      "url": "https://support.bostondynamics.com/s/spot/product-safety",
+      "domain": "support.bostondynamics.com",
+      "label": "Boston Dynamics Spot Product Safety — official download index listing Spot 5.2 Instructions for Use",
+      "sourceType": "manufacturer_primary",
+      "authorityTier": "manufacturer_primary",
+      "reviewStatus": "reviewed_restrictions_identified",
+      "lastReviewedAt": "2026-11-22",
+      "firstRecordedAt": "2026-11-22",
+      "notes": "Official Boston Dynamics Product Safety index lists Spot 5.2 Instructions for Use and links to the manufacturer manual download route. This is evidence of a download offer, not evidence that the English file URL, revision metadata, or rights to local processing, extraction, storage, quotation, display, or redistribution have been approved. Terms of Use reviewed 2026-11-22; do not scrape or automate page access. Identify the exact file through an authorized human review and retain processingPermission=false until the applicable download exception is confirmed or written permission is obtained. See docs/SPOT_RIGHTS_AND_CLAIM_REVIEW.md.",
+      "rights": {
+        "status": "restricted_automated_access_pending_written_permission",
+        "processingPermitted": false,
+        "automatedAccessPermitted": false,
+        "redistributionPermitted": "unknown",
+        "publicDisplayPermitted": "unknown",
+        "basis": "Official Product Safety page lists a Spot 5.2 Instructions for Use download, but the exact English file and the scope of permitted processing under the Terms' download exception have not yet been confirmed. Automated page scraping remains prohibited.",
+        "legalTermsUrl": "https://bostondynamics.com/terms/",
+        "reviewedBy": "Roboscopia source-policy review",
+        "reviewedAt": "2026-11-22",
+        "nextAction": "Human reviewer to identify the exact English Spot 5.2 PDF link and version metadata, then confirm whether local processing, extraction and private retention are covered by the download exception; otherwise obtain written permission."
+      }
     }
   ],
   "dataQuality": {
