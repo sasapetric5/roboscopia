@@ -104,3 +104,48 @@ Roboscopia Project Team
 | Catalogue mutation | **None** |
 
 **Spot pilot remains PARTIAL.** The next legal dependency is written permission or confirmation of a qualifying manufacturer-provided downloadable document. No automated access to Boston Dynamics pages is permitted under the reviewed Terms.
+
+## 7. Official downloadable-material route review (22 November 2026)
+
+A further public-source review identified a more promising route than the blocked live HTML pages. This review used indexed search results and official page references; it did not fetch or capture Boston Dynamics page HTML, download a document, or alter any registry or catalogue record.
+
+### 7.1 Current Spot Product Safety page
+
+- Official page: https://support.bostondynamics.com/s/spot/product-safety
+- The page is titled **Spot Product Safety** and lists **Spot 5.2 Instructions for Use** for Spot, alongside current manuals for related equipment.
+- The official *About the Spot Robot* article explicitly directs readers to the Spot Product Safety page to download instruction manuals and safety information: https://support.bostondynamics.com/s/article/about-the-spot-robot
+- The official *Spot Safety and Operations Manuals* article describes Instructions for Use as foundational user documentation and directs readers to the Product Safety page: https://support.bostondynamics.com/s/article/spot-safety-and-operations-manuals
+- The Product Safety page also lists 2026 Spot Robot EU Declaration of Conformity and declarations for related equipment.
+
+**Assessment:** This is a credible manufacturer-provided download route under the narrow download exception described in the Terms. However, the exact English Spot 5.2 PDF URL, file revision metadata and document contents have not yet been independently captured or inspected. The presence of a document on the download page does not by itself resolve whether the proposed extraction, private retention, quotation and public factual reuse are all covered. Keep processing permission false until the exact file and applicable terms are reviewed; seek written clarification if the scope is not explicit.
+
+### 7.2 Older official Spot specifications PDF — historical candidate only
+
+An official-host PDF was found at:
+
+https://www.bostondynamics.com/sites/default/files/inline-files/spot-specifications.pdf
+
+The indexed PDF identifies itself as **SPOT Robot Specifications** and contains, among other values, base-robot net weight 32.5 kg, battery capacity 605 Wh, battery weight 4.2 kg and average runtime 90 minutes. These values differ from the current Spot product/support pages, which state 33.8 kg with battery and 564 Wh battery capacity; the support page describes current production hardware and warns that older models may differ.
+
+**Disposition:** Do not use this PDF to verify current-production Spot claims. It is a historical/version-specific candidate only. Its exact issue date, model applicability and whether it is presently linked as a purposely offered download from the official site remain unconfirmed. Do not process it merely because its URL is publicly reachable or indexed.
+
+A separate indexed 2025 **Spot 5.1 Instructions for Use** PDF was also found on Boston Dynamics' CloudFront delivery host. It is not the current 5.2 manual and must not be substituted for it:
+https://d3cjkvgbik1jtv.cloudfront.net/translations/spot-5_1/spot-user-manual-en.pdf
+
+### 7.3 Current product-page inconsistency remains open
+
+The indexed current Spot product page displays **110 mm (43.3 in)** for length, while the official Spot Specifications support article displays **1100 mm** and the equivalent **43.3 in**. The 110 mm figure is internally inconsistent with its own imperial value and with the support article. Do not silently correct or publish a derived replacement; retain the discrepancy as an explicit source conflict pending an authorized claim decision.
+
+- Product page: https://bostondynamics.com/products/spot/
+- Support specifications: https://support.bostondynamics.com/s/article/spot-specifications
+
+### 7.4 Next authorized review steps
+
+1. Open the official Product Safety page and identify the exact English Spot 5.2 PDF download target and its displayed version/date.
+2. Confirm that the file is explicitly offered for download by Boston Dynamics and record the page-to-file relationship.
+3. Review the PDF's title page, applicable hardware part numbers/software version, revision, issue date and relevant technical sections.
+4. Confirm whether the published Terms' download exception covers the proposed private processing/extraction, hash retention and publication of attributed factual values. Request written clarification where ambiguous.
+5. Only after the rights reviewer records an explicit processing basis in the canonical Source Registry may an authorized reviewer provide the local PDF to the acquisition processor.
+6. Keep redistribution of the original PDF, diagrams, photographs and other protected material separately blocked unless expressly permitted.
+
+**Updated decision:** A plausible official download route has been identified, but no qualifying Spot 5.2 PDF has yet been acquired or rights-cleared for processing. No SHA-256 evidence package exists, no Spot claim has been approved, and no catalogue value has changed. The Spot pilot remains **PARTIAL**.
