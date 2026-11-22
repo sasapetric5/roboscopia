@@ -44,3 +44,30 @@ test("gallery restricts media URLs to HTTPS and retains rights provenance", asyn
     }
   }
 });
+
+
+test("unapproved photographs are excluded from the rendered gallery", async () => {
+  const html = await read("../robot-profile.html");
+  assert.match(html, /photo\.rightsStatus==="approved"&&photo\.rightsEvidence&&photo\.rightsEvidence\.reference&&photo\.rightsEvidence\.reviewedAt/);
+  assert.match(html, /No rights-cleared product photographs yet/);
+  assert.doesNotMatch(html, /const photos=\(Array\.isArray\(r\.media\)\?r\.media:\[\]\)\.map\(photo=>/);
+});
+
+test("videos have a separate collection and require reviewed rights evidence", async () => {
+  const html = await read("../robot-profile.html");
+  const data = JSON.parse(await read("../data/robots.json"));
+  assert.match(html, /const videos=\(Array\.isArray\(r\.videos\)\?r\.videos:\[\]\)/);
+  assert.match(html, /video\.rightsStatus==="approved"&&video\.rightsEvidence/);
+  assert.match(html, /video-media/);
+  assert.match(html, /No verified video demonstrations yet/);
+  for (const record of data.records) {
+    assert.ok(Array.isArray(record.videos), `${record.id} must have a separate videos array`);
+    assert.equal(record.videos.length, 0, `${record.id} must not receive invented video entries`);
+  }
+});
+
+test("approved media requires a reference and review timestamp", async () => {
+  const html = await read("../robot-profile.html");
+  assert.match(html, /rightsEvidence\.reference&&photo\.rightsEvidence\.reviewedAt/);
+  assert.match(html, /rightsEvidence\.reference&&video\.rightsEvidence\.reviewedAt/);
+});
