@@ -1,0 +1,106 @@
+# Boston Dynamics Spot — Rights Gate and Claim Review
+
+**Review date:** 2026-11-22  
+**Branch:** `main`  
+**Status:** RIGHTS RESTRICTION IDENTIFIED; NO HTML CAPTURE; CLAIMS SOURCE-REVIEWED BUT NOT APPROVED; NO CATALOG MUTATION.
+
+## 1. Rights decision
+
+Boston Dynamics' published Terms of Use apply to bostondynamics.com and associated sites linked by Boston Dynamics. They state that site content is protected by intellectual-property laws; copying, reproduction, republication, public display, distribution, mirroring or commercial use generally requires express prior written consent, subject to a limited exception for product/service information (such as datasheets and knowledge-base articles) that Boston Dynamics purposely makes available for download, provided proprietary notices are retained, the material is not modified and no additional representations or warranties are made.
+
+The Terms also prohibit deep-linking, page-scraping, robots, spiders and other automated devices/programs/methodologies, as well as similar or equivalent manual processes, to access, acquire, copy or monitor site content or obtain material not purposely made available through the site.
+
+Official terms: https://bostondynamics.com/terms/  
+The Terms page lists legal@bostondynamics.com as the legal contact.
+
+### Decision for Roboscopia
+
+- **Automated fetching/scraping of Spot product, support or SDK HTML:** prohibited by the published Terms; do not implement or run it.
+- **Using a page URL as a citation/link and manually describing facts:** keep the URL and attribute statements to the manufacturer; do not copy page text, tables, images or source files into Roboscopia.
+- **Local processing of a saved HTML page:** blocked unless Boston Dynamics provides written permission covering the proposed processing, or confirms that the exact material is purposely made available for download and that the proposed processing falls within the stated exception.
+- **Redistribution, public display, quotation, rehosting or commercial reuse of page content:** not approved; require express written permission or a separate applicable license.
+- **SDK software/source code:** do not treat documentation permission as SDK software permission. The SDK software carries a separate license; do not copy SDK code into Roboscopia.
+- **No permission inferred from public accessibility, official domain ownership, search indexing, or a successful browser request.**
+
+This is a conservative product-policy assessment of the published terms, not a legal opinion. The canonical Source Registry now records automated processing as not permitted pending written permission. It deliberately does not mark any rights as cleared.
+
+## 2. Lawful acquisition path
+
+1. Ask Boston Dynamics for written permission for Roboscopia's narrowly described use of the three Spot technical sources.
+2. Ask whether the support specification and SDK payload documentation are expressly downloadable for this purpose; request an approved PDF/export or a written permission for HTML capture if not.
+3. Obtain explicit answers separately for: local processing/extraction; storage of a copy; retaining a SHA-256 digest and metadata; publishing short attributed factual values; quoting short excerpts; publicly displaying or hosting source material; redistribution of full documents; and use of images/diagrams.
+4. Preserve the permission email/license and its scope, expiry, territory, attribution requirements and restrictions as a rights evidence record.
+5. Only after approval, use the local-file acquisition CLI. It does not fetch URLs. It verifies the canonical source-to-document mapping and checks the Source Registry rights object before reading the local file.
+6. Record the capture timestamp and method supplied by the reviewer, file name, byte size, MIME/signature, SHA-256, source URL, model/configuration, revision/date and extraction locators. The extractor's page/line/section locators are candidates and must be checked against the original source.
+7. Keep original documents outside the public repository unless the permission explicitly allows hosting there. Never auto-approve a claim or mutate the catalogue from extraction output.
+
+Until written permission or an applicable explicit download exception is confirmed, **do not save a copy of the HTML source or run the local processor on a Spot HTML capture**. The existing synthetic HTML test is only a software test; it is not a Spot source capture.
+
+## 3. Spot claim-by-claim source assessment
+
+The following is a source-level comparison of the previously reviewed official manufacturer statements. It is not an independent test and does not approve the six catalogue claims. The values remain `source_linked_unverified` in `data/robots.json`.
+
+| Existing catalogue claim | Manufacturer source comparison | Review disposition |
+|---|---|---|
+| Mass with battery — 33.8 kg | Spot product page labels 33.8 kg as net mass/weight with battery. | Exact visible match to S1; manufacturer-declared candidate. Keep unverified until model-generation applicability and exact source locator are approved. |
+| Maximum speed — 1.6 m/s | Product page gives 1.6 m/s. Support article gives nominal forward body velocity 5.8 kph (about 1.61 m/s). | Consistent after rounding. Preserve “nominal forward body velocity” when citing the support value. |
+| Maximum payload — 14 kg | Product page says 14 kg payload capacity / Max Weight. SDK payload documentation says 14 kg total combined payload capacity including all payloads. Support article separately lists 20.43 kg as “Max recommended mass/weight” with center-of-mass, stability and performance caveats. | 14 kg has consistent manufacturer wording across S1 and S3. Do not relabel 20.43 kg as payload capacity; retain it as a distinct unresolved manufacturer statement. Exact Spot generation applicability of S3 still needs confirmation. |
+| Battery capacity — 564 Wh | Product page gives 564 Wh. | Exact visible match to S1; manufacturer-declared candidate. |
+| Typical runtime — 90 min | Product page says average runtime 90 minutes and qualifies it by payload/environment. Support article distinguishes approximately 90 minutes base from approximately 60 minutes while powering payloads. | Partially supported until the catalogue wording explicitly identifies average/base configuration and conditions. Never present as guaranteed loaded runtime. |
+| Ingress protection — IP54 | Product page gives IP54. | Exact visible match to S1; manufacturer-declared candidate. Confirm model-generation applicability and source locator. |
+
+### Additional source issues to preserve
+
+- **Dimensions:** product-page rendering previously showed 110 mm alongside 43.3 in, an inconsistent pair. Support and SDK sources state 1100 mm (43.3 in). Do not copy 110 mm; a correction requires a recorded reviewer decision.
+- **Recharge:** a generic 60-minute value must not be described as universal full-charge time. The support article distinguishes charger, ambient temperature and charge target.
+- **Payload terminology:** preserve the exact label and conditions attached to 20.43 kg; do not merge it with 14 kg total combined payload capacity.
+- **Variant applicability:** the support article says the table is based on current production hardware/software and older models may differ. The SDK source's applicability to the catalogued production Spot must be explicitly confirmed.
+
+## 4. Registry and catalogue state
+
+- `src-0001` — official Spot product page: rights gate recorded; automated processing not permitted pending written permission.
+- `src-0002` — official Spot support article: same rights gate; no capture.
+- `src-0018` — official Spot SDK payload documentation candidate: same rights gate; model-generation applicability pending.
+- `spot-current-production-specs` and `spot-sdk-payload-configuration` remain `not_acquired`.
+- Processing permission remains `false`; redistribution permission remains `unknown`; factual verification remains `not_performed`.
+- Six existing Spot catalogue values and their `src-0001` mappings remain unchanged.
+- No candidate extraction, source file, SHA-256 artifact or claim approval has been fabricated.
+
+## 5. Permission request draft
+
+Send to **legal@bostondynamics.com**. This draft is not sent by Roboscopia.
+
+**Subject:** Permission request — limited use of Boston Dynamics Spot technical specifications in Roboscopia
+
+Hello Boston Dynamics Legal Team,
+
+We are developing Roboscopia, an independent, non-manufacturer robotics and CNC reference platform. We would like to accurately attribute a limited set of Spot technical facts to Boston Dynamics and maintain a reproducible evidence record for editorial quality control.
+
+Could you please confirm whether Roboscopia may:
+
+1. Access and locally process the Spot product specifications page, the Spot specifications support article, and the Spot SDK “Payload Configuration Requirements” documentation for extracting a small set of factual technical values;
+2. retain a private source capture or manufacturer-provided document, together with its URL, retrieval date, file metadata and SHA-256 digest, solely for provenance and audit purposes;
+3. publish the extracted factual values with clear attribution and links to the original Boston Dynamics pages;
+4. quote short excerpts and identify section/table labels where needed to explain technical qualifiers and apparent discrepancies; and
+5. display or host any portion of the source documents, tables, diagrams or images (we will not do so unless you expressly authorize it).
+
+We will not reproduce full documents, scrape or crawl Boston Dynamics websites, redistribute SDK software/source code, imply manufacturer endorsement, or describe manufacturer-declared values as independently tested. We will preserve copyright notices and follow any attribution, scope, retention or other conditions you specify.
+
+If any of these materials are expressly made available for download under your Terms of Use, please identify the permitted files and the applicable conditions. Written confirmation of the permitted activities and any limitations would be appreciated.
+
+Thank you,
+Roboscopia Project Team
+
+## 6. Completion status
+
+| Item | Status |
+|---|---|
+| Review published terms and identify access restrictions | **Completed** |
+| Record rights restrictions in canonical registries | **Completed** |
+| Design permission-gated local processing route | **Available; blocked until rights are approved** |
+| Actual Spot HTML capture and SHA-256 | **Blocked — no permission/download basis established** |
+| Source-level comparison of six existing Spot claims | **Completed as preliminary review** |
+| Human approval of six claims | **Pending authorized reviewer** |
+| Catalogue mutation | **None** |
+
+**Spot pilot remains PARTIAL.** The next legal dependency is written permission or confirmation of a qualifying manufacturer-provided downloadable document. No automated access to Boston Dynamics pages is permitted under the reviewed Terms.
