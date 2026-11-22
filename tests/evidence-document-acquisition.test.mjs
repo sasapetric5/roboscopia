@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
 test("evidence source registry contains seven manufacturer-primary source records", async () => {
@@ -92,4 +95,64 @@ test("HTML evidence acquisition remains behind the canonical rights gate", () =>
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /canonical Source Registry|exact URL/i);
   assert.doesNotMatch(result.stderr, /ENOENT|does-not-exist/);
+});
+
+
+test("authorized local HTML evidence is processed with provenance and without catalog mutation", async () => {
+  const workspace = await mkdtemp(join(tmpdir(), "roboscopia-html-evidence-"));
+  try {
+    await mkdir(join(workspace, "data"), { recursive: true });
+    const registry = JSON.parse(await readFile(new URL("../data/evidence-document-registry.json", import.meta.url), "utf8"));
+    const db = JSON.parse(await readFile(new URL("../data/robots.json", import.meta.url), "utf8"));
+    const source = db.sources.find((item) => item.id === "src-0003");
+    assert.ok(source, "Unitree Go2 canonical source must exist in the test fixture");
+    source.reviewStatus = "verified";
+    source.authorityTier = "manufacturer_primary";
+    source.lastReviewedAt = "2026-11-22T00:00:00.000Z";
+    source.rights = {
+      processingPermitted: true,
+      redistributionPermitted: "unknown",
+      reviewedBy: "synthetic test fixture",
+      reviewedAt: "2026-11-22T00:00:00.000Z",
+      basis: "Synthetic fixture only; this is not a real-world rights determination."
+    };
+    const canonicalBefore = JSON.stringify(db);
+    await writeFile(join(workspace, "data", "robots.json"), JSON.stringify(db, null, 2));
+    await writeFile(join(workspace, "data", "evidence-document-registry.json"), JSON.stringify(registry, null, 2));
+
+    const htmlPath = join(workspace, "authorized-source-capture.html");
+    const outputPath = join(workspace, "evidence-report.json");
+    const html = `<!doctype html><html><head><title>Unitree Go2</title></head><body>
+      <h1>Unitree Go2</h1><section><h2>Performance Parameters</h2>
+      <p>Payload: 8 kg</p><p>Maximum speed: 3.7 m/s</p></section></body></html>`;
+    await writeFile(htmlPath, html, "utf8");
+
+    const scriptPath = fileURLToPath(new URL("../scripts/evidence-document-acquisition.mjs", import.meta.url));
+    const result = spawnSync(process.execPath, [
+      scriptPath,
+      "--source-id", "unitree-go2-product-page",
+      "--file", htmlPath,
+      "--processing-permitted", "yes",
+      "--rights-reviewer", "synthetic test fixture",
+      "--rights-note", "synthetic fixture only",
+      "--redistribution", "unknown",
+      "--model-name", "Go2",
+      "--output", outputPath
+    ], { cwd: workspace, encoding: "utf8" });
+
+    assert.equal(result.status, 0, result.stderr);
+    const report = JSON.parse(await readFile(outputPath, "utf8"));
+    assert.equal(report.localDocument.contentType, "text/html");
+    assert.equal(report.localDocument.sha256.length, 64);
+    assert.equal(report.source.sourceId, "src-0003");
+    assert.equal(report.rightsReview.processingPermitted, true);
+    assert.equal(report.rightsReview.redistribution, "unknown");
+    assert.equal(report.verification.factualVerification, "not_performed");
+    assert.equal(report.verification.catalogMutation, false);
+    assert.ok(report.extraction.counts.candidates >= 2);
+    assert.ok(report.extraction.candidates.every((candidate) => candidate.reviewStatus === "extracted_unverified"));
+    assert.equal(JSON.stringify(JSON.parse(await readFile(join(workspace, "data", "robots.json"), "utf8"))), canonicalBefore);
+  } finally {
+    await rm(workspace, { recursive: true, force: true });
+  }
 });
