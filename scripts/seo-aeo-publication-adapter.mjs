@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { evaluatePublicationReadiness } from "./publication-readiness-engine.mjs";
 
 const ISSUE_SEVERITIES = new Set(["error", "warning", "notice", "good"]);
@@ -120,12 +121,16 @@ export function normalizeCrawlieReport(report) {
 }
 
 /** Evaluate one normalized page using the existing ten-gate publication policy. */
+function stablePageId(url) {
+  return "page-" + createHash("sha256").update(url).digest("hex").slice(0, 32);
+}
+
 export function evaluateCrawliePageReadiness(pageReport, supplementalGates = {}) {
   if (!pageReport || typeof pageReport !== "object" || !pageReport.gates) {
     throw new TypeError("pageReport must be a normalized Crawlie page report");
   }
   return evaluatePublicationReadiness({
-    pageId: pageReport.pageId,
+    pageId: stablePageId(pageReport.url),
     gates: { ...pageReport.gates, ...supplementalGates }
   });
 }
