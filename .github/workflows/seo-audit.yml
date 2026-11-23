@@ -48,7 +48,7 @@ jobs:
         run: |
           cargo install --git https://github.com/spronta/crawlie \
             --rev 9641d31f8ef1d7322792cb4fe532a3f5ad14c995 \
-            --locked --path crates/crawlie-cli
+            --locked --package crawlie-cli
 
       - name: Run bounded read-only crawl
         env:
