@@ -1,0 +1,73 @@
+name: ROBOSCOPIA SEO and GEO audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: "Public ROBOSCOPIA website URL to audit"
+        required: true
+        default: "https://roboscopia.com"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: roboscopia-seo-audit
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    name: Run pinned open-source Crawlie audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Validate target is ROBOSCOPIA
+        env:
+          TARGET_URL: ${{ inputs.target_url }}
+        run: |
+          python - <<'PY'
+          import os
+          from urllib.parse import urlparse
+          value = os.environ["TARGET_URL"].strip()
+          parsed = urlparse(value)
+          allowed = {"roboscopia.com", "www.roboscopia.com"}
+          if parsed.scheme != "https" or parsed.hostname not in allowed:
+              raise SystemExit("Only https://roboscopia.com or https://www.roboscopia.com may be audited.")
+          if parsed.username or parsed.password or parsed.port not in (None, 443):
+              raise SystemExit("Credentials and non-standard ports are not allowed.")
+          print("Approved read-only audit target:", value)
+          PY
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install Crawlie from pinned MIT-licensed source revision
+        run: |
+          cargo install --git https://github.com/spronta/crawlie \
+            --rev 9641d31f8ef1d7322792cb4fe532a3f5ad14c995 \
+            --locked --path crates/crawlie-cli
+
+      - name: Run bounded read-only crawl
+        env:
+          TARGET_URL: ${{ inputs.target_url }}
+        run: |
+          crawlie crawl "$TARGET_URL" \
+            --max-pages 100 \
+            --max-depth 4 \
+            --concurrency 4 \
+            --format json \
+            --fail-on error \
+            --save \
+            -o crawlie-report.json
+
+      - name: Upload SEO and GEO audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: roboscopia-seo-geo-audit
+          path: crawlie-report.json
+          if-no-files-found: warn
+          retention-days: 30
